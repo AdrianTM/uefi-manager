@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sun, 17 Nov 2024 20:47:33 -0500
+Source: uefi-stub-installer
+Architecture: source
+Version: 0.24.11
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ uefi-stub-installer (0.24.11) UNRELEASED; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 979c8834b88ee111138f16d22410b158a5e22430 1174 uefi-stub-installer_0.24.11.dsc
+ b049cdfd36915e48e80a9357ae75385890bc250d 31224 uefi-stub-installer_0.24.11.tar.xz
+ 8786cba61d3402f60d833199ffe4acd5040a66e8 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+Checksums-Sha256:
+ 0f9dc3a6b46f7064286dcd664b423bb03b6b86d21839549be61094f134d2c371 1174 uefi-stub-installer_0.24.11.dsc
+ b7be85e86d778a851f3e6247c780df672fcabfdef4abeb63304dd3a7747788f3 31224 uefi-stub-installer_0.24.11.tar.xz
+ fc95d10dbef715999bf45f589999745154344c6d30785738091e2cff03e93570 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+Files:
+ ad85af4611e2f993ed3311e4e312fa06 1174 admin optional uefi-stub-installer_0.24.11.dsc
+ 8606c0d4489987125d6714256cec4a84 31224 admin optional uefi-stub-installer_0.24.11.tar.xz
+ c74ce0408482e31e098503c739571cb9 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc8AvMTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumJvcCACGt1mQHpHlAoAsVtyMKG+5Dn2QYZKZ
+4mGc1d4qq7gAZcMt3303USrQCwSPRSs+AzbT0IwTy+tSdwR7pR6J8Ue0f5id4GP1
+7SaCLeLu6i7IEtwP6+KqIOKEGoTXBEKhtd9VdQYzAOMq3UGRT+JN3xiiyxpWV9Rp
++Y1/fomw2GZ4Fu47qRQceyeTm4iceGzCcLwy3LVLfU0Qz3EZWhqLSe93HeV3A9Cj
+VH6IMCrMQQdwY9VjSQI3lUrZ2EH9UiO+VvNG7rAAM9fnXQon1626GyTYAmS9OGCG
+PXONGntx81zF9m333rgzirDXy0IyXJn+upfuqu/xtDltr54lPR7cXSaF
+=LXfm
+-----END PGP SIGNATURE-----

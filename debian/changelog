@@ -1,0 +1,5 @@
+uefi-stub-installer (0.24.11) UNRELEASED; urgency=medium
+
+  * Initial release
+
+ -- Adrian <adrian@mxlinux.org>  Sun, 17 Nov 2024 20:47:33 -0500

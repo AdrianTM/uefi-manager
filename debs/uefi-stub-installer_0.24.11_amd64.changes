@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sun, 17 Nov 2024 20:47:33 -0500
+Source: uefi-stub-installer
+Binary: uefi-stub-installer
+Architecture: source amd64
+Version: 0.24.11
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ uefi-stub-installer - uefi-stub-installer
+Changes:
+ uefi-stub-installer (0.24.11) UNRELEASED; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 979c8834b88ee111138f16d22410b158a5e22430 1174 uefi-stub-installer_0.24.11.dsc
+ b049cdfd36915e48e80a9357ae75385890bc250d 31224 uefi-stub-installer_0.24.11.tar.xz
+ 8786cba61d3402f60d833199ffe4acd5040a66e8 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ e52ce73bfd643864bf42d8f86989a4fd5690946f 47240 uefi-stub-installer_0.24.11_amd64.deb
+Checksums-Sha256:
+ 0f9dc3a6b46f7064286dcd664b423bb03b6b86d21839549be61094f134d2c371 1174 uefi-stub-installer_0.24.11.dsc
+ b7be85e86d778a851f3e6247c780df672fcabfdef4abeb63304dd3a7747788f3 31224 uefi-stub-installer_0.24.11.tar.xz
+ fc95d10dbef715999bf45f589999745154344c6d30785738091e2cff03e93570 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ 374f62b79c7383a1e64a82f5efcd995cd7a6d53b4989fed45c586e8ec46e47e1 47240 uefi-stub-installer_0.24.11_amd64.deb
+Files:
+ ad85af4611e2f993ed3311e4e312fa06 1174 admin optional uefi-stub-installer_0.24.11.dsc
+ 8606c0d4489987125d6714256cec4a84 31224 admin optional uefi-stub-installer_0.24.11.tar.xz
+ c74ce0408482e31e098503c739571cb9 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
+ 1676eb142070dfa630719e75ceceed91 47240 admin optional uefi-stub-installer_0.24.11_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc8AvMTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumAtVB/4xMFzh86X6X+ySJ+1vWqAD390/1q8R
+3K121ddMY8xv9mUhRDkNXM6CFhiEW/+jOiOZ756HXpdtllEQ/A1lFIQvUEnkLLEW
+gNe6MGzbF68Azvf8HAwq8Jo/5S4tALZt4D1Aru+nRZeaqQbNHSIkaRZoLziGgHJQ
+Dmeru7W1/EJxJGyNyOrZMwCkPcTgn/xQHtSWMe/1/V2sBNGJWrojX7aB/sb0UvAF
+kMCQs2Inzj8axcQP/y5jXNZH0kK1+Qnj4jejPkI9dapeniCXwoz1AeYlRDpmVIPw
+pLJr4po2lpSMQRIB71wr3nRTZ4GP9wOiWhkvRDLXcOIcvCUYzedmwZrT
+=rtte
+-----END PGP SIGNATURE-----
