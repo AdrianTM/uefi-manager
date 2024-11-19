@@ -29,6 +29,7 @@
 #include <QInputDialog>
 #include <QScreen>
 #include <QScrollBar>
+#include <QStorageInfo>
 #include <QTextStream>
 #include <QTimer>
 
@@ -48,7 +49,6 @@ MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
     setup();
     setConnections();
     addDevToList();
-    distro = getDistroName();
 }
 
 MainWindow::~MainWindow()
@@ -127,10 +127,7 @@ bool MainWindow::copyKernel()
 
 bool MainWindow::installUefiStub(const QString &esp)
 {
-    if (esp.isEmpty()) {
-        return false;
-    }
-    if (!copyKernel()) {
+    if (esp.isEmpty() || !copyKernel()) {
         return false;
     }
 
@@ -142,11 +139,9 @@ bool MainWindow::installUefiStub(const QString &esp)
             break;
         }
     }
-    if (disk.isEmpty()) {
-        return false;
-    }
     QString part = esp.mid(esp.lastIndexOf(QRegularExpression("[0-9]+$")));
-    if (part.isEmpty()) {
+
+    if (disk.isEmpty() || part.isEmpty()) {
         return false;
     }
 
@@ -169,6 +164,7 @@ QString MainWindow::mountPartition(QString part)
     if (part.startsWith("/dev/")) {
         part = part.mid(5);
     }
+
     QString mountDir = cmd.getOut("findmnt -nf --source /dev/" + part).section(" ", 0, 0);
     if (!mountDir.isEmpty()) {
         return mountDir;
@@ -205,6 +201,21 @@ void MainWindow::addDevToList()
     filterDrivePartitions();
 }
 
+bool MainWindow::checkSizeEsp()
+{
+    QString vmlinuzPath = frugalDir + "/vmlinuz";
+    QString initrdPath = frugalDir + "/initrd.gz";
+    qint64 vmlinuzSize = QFile(vmlinuzPath).size();
+    qint64 initrdSize = QFile(initrdPath).size();
+    qint64 totalSize = vmlinuzSize + initrdSize;
+
+    qint64 espFreeSpace = QStorageInfo(espMountPoint).bytesAvailable();
+    if (totalSize > espFreeSpace) {
+        return false;
+    }
+    return true;
+}
+
 void MainWindow::filterDrivePartitions()
 {
     ui->comboPartition->clear();
@@ -223,8 +234,7 @@ void MainWindow::promptFrugalStubInstall()
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
     if (ret == QMessageBox::No) {
-        QString elevate {QFile::exists("/usr/bin/pkexec") ? "/usr/bin/pkexec" : "/usr/bin/gksu"};
-        cmd.proc(elevate, {"/usr/lib/uefi-stub-installer/uefistub--lib", "write_checkfile"});
+        cmd.procAsRoot("/usr/lib/uefi-stub-installer/uefistub--lib", {"write_checkfile"});
         QTimer::singleShot(0, qApp, &QApplication::quit);
     }
 }
@@ -278,18 +288,18 @@ QString MainWindow::getDistroName()
     }
     QTextStream in(&file);
     QString line;
-    QString distro;
+    QString distroName;
 
     while (!in.atEnd()) {
         line = in.readLine();
         if (line.startsWith("NAME=")) {
-            distro = line.section('=', 1, 1).remove('"').trimmed();
+            distroName = line.section('=', 1, 1).remove('"').trimmed();
             break;
         }
     }
 
     file.close();
-    return distro;
+    return distroName;
 }
 
 void MainWindow::validateAndLoadOptions(const QString &frugalDir)
@@ -297,12 +307,14 @@ void MainWindow::validateAndLoadOptions(const QString &frugalDir)
     QString cmd_str("ls -1 " + frugalDir + " | grep -E 'vmlinuz|grub\\.entry|linuxfs'");
     QStringList listFiles = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
     QStringList requiredFiles = {"vmlinuz", "linuxfs", "grub.entry"};
+
     QStringList missingFiles;
     for (const QString &requiredFile : requiredFiles) {
         if (!listFiles.contains(requiredFile)) {
             missingFiles.append(requiredFile);
         }
     }
+
     if (!missingFiles.isEmpty()) {
         QMessageBox::critical(
             this, tr("UEFI Installer"),
@@ -311,12 +323,14 @@ void MainWindow::validateAndLoadOptions(const QString &frugalDir)
         ui->pushBack->click();
         return;
     }
+
     bool success = readGrubEntry();
     if (!success) {
         QMessageBox::critical(this, tr("UEFI Installer"), tr("Failed to read grub.entry file."));
         ui->pushBack->click();
         return;
     }
+
     if (!options.persistenceType.isEmpty()) {
         ui->comboFrugalMode->setCurrentText(options.persistenceType);
     }
@@ -375,7 +389,11 @@ QString MainWindow::selectESP()
         QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("Could not mount selected EFI System Partition"));
         return {};
     }
-
+    if (!checkSizeEsp()) {
+        QMessageBox::critical(this, tr("UEFI Stub Installer"),
+                              tr("Not enough space on the EFI System Partition to install the frugal installation."));
+        return {};
+    }
     return selectedEsp;
 }
 
@@ -404,7 +422,11 @@ void MainWindow::pushNext_clicked()
             validateAndLoadOptions(frugalDir);
         }
     } else if (ui->stackedWidget->currentIndex() == Tab::Options) {
-        if (installUefiStub(selectESP())) {
+        QString esp = selectESP();
+        if (esp.isEmpty()) {
+            return;
+        }
+        if (installUefiStub(esp)) {
             QMessageBox::information(this, tr("UEFI Stub Installer"), tr("UEFI stub installed successfully."));
         } else {
             QMessageBox::critical(this, tr("UEFI Stub Installer"), tr("Failed to install UEFI stub."));

@@ -59,7 +59,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Cmd cmd;
-    QString distro;
+    QString distro = getDistroName();
     QString espMountPoint;
     QString frugalDir;
     QSettings settings;
@@ -76,10 +76,11 @@ private:
         QString persistenceType;
     } options;
 
-    QString selectFrugalDirectory(const QString &part);
     [[nodiscard]] QString getDistroName();
     [[nodiscard]] QString mountPartition(QString part);
     [[nodiscard]] QString selectESP();
+    [[nodiscard]] QString selectFrugalDirectory(const QString &part);
+    [[nodiscard]] bool checkSizeEsp();
     [[nodiscard]] bool copyKernel();
     [[nodiscard]] bool installUefiStub(const QString &esp);
     [[nodiscard]] bool readGrubEntry();
