@@ -100,6 +100,8 @@ void MainWindow::cmdDone()
 
 void MainWindow::setConnections()
 {
+    connect(&cmd, &Cmd::done, this, &MainWindow::cmdDone);
+    connect(&cmd, &Cmd::started, this, &MainWindow::cmdStart);
     connect(ui->comboDrive, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
     connect(ui->pushAbout, &QPushButton::clicked, this, &MainWindow::pushAbout_clicked);
     connect(ui->pushBack, &QPushButton::clicked, this, &MainWindow::pushBack_clicked);
