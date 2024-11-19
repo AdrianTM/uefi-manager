@@ -18,29 +18,29 @@ Changes:
  .
    * Initial release
 Checksums-Sha1:
- 979c8834b88ee111138f16d22410b158a5e22430 1174 uefi-stub-installer_0.24.11.dsc
- b049cdfd36915e48e80a9357ae75385890bc250d 31224 uefi-stub-installer_0.24.11.tar.xz
- 8786cba61d3402f60d833199ffe4acd5040a66e8 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
- e52ce73bfd643864bf42d8f86989a4fd5690946f 47240 uefi-stub-installer_0.24.11_amd64.deb
+ 2dd313f22fcf3e688fb2fdfd320eb186daa22768 1174 uefi-stub-installer_0.24.11.dsc
+ 7316bf82ad54685b5eb4c1e875890dba11f0d927 31380 uefi-stub-installer_0.24.11.tar.xz
+ b4cfcd50d76d236e5ff95adc37321ea981f2ab1f 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ a2152533249de6af0e3461c045849ac2021a258f 47564 uefi-stub-installer_0.24.11_amd64.deb
 Checksums-Sha256:
- 0f9dc3a6b46f7064286dcd664b423bb03b6b86d21839549be61094f134d2c371 1174 uefi-stub-installer_0.24.11.dsc
- b7be85e86d778a851f3e6247c780df672fcabfdef4abeb63304dd3a7747788f3 31224 uefi-stub-installer_0.24.11.tar.xz
- fc95d10dbef715999bf45f589999745154344c6d30785738091e2cff03e93570 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
- 374f62b79c7383a1e64a82f5efcd995cd7a6d53b4989fed45c586e8ec46e47e1 47240 uefi-stub-installer_0.24.11_amd64.deb
+ 0cf70bdf6952c50778987d162ed4fbaeff2ca7fb7d781d273abf815ecc4abd6b 1174 uefi-stub-installer_0.24.11.dsc
+ 9879be5621bef9b81d3a8e85cd0e5118e496464139b32042d1308dec5218d779 31380 uefi-stub-installer_0.24.11.tar.xz
+ a5447e3538cc607ddeed36e550786d41d687742fc72452710462c454ccf55e00 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ 61be956c6c03e15bd19e0d87bbe084452b8a624cd8fc8eaf6bec2a56066baf6f 47564 uefi-stub-installer_0.24.11_amd64.deb
 Files:
- ad85af4611e2f993ed3311e4e312fa06 1174 admin optional uefi-stub-installer_0.24.11.dsc
- 8606c0d4489987125d6714256cec4a84 31224 admin optional uefi-stub-installer_0.24.11.tar.xz
- c74ce0408482e31e098503c739571cb9 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
- 1676eb142070dfa630719e75ceceed91 47240 admin optional uefi-stub-installer_0.24.11_amd64.deb
+ 6933382f73a0d4043b06cf6047f0e7fe 1174 admin optional uefi-stub-installer_0.24.11.dsc
+ 41d86d9fe368df0c26f2a00aec73f5fb 31380 admin optional uefi-stub-installer_0.24.11.tar.xz
+ 6866a33244dd59eb835d7de9722e6765 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
+ fd47a4ebb3317affd88b2334501644ab 47564 admin optional uefi-stub-installer_0.24.11_amd64.deb
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc8AvMTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumAtVB/4xMFzh86X6X+ySJ+1vWqAD390/1q8R
-3K121ddMY8xv9mUhRDkNXM6CFhiEW/+jOiOZ756HXpdtllEQ/A1lFIQvUEnkLLEW
-gNe6MGzbF68Azvf8HAwq8Jo/5S4tALZt4D1Aru+nRZeaqQbNHSIkaRZoLziGgHJQ
-Dmeru7W1/EJxJGyNyOrZMwCkPcTgn/xQHtSWMe/1/V2sBNGJWrojX7aB/sb0UvAF
-kMCQs2Inzj8axcQP/y5jXNZH0kK1+Qnj4jejPkI9dapeniCXwoz1AeYlRDpmVIPw
-pLJr4po2lpSMQRIB71wr3nRTZ4GP9wOiWhkvRDLXcOIcvCUYzedmwZrT
-=rtte
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc9Eo8THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHQ+B/4lK48hKsKoq7tyWlA/XRwegr0aPtkj
+S2767rCAtx5FaSpO54IMaF0ROWuK/YVB78pdbqq8f7vr3tyeoD9/lxkUZC1cEOLh
+OYH5THZYct2VtyhruxPXioU71zMNcholEC8xvAnl423iwERFEyJoyWIumlryqc3s
+Zwt79x7AP7rZe4mIm/A94WUZZt1Vu2mmQTXy2s+l2/7AufIalpDjqo8c90aRKYy8
+BVi0bvSjAEjHfFNPZekrK8HwhwPt74qKUV9rIzcBaoi3guE7KCvtGBarEoHnR5yp
+0UC90yMnVB2LXfV8L5gW9EQW+Vj/l0smbwghMdYkQO+73AydhKeWlLCs
+=UuXG
 -----END PGP SIGNATURE-----
