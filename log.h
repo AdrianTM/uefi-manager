@@ -28,7 +28,7 @@
 class Log
 {
 public:
-    explicit Log(const QString &file_name = "/tmp/mxpi.log");
+    explicit Log(const QString &file_name = "/tmp/uefi-stub-installer.log");
     static QString getLog();
     static void messageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
 
