@@ -15,26 +15,26 @@ Changes:
  .
    * Initial release
 Checksums-Sha1:
- 2dd313f22fcf3e688fb2fdfd320eb186daa22768 1174 uefi-stub-installer_0.24.11.dsc
- 7316bf82ad54685b5eb4c1e875890dba11f0d927 31380 uefi-stub-installer_0.24.11.tar.xz
- b4cfcd50d76d236e5ff95adc37321ea981f2ab1f 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ a601f54e1a9e5d5d0d7228589012dfd10ccd5242 1174 uefi-stub-installer_0.24.11.dsc
+ f7937746d8c4d6056c81ed3892bf370c5593baf9 34332 uefi-stub-installer_0.24.11.tar.xz
+ d35a196f912ec456cf6049ea08265454371d1420 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
 Checksums-Sha256:
- 0cf70bdf6952c50778987d162ed4fbaeff2ca7fb7d781d273abf815ecc4abd6b 1174 uefi-stub-installer_0.24.11.dsc
- 9879be5621bef9b81d3a8e85cd0e5118e496464139b32042d1308dec5218d779 31380 uefi-stub-installer_0.24.11.tar.xz
- a5447e3538cc607ddeed36e550786d41d687742fc72452710462c454ccf55e00 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
+ 0c031fd1ae0f8a23fe491b2407e04ecbb37f0d03882c66501c7a55f3625366eb 1174 uefi-stub-installer_0.24.11.dsc
+ ecabb38a3df9de9063ad227666026f587a9aa57e88eb83d9045f39fffab7af01 34332 uefi-stub-installer_0.24.11.tar.xz
+ c90ebb0995347019af599e590885083c99057f5764087fdc5f10a4d6e37aa014 10849 uefi-stub-installer_0.24.11_amd64.buildinfo
 Files:
- 6933382f73a0d4043b06cf6047f0e7fe 1174 admin optional uefi-stub-installer_0.24.11.dsc
- 41d86d9fe368df0c26f2a00aec73f5fb 31380 admin optional uefi-stub-installer_0.24.11.tar.xz
- 6866a33244dd59eb835d7de9722e6765 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
+ c10d5cfe4a93b960d85730715e18f623 1174 admin optional uefi-stub-installer_0.24.11.dsc
+ 024a9f75d0b0a6883553514b887df354 34332 admin optional uefi-stub-installer_0.24.11.tar.xz
+ 2162f397779259249a3c26f023e7679c 10849 admin optional uefi-stub-installer_0.24.11_amd64.buildinfo
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc9Eo8THGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHOyCACHpKkKxLfvE2tqUXcOFlBci3x5I96T
-+VaIrYLe+NAepHb9lFHr/JvhHcxlVTp0EHje/SbtaYnz0M5nxSgDOf2GNDkzwexu
-n7Gf1N2EcSI4Dm371aW0699zEiKHgsUUIkvOMI7deAbm8GCriPP6W65Xat2+sYdO
-IGL5cU44xgrSFOwDt9DmVVbVMJV6krO82fRrHw0ZtAbK2WupsLpk4GOLivdhxuTa
-c7DdoGOy0JLXYUsXwFQeJasfEhiMaKbZFCAulVfR0ClEzpAr0TimR85UTbFN77Vr
-gW8gkMnFp3ii0rtz1asjvaeruowqGZDXDf0jPYF7w5g1+Vf//I74eOJm
-=8Akr
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc9fDITHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumE0HB/9FGtpv8vSMOBq6l8crmQTOlQKcjt1P
+GT7lPjfGB/fZogPojNifh35m/FlTCbUFPGleUkj0QEz/yos7dUAWFEPE16PvmTKb
+f4yfWtVFtqto55FAf4RJcX8uR2oWrf7QzOlEZs+b8HY96e5KgNfP9AESz9i5bKTz
+sYShvJn+tw9mEPjzexuDOlGMLU9yfQF0D6ycBYWCkHcvFR0HTk4NrzbrsaqivTTo
+CX1PAQX5Oi8JcixZsWP6i1sIiiG5U3aM5bRSrrYOUfi3j/F2Vosk4m7+Fo6h+sNz
+DcjouLVDbpcjHsVmI95PjYu5eRDJX+eRwiUsEWTM1o0rSCi/7X88CLZO
+=UTuq
 -----END PGP SIGNATURE-----

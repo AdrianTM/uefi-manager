@@ -22,6 +22,7 @@
 #pragma once
 
 #include <QCommandLineParser>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QSettings>
 
@@ -32,10 +33,13 @@ namespace Ui
 class MainWindow;
 }
 
-namespace Tab
-{
-enum { Location, Options };
-}
+struct Tab {
+    enum Values { Entries, Frugal };
+};
+
+struct Page {
+    enum Values { Location, Options };
+};
 
 class MainWindow : public QDialog
 {
@@ -55,6 +59,7 @@ private slots:
     void pushBack_clicked();
     void pushNext_clicked();
     void setConnections();
+    void tabWidget_currentChanged();
 
 private:
     Ui::MainWindow *ui;
@@ -84,8 +89,19 @@ private:
     [[nodiscard]] bool copyKernel();
     [[nodiscard]] bool installUefiStub(const QString &esp);
     [[nodiscard]] bool readGrubEntry();
+    static void removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog);
+    static void setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext);
+    static void setUefiTimeout(QWidget *uefiDialog, QLabel *textTimeout);
+    static void sortUefiBootOrder(const QStringList &order, QListWidget *list);
+    static void toggleUefiActive(QListWidget *listEntries);
     void addDevToList();
+    void addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi);
     void filterDrivePartitions();
     void promptFrugalStubInstall();
+    void readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext, QLabel *textBootCurrent,
+                         QStringList *bootorder);
+    void refreshEntries();
+    void refreshFrugal();
+    void saveBootOrder(const QListWidget *list);
     void validateAndLoadOptions(const QString &frugalDir);
 };

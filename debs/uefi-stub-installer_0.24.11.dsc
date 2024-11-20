@@ -12,20 +12,20 @@ Build-Depends: debhelper (>= 10), qtbase5-dev, qttools5-dev-tools
 Package-List:
  uefi-stub-installer deb admin optional arch=any
 Checksums-Sha1:
- 7316bf82ad54685b5eb4c1e875890dba11f0d927 31380 uefi-stub-installer_0.24.11.tar.xz
+ f7937746d8c4d6056c81ed3892bf370c5593baf9 34332 uefi-stub-installer_0.24.11.tar.xz
 Checksums-Sha256:
- 9879be5621bef9b81d3a8e85cd0e5118e496464139b32042d1308dec5218d779 31380 uefi-stub-installer_0.24.11.tar.xz
+ ecabb38a3df9de9063ad227666026f587a9aa57e88eb83d9045f39fffab7af01 34332 uefi-stub-installer_0.24.11.tar.xz
 Files:
- 41d86d9fe368df0c26f2a00aec73f5fb 31380 uefi-stub-installer_0.24.11.tar.xz
+ 024a9f75d0b0a6883553514b887df354 34332 uefi-stub-installer_0.24.11.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc9Eo4THGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumGqxB/9VLqrgkwQuoAufdJoIe5NVnwOjl2Qt
-IDJ7i63HTCXL1fo8nPFdLD0fWXzK0/HZ05m2JI8W22rLhaILCSwzHWpB5A/adRNx
-yceVUUfRwf7CmSEVnNJWkBD9GotPe7zS7RXSxCJkgURoSwnBlead2bmn8SaW8qN7
-RyrjDNd1WZxxl6HwsHK5MgBFw7LHoEHWA0qBNp3T5H9dHT10ofbUhcTV5olZa8mP
-EZN79NgkH6wEKRJ3EtHE3GvZJEUCMP/35mnOTKqPsenqkTKuv3CeVjoTJrIBdZl+
-JkZUnQ7C06X4l4g9CrnVWv3IA5qIbgeszutv8DqAAd9RH1fTpLyiQTXk
-=F6jB
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc9fDETHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumA9dB/sHo4gvV5SzDUuHGkrCpfGKBgG4tPug
+L9IVdvhmKzPmLBiVlgpEUi3+GWNLRipn9JP2rcXQQ+ygwHQ8/fBdv71FkQ81N3lH
+LSmQiWHCoITBV549+p4TedTsfRSlnEBsIqQi3JH/HAMT4Kn+FN20dsjxUZNJH856
+5Wpuj4ePXDYoafrfyPR/GtH0FNvrr7HgziYGx3TKjA608FpR02bnxMUfjOa1iXJ9
+8nWaI1NdfBqytPy51tkFQQSO7c56URsHLc6feosl+uKOkdV0BWeE/yGuWf1zLVCp
+vkGXh/luvkY6/g5uQNA9QJJR8QBQYga/d5SmMo4oEWTTOot9SyPcwoVe
+=VEEL
 -----END PGP SIGNATURE-----

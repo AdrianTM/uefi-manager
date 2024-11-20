@@ -27,8 +27,8 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QListWidget>
 #include <QScreen>
-#include <QScrollBar>
 #include <QStorageInfo>
 #include <QTextStream>
 #include <QTimer>
@@ -58,10 +58,67 @@ MainWindow::~MainWindow()
     for (auto it = newMounts.rbegin(); it != newMounts.rend(); ++it) {
         cmd.procAsRoot("umount", {*it});
     }
-    for (const auto &dir : newDirectories) {
+    for (const QString &dir : newDirectories) {
         cmd.procAsRoot("rmdir", {dir});
     }
     delete ui;
+}
+
+void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
+{
+    // Mount all ESPs
+    QStringList partList
+        = cmd.getOutAsRoot(
+                 "lsblk -no PATH,PARTTYPE | grep -iE 'c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef' | cut -d' ' -f1")
+              .split("\n", Qt::SkipEmptyParts);
+
+    for (const auto &device : qAsConst(partList)) {
+        if (!cmd.proc("findmnt", {"-n", device})) {
+            QString partName = device.section('/', -1);
+            QString mountDir = "/boot/efi/" + partName;
+            if (!QDir(mountDir).exists()) {
+                cmd.procAsRoot("mkdir", {"-p", mountDir});
+                newDirectories.append(mountDir);
+                cmd.procAsRoot("mount", {device, mountDir});
+                newMounts.append(mountDir);
+            }
+        }
+    }
+
+    QString initialPath = QFile::exists("/boot/efi/EFI") ? "/boot/efi/EFI" : "/boot/efi/";
+    QString fileName
+        = QFileDialog::getOpenFileName(dialogUefi, tr("Select EFI file"), initialPath, tr("EFI files (*.efi *.EFI)"));
+
+    if (!QFile::exists(fileName)) {
+        return;
+    }
+
+    QString partitionName = cmd.getOut("df " + fileName + " --output=source | sed 1d");
+    QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName);
+    QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
+
+    if (cmd.exitCode() != 0) {
+        QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
+        return;
+    }
+
+    QString name = QInputDialog::getText(dialogUefi, tr("Set name"), tr("Enter the name for the UEFI menu item:"));
+    if (name.isEmpty()) {
+        name = "New entry";
+    }
+
+    fileName = "/EFI/" + fileName.section("/EFI/", 1);
+    QString command = QString("efibootmgr -cL \"%1\" -d %2 -p %3 -l %4").arg(name, disk, partition, fileName);
+    QString out = cmd.getOutAsRoot(command);
+
+    if (cmd.exitCode() != 0) {
+        QMessageBox::critical(dialogUefi, tr("Error"), tr("Something went wrong, could not add entry."));
+        return;
+    }
+
+    QStringList outList = out.split('\n', Qt::SkipEmptyParts);
+    listEntries->insertItem(0, outList.constLast());
+    emit listEntries->itemSelectionChanged();
 }
 
 void MainWindow::centerWindow()
@@ -77,16 +134,14 @@ void MainWindow::setup()
     auto size = this->size();
     if (settings.contains("geometry")) {
         restoreGeometry(settings.value("geometry").toByteArray());
-        if (this->isMaximized()) { // add option to resize if maximized
+        if (this->isMaximized()) { // Add option to resize if maximized
             this->resize(size);
             centerWindow();
         }
     }
     this->adjustSize();
-    ui->stackedWidget->setCurrentIndex(Tab::Location);
-    ui->pushCancel->setEnabled(true);
-    ui->pushBack->setEnabled(false);
-    ui->pushNext->setEnabled(true);
+    refreshFrugal();
+    refreshEntries();
 }
 
 void MainWindow::cmdStart()
@@ -109,7 +164,43 @@ void MainWindow::setConnections()
     connect(ui->pushCancel, &QPushButton::pressed, this, &MainWindow::close);
     connect(ui->pushHelp, &QPushButton::clicked, this, &MainWindow::pushHelp_clicked);
     connect(ui->pushNext, &QPushButton::clicked, this, &MainWindow::pushNext_clicked);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidget_currentChanged);
 }
+
+void MainWindow::toggleUefiActive(QListWidget *listEntries)
+{
+    auto currentItem = listEntries->currentItem();
+    if (!currentItem) {
+        return;
+    }
+
+    QString item = currentItem->text().section(' ', 0, 0).remove(QRegularExpression("^Boot"));
+    QString rest = currentItem->text().section(' ', 1, -1);
+
+    if (!item.contains(QRegularExpression(R"(^[0-9A-Z]{4}\*?$)"))) {
+        return;
+    }
+
+    bool isActive = item.endsWith('*');
+    if (isActive) {
+        item.chop(1);
+    }
+
+    if (Cmd().procAsRoot("efibootmgr", {isActive ? "--inactive" : "--active", "-b", item})) {
+        listEntries->currentItem()->setText(QString("Boot%1%2 %3").arg(item, isActive ? "" : "*", rest));
+        listEntries->currentItem()->setBackground(isActive ? QBrush(Qt::gray) : QBrush());
+    }
+
+    emit listEntries->itemSelectionChanged();
+}
+
+void MainWindow::tabWidget_currentChanged()
+{
+    const bool isFrugalTab = ui->tabWidget->currentIndex() == Tab::Frugal;
+    ui->pushNext->setVisible(isFrugalTab);
+    ui->pushBack->setVisible(isFrugalTab);
+}
+
 bool MainWindow::copyKernel()
 {
     if (espMountPoint.isEmpty()) {
@@ -176,14 +267,14 @@ QString MainWindow::mountPartition(QString part)
     mountDir = "/mnt/" + part;
     if (!QDir(mountDir).exists()) {
         if (!cmd.procAsRoot("mkdir", {mountDir})) {
-            setup();
+            refreshFrugal();
             return {};
         }
         newDirectories.append(mountDir);
     }
 
     if (!cmd.procAsRoot("mount", {"/dev/" + part, mountDir})) {
-        setup();
+        refreshFrugal();
         return {};
     }
     newMounts.append(mountDir);
@@ -238,8 +329,144 @@ void MainWindow::promptFrugalStubInstall()
 
     if (ret == QMessageBox::No) {
         cmd.procAsRoot("/usr/lib/uefi-stub-installer/uefistub--lib", {"write_checkfile"});
-        QTimer::singleShot(0, qApp, &QApplication::quit);
+        exit(EXIT_SUCCESS);
+    } else {
+        ui->tabWidget->setCurrentIndex(Tab::Frugal);
     }
+}
+
+void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext,
+                                 QLabel *textBootCurrent, QStringList *bootorder)
+{
+    QStringList entries = cmd.getOutAsRoot("efibootmgr").split('\n', Qt::SkipEmptyParts);
+    QRegularExpression bootEntryRegex(R"(^Boot[0-9A-F]{4}\*?\s+)");
+
+    for (const auto &item : qAsConst(entries)) {
+        qDebug() << "ITEM" << item;
+        if (bootEntryRegex.match(item).hasMatch()) {
+            auto *listItem = new QListWidgetItem(item);
+            if (!item.contains("*")) {
+                listItem->setBackground(QBrush(Qt::gray));
+            }
+            listEntries->addItem(listItem);
+        } else if (item.startsWith("Timeout:")) {
+            textTimeout->setText(tr("Timeout: %1 seconds").arg(item.section(' ', 1).trimmed()));
+        } else if (item.startsWith("BootNext:")) {
+            textBootNext->setText(tr("Boot Next: %1").arg(item.section(' ', 1).trimmed()));
+        } else if (item.startsWith("BootCurrent:")) {
+            textBootCurrent->setText(tr("Boot Current: %1").arg(item.section(' ', 1).trimmed()));
+        } else if (item.startsWith("BootOrder:")) {
+            *bootorder = item.section(' ', 1).split(',', Qt::SkipEmptyParts);
+        }
+    }
+}
+
+void MainWindow::refreshEntries()
+{
+    auto *layout = new QGridLayout(ui->tabManageEfi);
+    auto *listEntries = new QListWidget(ui->tabManageEfi);
+    auto *textIntro = new QLabel(tr("You can use the Up/Down buttons, or drag & drop items to change boot order.\n"
+                                    "- Items are listed in the boot order.\n"
+                                    "- Grayed out lines are inactive."),
+                                 ui->tabManageEfi);
+
+    auto createButton = [&](const QString &text, const QString &iconName) {
+        auto *button = new QPushButton(text, ui->tabManageEfi);
+        button->setIcon(QIcon::fromTheme(iconName));
+        return button;
+    };
+
+    auto *pushActive = createButton(tr("Set ac&tive"), "star-on");
+    auto *pushAddEntry = createButton(tr("&Add entry"), "list-add");
+    auto *pushBootNext = createButton(tr("Boot &next"), "go-next");
+    auto *pushDown = createButton(tr("Move &down"), "arrow-down");
+    auto *pushRemove = createButton(tr("&Remove entry"), "trash-empty");
+    auto *pushResetNext = createButton(tr("Re&set next"), "edit-undo");
+    auto *pushTimeout = createButton(tr("Change &timeout"), "timer-symbolic");
+    auto *pushUp = createButton(tr("Move &up"), "arrow-up");
+
+    auto *spacer = new QSpacerItem(0, 0, QSizePolicy::Fixed, QSizePolicy::Expanding);
+    auto *textBootCurrent = new QLabel(ui->tabManageEfi);
+    auto *textBootNext
+        = new QLabel(tr("Boot Next: %1").arg(tr("not set, will boot using list order")), ui->tabManageEfi);
+    auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageEfi);
+    listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QStringList bootorder;
+    connect(pushResetNext, &QPushButton::clicked, ui->tabManageEfi, [textBootNext]() {
+        if (Cmd().procAsRoot("efibootmg", {"-N"})) {
+            textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
+        }
+    });
+    connect(pushTimeout, &QPushButton::clicked, this,
+            [this, textTimeout]() { setUefiTimeout(ui->tabManageEfi, textTimeout); });
+    connect(pushAddEntry, &QPushButton::clicked, this,
+            [this, listEntries]() { addUefiEntry(listEntries, ui->tabManageEfi); });
+    connect(pushBootNext, &QPushButton::clicked, this,
+            [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
+    connect(pushRemove, &QPushButton::clicked, this,
+            [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageEfi); });
+    connect(pushActive, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() { toggleUefiActive(listEntries); });
+    connect(pushUp, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() {
+        listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
+                                      listEntries->currentRow() - 1);
+    });
+    connect(pushDown, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() {
+        listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow() + 1, QModelIndex(),
+                                      listEntries->currentRow()); // move next entry down
+    });
+    connect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageEfi,
+            [listEntries, pushUp, pushDown, pushActive]() {
+                pushUp->setEnabled(listEntries->currentRow() != 0);
+                pushDown->setEnabled(listEntries->currentRow() != listEntries->count() - 1);
+                if (listEntries->currentItem()->text().section(' ', 0, 0).endsWith('*')) {
+                    pushActive->setText(tr("Set &inactive"));
+                    pushActive->setIcon(QIcon::fromTheme("star-off"));
+                } else {
+                    pushActive->setText(tr("Set ac&tive"));
+                    pushActive->setIcon(QIcon::fromTheme("star-on"));
+                }
+            });
+
+    readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
+    sortUefiBootOrder(bootorder, listEntries);
+
+    listEntries->setDragDropMode(QAbstractItemView::InternalMove);
+    connect(listEntries->model(), &QAbstractItemModel::rowsMoved, this, [this, listEntries]() {
+        saveBootOrder(listEntries);
+        emit listEntries->itemSelectionChanged();
+    });
+
+    int row = 0;
+    const int rowspan = 7;
+    layout->addWidget(textIntro, row++, 0, 1, 2);
+    layout->addWidget(listEntries, row, 0, rowspan, 1);
+    layout->addWidget(pushRemove, row++, 1);
+    layout->addWidget(pushAddEntry, row++, 1);
+    layout->addWidget(pushUp, row++, 1);
+    layout->addWidget(pushDown, row++, 1);
+    layout->addWidget(pushActive, row++, 1);
+    layout->addWidget(pushBootNext, row++, 1);
+    layout->addItem(spacer, row++, 1);
+    layout->addWidget(textBootCurrent, row++, 0);
+    layout->addWidget(textTimeout, row, 0);
+    layout->addWidget(pushTimeout, row++, 1);
+    layout->addWidget(textBootNext, row, 0);
+    layout->addWidget(pushResetNext, row++, 1);
+    ui->tabManageEfi->setLayout(layout);
+
+    ui->tabManageEfi->resize(this->size());
+    ui->tabManageEfi->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->pushNext->setHidden(true);
+    ui->pushBack->setHidden(true);
+}
+
+void MainWindow::refreshFrugal()
+{
+    ui->stackedWidget->setCurrentIndex(Page::Location);
+    ui->pushCancel->setEnabled(true);
+    ui->pushBack->setEnabled(false);
+    ui->pushNext->setEnabled(true);
 }
 
 bool MainWindow::readGrubEntry()
@@ -281,6 +508,30 @@ bool MainWindow::readGrubEntry()
     options.stringOptions = options.stringOptions.trimmed();
     grubEntryFile.close();
     return true;
+}
+
+void MainWindow::sortUefiBootOrder(const QStringList &order, QListWidget *list)
+{
+    if (order.isEmpty()) {
+        return;
+    }
+
+    int index = 0;
+    for (const auto &orderItem : order) {
+        auto items = list->findItems("Boot" + orderItem, Qt::MatchStartsWith);
+        if (items.isEmpty()) {
+            continue;
+        }
+
+        auto *item = items.constFirst();
+        list->takeItem(list->row(item));
+        list->insertItem(index, item);
+        ++index;
+    }
+
+    list->setCurrentRow(0);
+    list->currentItem()->setSelected(true);
+    emit list->itemSelectionChanged();
 }
 
 QString MainWindow::getDistroName()
@@ -404,37 +655,39 @@ QString MainWindow::selectESP()
 
 void MainWindow::pushNext_clicked()
 {
-    if (ui->stackedWidget->currentIndex() == Tab::Location) {
-        ui->pushNext->setEnabled(false);
-        if (!ui->comboDrive->currentText().isEmpty() && !ui->comboPartition->currentText().isEmpty()) {
-            QString part = mountPartition(ui->comboPartition->currentText().section(' ', 0, 0));
-            if (part.isEmpty()) {
-                QMessageBox::critical(
-                    this, tr("UEFI Stub Installer"),
-                    tr("Could not mount partition. Please make sure you selected the correct partition."));
-                setup();
+    if (ui->tabWidget->currentIndex() == Tab::Frugal) {
+        if (ui->stackedWidget->currentIndex() == Page::Location) {
+            ui->pushNext->setEnabled(false);
+            if (!ui->comboDrive->currentText().isEmpty() && !ui->comboPartition->currentText().isEmpty()) {
+                QString part = mountPartition(ui->comboPartition->currentText().section(' ', 0, 0));
+                if (part.isEmpty()) {
+                    QMessageBox::critical(
+                        this, tr("UEFI Stub Installer"),
+                        tr("Could not mount partition. Please make sure you selected the correct partition."));
+                    refreshFrugal();
+                    return;
+                }
+                frugalDir = selectFrugalDirectory(part);
+                if (!frugalDir.isEmpty()) {
+                    ui->stackedWidget->setCurrentIndex(Page::Options);
+                    ui->pushBack->setEnabled(true);
+                } else {
+                    QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("No directory selected"));
+                    refreshFrugal();
+                    return;
+                }
+                validateAndLoadOptions(frugalDir);
+            }
+        } else if (ui->stackedWidget->currentIndex() == Page::Options) {
+            QString esp = selectESP();
+            if (esp.isEmpty()) {
                 return;
             }
-            frugalDir = selectFrugalDirectory(part);
-            if (!frugalDir.isEmpty()) {
-                ui->stackedWidget->setCurrentIndex(Tab::Options);
-                ui->pushBack->setEnabled(true);
+            if (installUefiStub(esp)) {
+                QMessageBox::information(this, tr("UEFI Stub Installer"), tr("UEFI stub installed successfully."));
             } else {
-                QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("No directory selected"));
-                setup();
-                return;
+                QMessageBox::critical(this, tr("UEFI Stub Installer"), tr("Failed to install UEFI stub."));
             }
-            validateAndLoadOptions(frugalDir);
-        }
-    } else if (ui->stackedWidget->currentIndex() == Tab::Options) {
-        QString esp = selectESP();
-        if (esp.isEmpty()) {
-            return;
-        }
-        if (installUefiStub(esp)) {
-            QMessageBox::information(this, tr("UEFI Stub Installer"), tr("UEFI stub installed successfully."));
-        } else {
-            QMessageBox::critical(this, tr("UEFI Stub Installer"), tr("Failed to install UEFI stub."));
         }
     }
 }
@@ -461,11 +714,84 @@ void MainWindow::pushHelp_clicked()
 
 void MainWindow::pushBack_clicked()
 {
-    if (ui->stackedWidget->currentIndex() == Tab::Options) {
-        ui->stackedWidget->setCurrentIndex(Tab::Location);
+    if (ui->stackedWidget->currentIndex() == Page::Options) {
+        ui->stackedWidget->setCurrentIndex(Page::Location);
         ui->pushBack->setEnabled(false);
         ui->pushNext->setText(tr("Next"));
         ui->pushNext->setIcon(QIcon::fromTheme("go-next"));
         ui->pushNext->setEnabled(true);
     }
+}
+
+void MainWindow::saveBootOrder(const QListWidget *list)
+{
+    QStringList orderList;
+    orderList.reserve(list->count());
+    for (int i = 0; i < list->count(); ++i) {
+        QString item = list->item(i)->text().section(' ', 0, 0);
+        item.remove(QRegularExpression("^Boot|\\*$"));
+        if (item.contains(QRegularExpression("^[0-9A-Z]{4}$"))) {
+            orderList.append(item);
+        }
+    }
+
+    QString order = orderList.join(',');
+    if (!cmd.procAsRoot("efibootmgr", {"-o", order})) {
+        qDebug() << "Order:" << order;
+        QMessageBox::critical(this, tr("Error"), tr("Something went wrong, could not save boot order."));
+    }
+}
+
+void MainWindow::setUefiTimeout(QWidget *uefiDialog, QLabel *textTimeout)
+{
+    bool ok = false;
+    ushort initialTimeout = textTimeout->text().section(' ', 1, 1).toUInt();
+    ushort newTimeout = QInputDialog::getInt(uefiDialog, tr("Set timeout"), tr("Timeout in seconds:"), initialTimeout,
+                                             0, 65535, 1, &ok);
+
+    if (ok && Cmd().procAsRoot("efibootmgr", {"-t", QString::number(newTimeout)})) {
+        textTimeout->setText(tr("Timeout: %1 seconds").arg(newTimeout));
+    }
+}
+
+void MainWindow::setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext)
+{
+    if (auto currentItem = listEntries->currentItem()) {
+        QString item = currentItem->text().section(' ', 0, 0);
+        item.remove(QRegularExpression("^Boot"));
+        item.remove(QRegularExpression(R"(\*$)"));
+
+        if (QRegularExpression("^[0-9A-Z]{4}$").match(item).hasMatch()
+            && Cmd().procAsRoot("efibootmgr", {"-n", item})) {
+            textBootNext->setText(tr("Boot Next: %1").arg(item));
+        }
+    }
+}
+
+void MainWindow::removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog)
+{
+    auto *currentItem = listEntries->currentItem();
+    if (!currentItem) {
+        return;
+    }
+
+    QString itemText = currentItem->text();
+    if (QMessageBox::Yes
+        != QMessageBox::question(uefiDialog, tr("Removal confirmation"),
+                                 tr("Are you sure you want to delete this boot entry?\n%1").arg(itemText))) {
+        return;
+    }
+
+    QString item = itemText.section(' ', 0, 0);
+    item.remove(QRegularExpression("^Boot"));
+    item.remove(QRegularExpression(R"(\*$)"));
+
+    if (!item.contains(QRegularExpression("^[0-9A-Z]{4}$"))) {
+        return;
+    }
+
+    if (Cmd().procAsRoot("efibootmgr", {"-B", "-b", item})) {
+        delete currentItem;
+    }
+    emit listEntries->itemSelectionChanged();
 }
