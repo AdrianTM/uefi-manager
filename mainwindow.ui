@@ -14,7 +14,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabManageUefi">
       <attribute name="title">
@@ -140,12 +140,12 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>p_static_root</string>
+                  <string>persist_home</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>persist_home</string>
+                  <string>frugal_only</string>
                  </property>
                 </item>
                </widget>

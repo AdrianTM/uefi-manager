@@ -35,6 +35,22 @@
 #include "about.h"
 #include "cmd.h"
 
+// Trying to map all the persitence type to values that make sense
+// when passed to the kernel at boot time for frugal installation
+const QMap<QString, QString> MainWindow::persistenceTypes = {{"persist_all", "persist_all"},
+                                                             {"persist_root", "persist_root"},
+                                                             {"persist_static", "persist_static"},
+                                                             {"persist_static_root", "persist_static_root"},
+                                                             {"p_static_root", "persist_static_root"},
+                                                             {"persist_home", "persist_home"},
+                                                             {"frugal_persist", "persist_all"},
+                                                             {"frugal_root", "persist_root"},
+                                                             {"frugal_static", "persist_static"},
+                                                             {"frugal_static_root", "persist_static_root"},
+                                                             {"f_static_root", "persist_static_root"},
+                                                             {"frugal_home", "persist_home"},
+                                                             {"frugal_only", "frugal_only"}};
+
 MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::MainWindow)
@@ -522,10 +538,8 @@ bool MainWindow::readGrubEntry()
             for (const QString &option : optionsList) {
                 if (option.startsWith("bdir=")) {
                     options.bdir = option.section('=', 1, 1).trimmed();
-                } else if (option.startsWith("persist_all") || option.startsWith("persist_root")
-                           || option.startsWith("persist_static") || option.startsWith("persist_static_root")
-                           || option.startsWith("p_static_root") || option.startsWith("persist_home")) {
-                    options.persistenceType = option;
+                } else if (persistenceTypes.contains(option)) {
+                    options.persistenceType = persistenceTypes[option];
                 } else if (!option.startsWith("buuid=") && !option.endsWith("vmlinuz")) {
                     options.stringOptions.append(option + ' ');
                 }

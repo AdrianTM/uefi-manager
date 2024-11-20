@@ -23,6 +23,7 @@
 
 #include <QCommandLineParser>
 #include <QListWidget>
+#include <QMap>
 #include <QMessageBox>
 #include <QSettings>
 
@@ -72,6 +73,8 @@ private:
     QStringList listPart;
     QStringList newDirectories;
     QStringList newMounts;
+
+    static const QMap<QString, QString> persistenceTypes;
 
     struct Options {
         QString entryName;
