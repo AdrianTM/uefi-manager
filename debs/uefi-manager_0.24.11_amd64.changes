@@ -18,29 +18,29 @@ Changes:
  .
    * Initial release
 Checksums-Sha1:
- d3685ab26da5487b0868591139daea3c7b19836d 1132 uefi-manager_0.24.11.dsc
- 17dfac5da537cd5e5fe71b0ad9491d0c668ad063 34520 uefi-manager_0.24.11.tar.xz
- d4fb7fc61a48b8362b9535f38039a677dc14a340 10786 uefi-manager_0.24.11_amd64.buildinfo
- 6eca5e8d9179f6e7d083b18287e99c89781d92e6 58620 uefi-manager_0.24.11_amd64.deb
+ 004e44327037bb10cf6f064c62b007b6c8866094 1132 uefi-manager_0.24.11.dsc
+ c7525d77625344ce4f71811f6520df1ccaf3d29d 34448 uefi-manager_0.24.11.tar.xz
+ ee5eaff3e03031db3d82731ce9c819bf136469b0 10961 uefi-manager_0.24.11_amd64.buildinfo
+ 1bc13d6e90cd09ad2964d86bcb35ac149efe2eb4 58692 uefi-manager_0.24.11_amd64.deb
 Checksums-Sha256:
- 50052d9c59e778e46b995aade91ca6ec4295611ed40315c73388f74e4648df8c 1132 uefi-manager_0.24.11.dsc
- 5e9e4c11df1d7abc713046dd55fa65425e599a47a41c5631848e65416437ff9a 34520 uefi-manager_0.24.11.tar.xz
- 06c727a1120528a9ba74f69550b8af4dd378f2d5a0a301e61c3e7602ba0fa52a 10786 uefi-manager_0.24.11_amd64.buildinfo
- ecf124323b4bb9a51366e17b7053fcb4a636da7ad532f9a76a1a7371bef7b271 58620 uefi-manager_0.24.11_amd64.deb
+ 1d112757c1e2147572d9d1da17e35b3579920154bd769102c357e2c8309d55b5 1132 uefi-manager_0.24.11.dsc
+ ce262237033e1881b6f6be8fed1c2c5976f949f0e31e9f2c1888b61fb5c6b38d 34448 uefi-manager_0.24.11.tar.xz
+ 21547b487cebb13e29d3209f074949f0bdcb0f6ecc8049aee322b65a38615374 10961 uefi-manager_0.24.11_amd64.buildinfo
+ 8b4755acdbe9603193a548b2c489e8d37332a331838a1ec82aa9dda6738b5c1b 58692 uefi-manager_0.24.11_amd64.deb
 Files:
- 9df37f0467c31a4481a294228dc2ed64 1132 admin optional uefi-manager_0.24.11.dsc
- 42ebaeec5371daae1c6e270fc735a999 34520 admin optional uefi-manager_0.24.11.tar.xz
- 326460166a48ea2d292c7ca1d00fb3da 10786 admin optional uefi-manager_0.24.11_amd64.buildinfo
- 9a4ed60aeb1ed07176feafa2b7f27714 58620 admin optional uefi-manager_0.24.11_amd64.deb
+ 3ce5878142db1b5d5088d34983df9960 1132 admin optional uefi-manager_0.24.11.dsc
+ 2deb2b006ef32ebe73cae0a0d2c44d70 34448 admin optional uefi-manager_0.24.11.tar.xz
+ b8a20ca3a6e24afb8419a68c36f29f74 10961 admin optional uefi-manager_0.24.11_amd64.buildinfo
+ 44b9476c79d625ee3e060040076c33ed 58692 admin optional uefi-manager_0.24.11_amd64.deb
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc+XIMTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumNfqB/9pugLG4TNwL9vkrxvoJjV7BemPKUO+
-BQhmnM0y11Q9QkC8L5cbflZcjTABrod7us5BVh2BbFB6MKpz4yLFoYGtp7Efge78
-YYHMTBokyM4U3A4Jru90XdP1XBHpCNfbZrfbwSQzVg9qG3E8J5GvDBQj2vmls1bD
-x8s2sYBFE5exDd4mOYTiwxp41+kNlpYKJZLvaEviM0KNm/YgRdpHKulH0rBTM9HL
-PKTI9B47LDfBNufcIU8V4UqKdgSoA9o+LIn6kQmJ7cCRUAUzPOdgr2vQ6AQMq4ek
-QT5ivcJI/WYbrpbxDOB4wSjmvZJ6vf+VvMCvBo/cHTnMUR5Mex70ko90
-=f+RG
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc+b+QTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumNqUB/9yvr2il4MkjZX1H5mT8yqgmNRcnTwG
+t812hM76UBjFT+qQ6GNbHWFugOF44roFnPGfKSPa9CS8lBSJY5+RDXvFxkHJNiXc
+ofz2WPHN2Wx8+WPpwfrYqtIXbRLbgSPkLjTjs/gmy7AX7k4I1qEoTi0z2JSisDOi
+4IJleQN4biqExXh8x7qznsa6SWU+pc7Plh0KgtMy0arm7PCEzZr3GH980G9plhZu
+YHcca6VTbnHCpSytS/BymOCnlmb25b9+coaU5PAhdQ35VhjhTR1Rx9VtMoSeFyny
+K+3krI5AV6Da+UJFcCk604MaZl9ehoKldCtyaTMobD/dS0e5asi3eO7G
+=X8HP
 -----END PGP SIGNATURE-----
