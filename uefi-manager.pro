@@ -21,7 +21,7 @@
 QT       += core gui widgets
 CONFIG   += c++17
 
-TARGET = uefi-stub-installer
+TARGET = uefi-manager
 TEMPLATE = app
 
 # The following define makes your compiler warn you if you use any
@@ -48,7 +48,7 @@ FORMS    += \
     mainwindow.ui
 
 TRANSLATIONS += \
-    translations/uefi-stub-installer_en.ts
+    translations/uefi-manager_en.ts
 
 RESOURCES += \
     images.qrc

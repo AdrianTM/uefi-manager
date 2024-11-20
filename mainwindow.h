@@ -87,7 +87,7 @@ private:
     [[nodiscard]] QString selectFrugalDirectory(const QString &part);
     [[nodiscard]] bool checkSizeEsp();
     [[nodiscard]] bool copyKernel();
-    [[nodiscard]] bool installUefiStub(const QString &esp);
+    [[nodiscard]] bool installEfiStub(const QString &esp);
     [[nodiscard]] bool readGrubEntry();
     static void removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog);
     static void setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext);

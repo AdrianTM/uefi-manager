@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Root level functions requiring password for uefi-stub-installer
+# Root level functions requiring password for uefi-manager
 
 cleanup_temp() {
 }

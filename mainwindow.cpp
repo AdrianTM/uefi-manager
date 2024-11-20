@@ -31,7 +31,6 @@
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
-#include <QTimer>
 
 #include "about.h"
 #include "cmd.h"
@@ -219,7 +218,7 @@ bool MainWindow::copyKernel()
     return true;
 }
 
-bool MainWindow::installUefiStub(const QString &esp)
+bool MainWindow::installEfiStub(const QString &esp)
 {
     if (esp.isEmpty() || !copyKernel()) {
         return false;
@@ -328,7 +327,7 @@ void MainWindow::promptFrugalStubInstall()
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
     if (ret == QMessageBox::No) {
-        cmd.procAsRoot("/usr/lib/uefi-stub-installer/uefistub--lib", {"write_checkfile"});
+        cmd.procAsRoot("/usr/lib/uefi-manager/uefimanager-lib", {"write_checkfile"});
         exit(EXIT_SUCCESS);
     } else {
         ui->tabWidget->setCurrentIndex(Tab::Frugal);
@@ -363,15 +362,15 @@ void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, 
 
 void MainWindow::refreshEntries()
 {
-    auto *layout = new QGridLayout(ui->tabManageEfi);
-    auto *listEntries = new QListWidget(ui->tabManageEfi);
+    auto *layout = new QGridLayout(ui->tabManageUefi);
+    auto *listEntries = new QListWidget(ui->tabManageUefi);
     auto *textIntro = new QLabel(tr("You can use the Up/Down buttons, or drag & drop items to change boot order.\n"
                                     "- Items are listed in the boot order.\n"
                                     "- Grayed out lines are inactive."),
-                                 ui->tabManageEfi);
+                                 ui->tabManageUefi);
 
     auto createButton = [&](const QString &text, const QString &iconName) {
-        auto *button = new QPushButton(text, ui->tabManageEfi);
+        auto *button = new QPushButton(text, ui->tabManageUefi);
         button->setIcon(QIcon::fromTheme(iconName));
         return button;
     };
@@ -386,36 +385,36 @@ void MainWindow::refreshEntries()
     auto *pushUp = createButton(tr("Move &up"), "arrow-up");
 
     auto *spacer = new QSpacerItem(0, 0, QSizePolicy::Fixed, QSizePolicy::Expanding);
-    auto *textBootCurrent = new QLabel(ui->tabManageEfi);
+    auto *textBootCurrent = new QLabel(ui->tabManageUefi);
     auto *textBootNext
-        = new QLabel(tr("Boot Next: %1").arg(tr("not set, will boot using list order")), ui->tabManageEfi);
-    auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageEfi);
+        = new QLabel(tr("Boot Next: %1").arg(tr("not set, will boot using list order")), ui->tabManageUefi);
+    auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageUefi);
     listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     QStringList bootorder;
-    connect(pushResetNext, &QPushButton::clicked, ui->tabManageEfi, [textBootNext]() {
+    connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
         if (Cmd().procAsRoot("efibootmg", {"-N"})) {
             textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
         }
     });
     connect(pushTimeout, &QPushButton::clicked, this,
-            [this, textTimeout]() { setUefiTimeout(ui->tabManageEfi, textTimeout); });
+            [this, textTimeout]() { setUefiTimeout(ui->tabManageUefi, textTimeout); });
     connect(pushAddEntry, &QPushButton::clicked, this,
-            [this, listEntries]() { addUefiEntry(listEntries, ui->tabManageEfi); });
+            [this, listEntries]() { addUefiEntry(listEntries, ui->tabManageUefi); });
     connect(pushBootNext, &QPushButton::clicked, this,
             [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
     connect(pushRemove, &QPushButton::clicked, this,
-            [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageEfi); });
-    connect(pushActive, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() { toggleUefiActive(listEntries); });
-    connect(pushUp, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() {
+            [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
+    connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
+    connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
                                       listEntries->currentRow() - 1);
     });
-    connect(pushDown, &QPushButton::clicked, ui->tabManageEfi, [listEntries]() {
+    connect(pushDown, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow() + 1, QModelIndex(),
                                       listEntries->currentRow()); // move next entry down
     });
-    connect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageEfi,
+    connect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi,
             [listEntries, pushUp, pushDown, pushActive]() {
                 pushUp->setEnabled(listEntries->currentRow() != 0);
                 pushDown->setEnabled(listEntries->currentRow() != listEntries->count() - 1);
@@ -453,10 +452,10 @@ void MainWindow::refreshEntries()
     layout->addWidget(pushTimeout, row++, 1);
     layout->addWidget(textBootNext, row, 0);
     layout->addWidget(pushResetNext, row++, 1);
-    ui->tabManageEfi->setLayout(layout);
+    ui->tabManageUefi->setLayout(layout);
 
-    ui->tabManageEfi->resize(this->size());
-    ui->tabManageEfi->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->tabManageUefi->resize(this->size());
+    ui->tabManageUefi->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     ui->pushNext->setHidden(true);
     ui->pushBack->setHidden(true);
 }
@@ -614,7 +613,7 @@ QString MainWindow::selectESP()
     }
 
     if (espList.isEmpty()) {
-        QMessageBox::critical(this, tr("UEFI Stub Installer"), tr("No EFI System Partitions found."));
+        QMessageBox::critical(this, tr("EFI Stub Installer"), tr("No EFI System Partitions found."));
         return {};
     }
 
@@ -634,19 +633,19 @@ QString MainWindow::selectESP()
     }
 
     if (!ok || selectedEsp.isEmpty()) {
-        QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("No EFI System Partition selected"));
+        QMessageBox::warning(this, tr("EFI Stub Installer"), tr("No EFI System Partition selected"));
         return {};
     }
 
     espMountPoint = mountPartition(selectedEsp);
     if (espMountPoint.isEmpty()) {
-        QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("Could not mount selected EFI System Partition"));
+        QMessageBox::warning(this, tr("EFI Stub Installer"), tr("Could not mount selected EFI System Partition"));
         return {};
     }
     cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/frugal/vmlinuz"});
     cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/frugal/initrd.gz"});
     if (!checkSizeEsp()) {
-        QMessageBox::critical(this, tr("UEFI Stub Installer"),
+        QMessageBox::critical(this, tr("EFI Stub Installer"),
                               tr("Not enough space on the EFI System Partition to install the frugal installation."));
         return {};
     }
@@ -662,7 +661,7 @@ void MainWindow::pushNext_clicked()
                 QString part = mountPartition(ui->comboPartition->currentText().section(' ', 0, 0));
                 if (part.isEmpty()) {
                     QMessageBox::critical(
-                        this, tr("UEFI Stub Installer"),
+                        this, tr("EFI Stub Installer"),
                         tr("Could not mount partition. Please make sure you selected the correct partition."));
                     refreshFrugal();
                     return;
@@ -672,7 +671,7 @@ void MainWindow::pushNext_clicked()
                     ui->stackedWidget->setCurrentIndex(Page::Options);
                     ui->pushBack->setEnabled(true);
                 } else {
-                    QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("No directory selected"));
+                    QMessageBox::warning(this, tr("EFI Stub Installer"), tr("No directory selected"));
                     refreshFrugal();
                     return;
                 }
@@ -683,10 +682,10 @@ void MainWindow::pushNext_clicked()
             if (esp.isEmpty()) {
                 return;
             }
-            if (installUefiStub(esp)) {
-                QMessageBox::information(this, tr("UEFI Stub Installer"), tr("UEFI stub installed successfully."));
+            if (installEfiStub(esp)) {
+                QMessageBox::information(this, tr("EFI Stub Installer"), tr("EFI stub installed successfully."));
             } else {
-                QMessageBox::critical(this, tr("UEFI Stub Installer"), tr("Failed to install UEFI stub."));
+                QMessageBox::critical(this, tr("EFI Stub Installer"), tr("Failed to install EFI stub."));
             }
         }
     }
@@ -696,12 +695,12 @@ void MainWindow::pushAbout_clicked()
 {
     this->hide();
     displayAboutMsgBox(
-        tr("About %1") + tr("Uefi Installer"),
-        R"(<p align="center"><b><h2>Uefi Installer</h2></b></p><p align="center">)" + tr("Version: ")
+        tr("About %1") + tr("UEFI Manager"),
+        R"(<p align="center"><b><h2>UEFI Manager</h2></b></p><p align="center">)" + tr("Version: ")
             + QApplication::applicationVersion() + "</p><p align=\"center\"><h3>" + tr("Description goes here")
             + R"(</h3></p><p align="center"><a href="http://mxlinux.org">http://mxlinux.org</a><br /></p><p align="center">)"
             + tr("Copyright (c) MX Linux") + "<br /><br /></p>",
-        "/usr/share/doc/uefi-stub-installer/license.html", tr("%1 License").arg(this->windowTitle()));
+        "/usr/share/doc/uefi-manager/license.html", tr("%1 License").arg(this->windowTitle()));
 
     this->show();
 }

@@ -70,18 +70,16 @@ int main(int argc, char *argv[])
     }
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(
-        QObject::tr("uefi-stub-installer is a tool designed to create UEFI boot entries for launching installations "
-                    "directly, without using GRUB or other bootloaders."));
+    parser.setApplicationDescription(QObject::tr("uefi-manager is a tool for managing UEFI boot entries"));
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addOption({{"f", "frugal"}, QObject::tr("Perform UEFI Stub installation for frugal installation.")});
-    parser.addOption({{"u", "update-frugal"}, QObject::tr("Perform UEFI Stub installation for frugal installation.")});
+    parser.addOption({{"f", "frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
+    parser.addOption({{"u", "update-frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
     parser.process(app);
 
     if (!isUefi()) {
         QMessageBox::critical(
-            nullptr, QObject::tr("UEFI Stub Installer"),
+            nullptr, QObject::tr("EFI Stub Installer"),
             QObject::tr("This system doesn't seem to support UEFI, or was not booted in UEFI mode. Exiting."));
         return EXIT_FAILURE;
     }

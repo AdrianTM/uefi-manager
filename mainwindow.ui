@@ -16,9 +16,9 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tabManageEfi">
+     <widget class="QWidget" name="tabManageUefi">
       <attribute name="title">
-       <string>Manage EFI entries</string>
+       <string>Manage UEFI entries</string>
       </attribute>
      </widget>
      <widget class="QWidget" name="tabFrugal">

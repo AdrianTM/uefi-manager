@@ -38,4 +38,4 @@ Makefile*
 # Transifex ignore
 .tx/
 
-uefi-stub-installer
+uefi-manager
