@@ -167,9 +167,11 @@ void MainWindow::setup()
             centerWindow();
         }
     }
-    this->adjustSize();
-    refreshFrugal();
-    refreshEntries();
+    if (ui->tabWidget->currentIndex() == Tab::Frugal) {
+        refreshFrugal();
+    } else {
+        refreshEntries();
+    }
 }
 
 void MainWindow::cmdStart()
@@ -229,6 +231,8 @@ void MainWindow::tabWidget_currentChanged()
     ui->pushBack->setVisible(isFrugalTab);
     if (ui->tabWidget->currentIndex() == Tab::Entries) {
         refreshEntries();
+    } else if (ui->tabWidget->currentIndex() == Tab::Frugal) {
+        refreshFrugal();
     }
 }
 
