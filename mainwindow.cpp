@@ -391,6 +391,8 @@ QString MainWindow::selectESP()
         QMessageBox::warning(this, tr("UEFI Stub Installer"), tr("Could not mount selected EFI System Partition"));
         return {};
     }
+    cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/frugal/vmlinuz"});
+    cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/frugal/initrd.gz"});
     if (!checkSizeEsp()) {
         QMessageBox::critical(this, tr("UEFI Stub Installer"),
                               tr("Not enough space on the EFI System Partition to install the frugal installation."));
