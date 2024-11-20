@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sun, 17 Nov 2024 20:47:33 -0500
+Source: uefi-manager
+Binary: uefi-manager
+Architecture: source amd64
+Version: 0.24.11
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ uefi-manager - uefi-nanager
+Changes:
+ uefi-manager (0.24.11) UNRELEASED; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 1dffd3a5c2adbdd5f7358e99bf0bbebad7750758 1132 uefi-manager_0.24.11.dsc
+ bc6612694eb74de770538d3ea1236e16901b5210 34888 uefi-manager_0.24.11.tar.xz
+ ec682a5b40662f40d026b04090a72b703863c04d 10786 uefi-manager_0.24.11_amd64.buildinfo
+ bb4ddb69d8627fdc48798f349ffc470ab1f944c4 56980 uefi-manager_0.24.11_amd64.deb
+Checksums-Sha256:
+ ba0a658d7407bd9029c225fe6560ea62f039e2c679f53c6155873cd6f6fbb1be 1132 uefi-manager_0.24.11.dsc
+ 2aaf05dc5f27bdc2623c61eca2d9123861ed663c74645d82dd8d16b9ff5717c5 34888 uefi-manager_0.24.11.tar.xz
+ 8438badbec9a9d3afbb73a9c1eb556f60da9f0866525635d61bc8a2103e3c30c 10786 uefi-manager_0.24.11_amd64.buildinfo
+ 316d07436c34955f21961a966acd81d15504447272ed8f263bc5a66dc09d9627 56980 uefi-manager_0.24.11_amd64.deb
+Files:
+ 657d4689958466233da175d19bc6e8fe 1132 admin optional uefi-manager_0.24.11.dsc
+ 4829147522df07c36ce826e1d2d4df26 34888 admin optional uefi-manager_0.24.11.tar.xz
+ 4aea57c3e618417b226d219185eca64d 10786 admin optional uefi-manager_0.24.11_amd64.buildinfo
+ 7d1d03bc17d73761de1d9ad4f3241c3a 56980 admin optional uefi-manager_0.24.11_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc98dMTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumP78B/95MPwcyzZSFOzlh8RnNCloEuMjZ7WZ
+anc7n1EueL26NZgT0dXYQw1+4xMxsBAbnrXQlsPLm29E783ePrXmCojvf8P3TOVT
++xmpTQCOjKyimHYGOpRispwpKIRMM1WnsEfFF/zex6aggQYe39OpD4W3GZfW4MfH
+IWpBiWZ9SdiMR37xvmryXsVtiVlCN79N8k4+VOHmUPWlUTHGGSIJCE8ISe6J5Oi1
+aUkE8GHkC76wQj9+guvqgTk7aWXdogh2gzdLh9FgwBrfl9584ZBYs95IlrsxU2rf
+o2ypQ0TNNjPaMhk5n3VnvRZgSb9ZKU03Nuk8UZDLu12SbMVX5X7CG+ir
+=sH8w
+-----END PGP SIGNATURE-----

@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sun, 17 Nov 2024 20:47:33 -0500
+Source: uefi-manager
+Architecture: source
+Version: 0.24.11
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ uefi-manager (0.24.11) UNRELEASED; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 1dffd3a5c2adbdd5f7358e99bf0bbebad7750758 1132 uefi-manager_0.24.11.dsc
+ bc6612694eb74de770538d3ea1236e16901b5210 34888 uefi-manager_0.24.11.tar.xz
+ ec682a5b40662f40d026b04090a72b703863c04d 10786 uefi-manager_0.24.11_amd64.buildinfo
+Checksums-Sha256:
+ ba0a658d7407bd9029c225fe6560ea62f039e2c679f53c6155873cd6f6fbb1be 1132 uefi-manager_0.24.11.dsc
+ 2aaf05dc5f27bdc2623c61eca2d9123861ed663c74645d82dd8d16b9ff5717c5 34888 uefi-manager_0.24.11.tar.xz
+ 8438badbec9a9d3afbb73a9c1eb556f60da9f0866525635d61bc8a2103e3c30c 10786 uefi-manager_0.24.11_amd64.buildinfo
+Files:
+ 657d4689958466233da175d19bc6e8fe 1132 admin optional uefi-manager_0.24.11.dsc
+ 4829147522df07c36ce826e1d2d4df26 34888 admin optional uefi-manager_0.24.11.tar.xz
+ 4aea57c3e618417b226d219185eca64d 10786 admin optional uefi-manager_0.24.11_amd64.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmc98dMTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumG14CADFZnF6QlmO82uWtPpyoYduMM7AoRsQ
+KR0lTrTrBjGs2FmNWqSm4RuFfzlrhlCew2vsm9EWOlL4gVoqF30yrLR5q6OxkRRb
+iQCN0PnClquibc6/cv9A/qkgHsoEekkenedw/1tQIo9qhwaelVheff2IOhWXkZ39
+lrnzn+J8G8H497p5nMVvuL9LglIMVw4W3YbDCbSm6Rb5IBP+zaXnTurwEhY4cU1L
+9YDvRIZJ7JegKjoDigXFDnq9ZFOrgMBNGk2ITRlY8d4U9YmK367HH/3oOeSV/UwQ
+qjU2OfbMhBoUi7gfqWLCTuzSlZGyvR9bLUOO4Pj7tQSFlYEY8Mv9zM1d
+=WCri
+-----END PGP SIGNATURE-----
