@@ -96,6 +96,7 @@ private:
     static void toggleUefiActive(QListWidget *listEntries);
     void addDevToList();
     void addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi);
+    void clearEntryWidget();
     void filterDrivePartitions();
     void promptFrugalStubInstall();
     void readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext, QLabel *textBootCurrent,

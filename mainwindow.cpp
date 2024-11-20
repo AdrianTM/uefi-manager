@@ -120,6 +120,19 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     emit listEntries->itemSelectionChanged();
 }
 
+// Clear existing widgets and layout from tabManageUefi
+void MainWindow::clearEntryWidget()
+{
+    if (ui->tabManageUefi->layout() != nullptr) {
+        QLayoutItem *child;
+        while ((child = ui->tabManageUefi->layout()->takeAt(0))) {
+            delete child->widget();
+            delete child;
+        }
+    }
+    delete ui->tabManageUefi->layout();
+}
+
 void MainWindow::centerWindow()
 {
     const auto screenGeometry = QApplication::primaryScreen()->geometry();
@@ -198,6 +211,9 @@ void MainWindow::tabWidget_currentChanged()
     const bool isFrugalTab = ui->tabWidget->currentIndex() == Tab::Frugal;
     ui->pushNext->setVisible(isFrugalTab);
     ui->pushBack->setVisible(isFrugalTab);
+    if (ui->tabWidget->currentIndex() == Tab::Entries) {
+        refreshEntries();
+    }
 }
 
 bool MainWindow::copyKernel()
@@ -362,6 +378,8 @@ void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, 
 
 void MainWindow::refreshEntries()
 {
+    clearEntryWidget();
+
     auto *layout = new QGridLayout(ui->tabManageUefi);
     auto *listEntries = new QListWidget(ui->tabManageUefi);
     auto *textIntro = new QLabel(tr("You can use the Up/Down buttons, or drag & drop items to change boot order.\n"
@@ -391,7 +409,16 @@ void MainWindow::refreshEntries()
     auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageUefi);
     listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QStringList bootorder;
+    disconnect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, nullptr);
+    disconnect(pushTimeout, &QPushButton::clicked, this, nullptr);
+    disconnect(pushAddEntry, &QPushButton::clicked, this, nullptr);
+    disconnect(pushBootNext, &QPushButton::clicked, this, nullptr);
+    disconnect(pushRemove, &QPushButton::clicked, this, nullptr);
+    disconnect(pushActive, &QPushButton::clicked, ui->tabManageUefi, nullptr);
+    disconnect(pushUp, &QPushButton::clicked, ui->tabManageUefi, nullptr);
+    disconnect(pushDown, &QPushButton::clicked, ui->tabManageUefi, nullptr);
+    disconnect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi, nullptr);
+
     connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
         if (Cmd().procAsRoot("efibootmg", {"-N"})) {
             textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
@@ -427,6 +454,7 @@ void MainWindow::refreshEntries()
                 }
             });
 
+    QStringList bootorder;
     readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
     sortUefiBootOrder(bootorder, listEntries);
 
