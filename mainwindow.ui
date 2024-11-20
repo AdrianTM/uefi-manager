@@ -23,6 +23,9 @@
    </item>
    <item>
     <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
      <property name="sizeType">
       <enum>QSizePolicy::Fixed</enum>
      </property>
@@ -43,7 +46,7 @@
       <item>
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pageLocation">
          <layout class="QFormLayout" name="formLayout">
@@ -169,6 +172,9 @@
       </item>
       <item>
        <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
         <property name="sizeType">
          <enum>QSizePolicy::Fixed</enum>
         </property>
@@ -218,8 +224,7 @@
         <string>About...</string>
        </property>
        <property name="icon">
-        <iconset theme="help-about">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="help-about"/>
        </property>
        <property name="shortcut">
         <string>Alt+B</string>
@@ -244,8 +249,7 @@
         <string>Close</string>
        </property>
        <property name="icon">
-        <iconset theme="window-close">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="window-close"/>
        </property>
        <property name="shortcut">
         <string>Alt+N</string>
@@ -270,8 +274,7 @@
         <string>Help</string>
        </property>
        <property name="icon">
-        <iconset theme="help-contents">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="help-contents"/>
        </property>
        <property name="shortcut">
         <string>Alt+H</string>
@@ -280,6 +283,9 @@
      </item>
      <item row="0" column="5">
       <spacer name="horizontalSpacer2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
        <property name="sizeType">
         <enum>QSizePolicy::Fixed</enum>
        </property>
@@ -325,8 +331,7 @@
         <string>Next</string>
        </property>
        <property name="icon">
-        <iconset theme="go-next">
-         <normaloff>.</normaloff>.</iconset>
+        <iconset theme="go-next"/>
        </property>
        <property name="shortcut">
         <string/>
@@ -341,6 +346,9 @@
      </item>
      <item row="0" column="2">
       <spacer name="horizontalSpacer1">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
        <property name="sizeType">
         <enum>QSizePolicy::Fixed</enum>
        </property>

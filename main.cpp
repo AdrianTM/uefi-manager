@@ -23,10 +23,12 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QIcon>
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QMessageBox>
 #include <QTranslator>
 
 #include "common.h"
@@ -34,6 +36,8 @@
 #include "mainwindow.h"
 #include "version.h"
 #include <unistd.h>
+
+bool isUefi();
 
 int main(int argc, char *argv[])
 {
@@ -75,6 +79,13 @@ int main(int argc, char *argv[])
     parser.addOption({{"u", "update-frugal"}, QObject::tr("Perform UEFI Stub installation for frugal installation.")});
     parser.process(app);
 
+    if (!isUefi()) {
+        QMessageBox::critical(
+            nullptr, QObject::tr("UEFI Stub Installer"),
+            QObject::tr("This system doesn't seem to support UEFI, or was not booted in UEFI mode. Exiting."));
+        return EXIT_FAILURE;
+    }
+
     // Root guard
     QFile loginUidFile {"/proc/self/loginuid"};
     if (loginUidFile.open(QIODevice::ReadOnly)) {
@@ -94,4 +105,10 @@ int main(int argc, char *argv[])
     MainWindow w(parser);
     w.show();
     return QApplication::exec();
+}
+
+bool isUefi()
+{
+    QDir dir("/sys/firmware/efi/efivars");
+    return dir.exists() && !dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty();
 }

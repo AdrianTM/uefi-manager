@@ -42,6 +42,7 @@ MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
+
     if (arg_parser.isSet("frugal")) {
         qDebug() << "Frugal mode";
         promptFrugalStubInstall();
