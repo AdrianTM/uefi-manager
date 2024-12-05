@@ -21,6 +21,8 @@
 QT       += core gui widgets
 CONFIG   += c++17
 
+QMAKE_CXXFLAGS += -Wpedantic -pedantic -Werror
+
 TARGET = uefi-manager
 TEMPLATE = app
 
@@ -52,4 +54,3 @@ TRANSLATIONS += \
 
 RESOURCES += \
     images.qrc
-

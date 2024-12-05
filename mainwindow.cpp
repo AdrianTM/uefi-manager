@@ -617,7 +617,7 @@ void MainWindow::validateAndLoadOptions(const QString &frugalDir)
     if (!missingFiles.isEmpty()) {
         QMessageBox::critical(
             this, tr("UEFI Installer"),
-            tr("Are you sure this is the Frugal installation location?\nMissing mandatory files in directory: ")
+            tr("Are you sure this is the MX or antiX Frugal installation location?\nMissing mandatory files in directory: ")
                 + missingFiles.join(", "));
         ui->pushBack->click();
         return;
