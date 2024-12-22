@@ -35,7 +35,7 @@ class MainWindow;
 }
 
 struct Tab {
-    enum Values { Entries, Frugal };
+    enum Values { Entries, StubInstall, Frugal };
 };
 
 struct Page {
@@ -84,13 +84,18 @@ private:
         QString persistenceType;
     } options;
 
-    [[nodiscard]] QString getDistroName();
+    [[nodiscard]] QString getBootLocation();
+    [[nodiscard]] QString getDistroName(bool pretty = false, const QString &mountPoint = "/") const;
+    [[nodiscard]] QString getLuksUUID(const QString &part);
+    [[nodiscard]] QString getMountPoint(const QString &part);
     [[nodiscard]] QString mountPartition(QString part);
+    [[nodiscard]] QString openLuks(const QString &part);
     [[nodiscard]] QString selectESP();
     [[nodiscard]] QString selectFrugalDirectory(const QString &part);
     [[nodiscard]] bool checkSizeEsp();
     [[nodiscard]] bool copyKernel();
     [[nodiscard]] bool installEfiStub(const QString &esp);
+    [[nodiscard]] bool isLuks(const QString &part);
     [[nodiscard]] bool readGrubEntry();
     static void removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog);
     static void setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext);
@@ -99,13 +104,20 @@ private:
     static void toggleUefiActive(QListWidget *listEntries);
     void addDevToList();
     void addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi);
+    void checkDoneStub();
     void clearEntryWidget();
     void filterDrivePartitions();
+    void getGrubOptions(const QString &mountPoint = "/");
+    void guessPartition();
+    void listDevices();
+    void loadStubOption();
     void promptFrugalStubInstall();
     void readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext, QLabel *textBootCurrent,
                          QStringList *bootorder);
     void refreshEntries();
     void refreshFrugal();
+    void refreshStubInstall();
     void saveBootOrder(const QListWidget *list);
+    void selectKernel();
     void validateAndLoadOptions(const QString &frugalDir);
 };

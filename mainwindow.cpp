@@ -57,14 +57,17 @@ MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
+    setWindowTitle(QApplication::applicationDisplayName());
+
+    setup();
+    setConnections();
 
     if (arg_parser.isSet("frugal")) {
         qDebug() << "Frugal mode";
         promptFrugalStubInstall();
+        ui->tabWidget->setCurrentIndex(Tab::Frugal);
+        refreshFrugal();
     }
-    setup();
-    setConnections();
-    addDevToList();
 }
 
 MainWindow::~MainWindow()
@@ -108,9 +111,9 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         return;
     }
 
-    QString partitionName = cmd.getOut("df " + fileName + " --output=source | sed 1d");
-    QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName);
-    QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
+    QString partitionName = cmd.getOut("df " + fileName + " --output=source").split('\n').last().trimmed();
+    QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName).trimmed();
+    QString partition = partitionName.section(QRegularExpression("[0-9]+$"), -1);
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
@@ -134,6 +137,13 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     QStringList outList = out.split('\n', Qt::SkipEmptyParts);
     listEntries->insertItem(0, outList.constLast());
     emit listEntries->itemSelectionChanged();
+}
+
+void MainWindow::checkDoneStub()
+{
+    bool allDone = !ui->comboDriveStub->currentText().isEmpty() && !ui->comboPartitionStub->currentText().isEmpty()
+                   && !ui->comboKernel->currentText().isEmpty() && !ui->textEntryName->text().isEmpty();
+    ui->pushNext->setEnabled(allDone);
 }
 
 // Clear existing widgets and layout from tabManageUefi
@@ -167,10 +177,19 @@ void MainWindow::setup()
             centerWindow();
         }
     }
-    if (ui->tabWidget->currentIndex() == Tab::Frugal) {
-        refreshFrugal();
-    } else {
+
+    // Refresh appropriate tab content based on current tab
+    const auto currentTab = ui->tabWidget->currentIndex();
+    switch (currentTab) {
+    case Tab::Entries:
         refreshEntries();
+        break;
+    case Tab::Frugal:
+        refreshFrugal();
+        break;
+    case Tab::StubInstall:
+        refreshStubInstall();
+        break;
     }
 }
 
@@ -188,13 +207,20 @@ void MainWindow::setConnections()
 {
     connect(&cmd, &Cmd::done, this, &MainWindow::cmdDone);
     connect(&cmd, &Cmd::started, this, &MainWindow::cmdStart);
+
     connect(ui->comboDrive, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
+    connect(ui->comboDriveStub, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
     connect(ui->pushAbout, &QPushButton::clicked, this, &MainWindow::pushAbout_clicked);
     connect(ui->pushBack, &QPushButton::clicked, this, &MainWindow::pushBack_clicked);
     connect(ui->pushCancel, &QPushButton::pressed, this, &MainWindow::close);
     connect(ui->pushHelp, &QPushButton::clicked, this, &MainWindow::pushHelp_clicked);
     connect(ui->pushNext, &QPushButton::clicked, this, &MainWindow::pushNext_clicked);
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidget_currentChanged);
+
+    connect(ui->comboDriveStub, &QComboBox::currentTextChanged, this, &MainWindow::checkDoneStub);
+    connect(ui->comboKernel, &QComboBox::currentTextChanged, this, &MainWindow::checkDoneStub);
+    connect(ui->comboPartitionStub, &QComboBox::currentTextChanged, this, &MainWindow::checkDoneStub);
+    connect(ui->textEntryName, &QLineEdit::textChanged, this, &MainWindow::checkDoneStub);
 }
 
 void MainWindow::toggleUefiActive(QListWidget *listEntries)
@@ -226,31 +252,120 @@ void MainWindow::toggleUefiActive(QListWidget *listEntries)
 
 void MainWindow::tabWidget_currentChanged()
 {
-    const bool isFrugalTab = ui->tabWidget->currentIndex() == Tab::Frugal;
-    ui->pushNext->setVisible(isFrugalTab);
-    ui->pushBack->setVisible(isFrugalTab);
-    if (ui->tabWidget->currentIndex() == Tab::Entries) {
+    const int currentTab = ui->tabWidget->currentIndex();
+    ui->pushNext->setVisible(currentTab == Tab::Frugal || currentTab == Tab::StubInstall);
+    ui->pushBack->setVisible(currentTab == Tab::Frugal);
+
+    switch (currentTab) {
+    case Tab::Entries:
         refreshEntries();
-    } else if (ui->tabWidget->currentIndex() == Tab::Frugal) {
+        break;
+    case Tab::Frugal:
         refreshFrugal();
+        break;
+    case Tab::StubInstall:
+        refreshStubInstall();
+        break;
     }
+}
+
+QString MainWindow::getBootLocation()
+{
+    QString partition = ui->comboPartitionStub->currentText().section(' ', 0, 0);
+    QString mountPoint = getMountPoint(partition);
+    if (mountPoint.isEmpty()) {
+        mountPoint = mountPartition(partition);
+    }
+    if (mountPoint.isEmpty()) {
+        qWarning() << "Failed to mount partition" << partition;
+        return {};
+    }
+
+    // Check /etc/fstab for separate /boot partition
+    QFile fstab(mountPoint + "/etc/fstab");
+    if (!fstab.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open" << fstab.fileName();
+        return mountPoint;
+    }
+
+    QString bootPartition;
+    QTextStream in(&fstab);
+    QString line;
+    while (in.readLineInto(&line)) {
+        line = line.trimmed();
+        if (line.isEmpty() || line.startsWith('#')) {
+            continue;
+        }
+        QStringList fields = line.split(QRegularExpression("\\s+"));
+        if (fields.size() >= 2 && fields.at(1) == "/boot") {
+            bootPartition = fields.at(0);
+            break;
+        }
+    }
+    fstab.close();
+
+    if (bootPartition.isEmpty()) {
+        return mountPoint;
+    }
+
+    // If UUID is used, convert to device name
+    if (bootPartition.startsWith("UUID=")) {
+        QString uuid = bootPartition.mid(5);
+        bootPartition = "/dev/disk/by-uuid/" + uuid;
+    }
+
+    // Mount the boot partition
+    QString bootMountPoint = mountPartition(bootPartition);
+    if (bootMountPoint.isEmpty()) {
+        qWarning() << "Failed to mount boot partition" << bootPartition;
+        return mountPoint;
+    }
+
+    return bootMountPoint;
 }
 
 bool MainWindow::copyKernel()
 {
     if (espMountPoint.isEmpty()) {
+        qWarning() << "ESP mount point is empty.";
         return false;
     }
-    const QString targetPath = espMountPoint + "/EFI/" + distro + "/frugal/";
-    if (!QFile::exists(targetPath) && !cmd.procAsRoot("mkdir", {"-p", targetPath})) {
-        return false;
-    }
-    const QStringList filesToCopy = {frugalDir + "/vmlinuz", frugalDir + "/initrd.gz"};
-    for (const QString &file : filesToCopy) {
-        if (!cmd.procAsRoot("cp", {file, targetPath})) {
+
+    const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
+
+    const QString subDir = isFrugal ? "/frugal" : "/stub";
+    const QString targetPath = espMountPoint + "/EFI/" + distro + subDir;
+
+    // Create target directory if it doesn't exist
+    if (!QDir().exists(targetPath)) {
+        if (!cmd.procAsRoot("mkdir", {"-p", targetPath})) {
+            qWarning() << "Failed to create directory:" << targetPath;
             return false;
         }
     }
+
+    // Copy kernel and initrd files
+    const QString sourceDir = isFrugal ? frugalDir : getBootLocation();
+    const QString kernelVersion = ui->comboKernel->currentText();
+    const QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
+    const QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
+    const QStringList filesToCopy = {vmlinuz, initrd};
+
+    const QStringList targetFiles = {"/vmlinuz", "/initrd.img"};
+    for (int i = 0; i < filesToCopy.size(); ++i) {
+        const QString &file = filesToCopy.at(i);
+        if (!QFile::exists(file)) {
+            qWarning() << "Source file does not exist:" << file;
+            return false;
+        }
+        const QString targetFile = targetPath + targetFiles.at(i);
+        if (!cmd.procAsRoot("cp", {file, targetFile})) {
+            qWarning() << "Failed to copy file:" << file << "to" << targetFile;
+            return false;
+        }
+    }
+
+    qInfo() << "Kernel and initrd files copied successfully to" << targetPath;
     return true;
 }
 
@@ -274,18 +389,48 @@ bool MainWindow::installEfiStub(const QString &esp)
         return false;
     }
 
+    const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
+    const QString efiDir = isFrugal ? "frugal" : "stub";
+    const QString entryName = isFrugal ? ui->textUefiEntryFrugal->text() : ui->textEntryName->text();
+
     QStringList args;
     args << "--disk" << disk << "--part" << part << "--create"
-         << "--label" << '"' + ui->textUefiEntry->text() + '"' << "--loader"
-         << QString("\"\\EFI\\%1\\frugal\\vmlinuz\"").arg(distro) << "--unicode"
-         << QString("'bdir=%1 buuid=%2 %3 %4 initrd=/EFI/%5/frugal/initrd.gz'")
-                .arg(options.bdir, options.uuid, options.stringOptions, ui->comboFrugalMode->currentText(), distro);
+         << "--label" << '"' + entryName + '"' << "--loader"
+         << QString("\"\\EFI\\%1\\%2\\vmlinuz\"").arg(distro, efiDir) << "--unicode";
 
-    if (!cmd.procAsRoot("efibootmgr", args)) {
-        return false;
+    const QString initrd = QString("initrd=\\EFI\\%1\\%2\\initrd.img").arg(distro, efiDir);
+    QString bootOptions;
+    if (isFrugal) {
+        bootOptions
+            = QString("'bdir=%1 buuid=%2 %3 %4 %5'")
+                  .arg(options.bdir, options.uuid, options.stringOptions, ui->comboFrugalMode->currentText(), initrd);
+    } else {
+        // Get drive and partition info
+        QString rootDev = "/dev/" + ui->comboPartitionStub->currentText().section(' ', 0, 0);
+        QString rootLabel = cmd.getOutAsRoot("blkid -s LABEL -o value " + rootDev).trimmed();
+        QString root = !rootLabel.isEmpty() ? "LABEL=\"" + rootLabel + '"'
+                                            : "UUID=" + cmd.getOutAsRoot("blkid -s UUID -o value " + rootDev).trimmed();
+
+        if (isLuks(root)) {
+            // ASSUMPTION: for MX we use "/dev/mapper/root.fsm"
+            rootLabel = cmd.getOutAsRoot("blkid -s LABEL -o value /dev/mapper/root.fsm").trimmed();
+            root = !rootLabel.isEmpty()
+                       ? "LABEL=\"" + rootLabel + '"'
+                       : "UUID=" + cmd.getOutAsRoot("blkid -s UUID -o value /dev/mapper/root.fsm").trimmed();
+            root += QString(" rd.luks.uuid=%1=root.fsm").arg(getLuksUUID(rootDev));
+        }
+        bootOptions = QString("'root=%1 %2 %3'").arg(root, options.stringOptions, initrd);
     }
 
+    if (!cmd.procAsRoot("efibootmgr", args << bootOptions)) {
+        return false;
+    }
     return true;
+}
+
+bool MainWindow::isLuks(const QString &part)
+{
+    return cmd.procAsRoot("cryptsetup", {"isLuks", part});
 }
 
 QString MainWindow::mountPartition(QString part)
@@ -294,7 +439,14 @@ QString MainWindow::mountPartition(QString part)
         part = part.mid(5);
     }
 
-    QString mountDir = cmd.getOut("findmnt -nf --source /dev/" + part).section(" ", 0, 0);
+    if (isLuks("/dev/" + part)) {
+        if (cmd.run("lsblk -o NAME,MOUNTPOINT | grep -w " + part)) {
+            return cmd.getOut("lsblk -o NAME,MOUNTPOINT | grep -A1 -w " + part + "| awk '{print $2}'").trimmed();
+        }
+        return openLuks("/dev/" + part);
+    }
+
+    QString mountDir = cmd.getOut("findmnt -nf --source /dev/" + part.section(" ", 0, 0)).section(" ", 0, 0);
     if (!mountDir.isEmpty()) {
         return mountDir;
     }
@@ -302,14 +454,12 @@ QString MainWindow::mountPartition(QString part)
     mountDir = "/mnt/" + part;
     if (!QDir(mountDir).exists()) {
         if (!cmd.procAsRoot("mkdir", {mountDir})) {
-            refreshFrugal();
             return {};
         }
         newDirectories.append(mountDir);
     }
 
     if (!cmd.procAsRoot("mount", {"/dev/" + part, mountDir})) {
-        refreshFrugal();
         return {};
     }
     newMounts.append(mountDir);
@@ -319,26 +469,32 @@ QString MainWindow::mountPartition(QString part)
 // Add list of devices to comboLocation
 void MainWindow::addDevToList()
 {
-    QString cmd_str("lsblk -ln -o NAME,SIZE,LABEL,MODEL -d -e 2,11 -x NAME | grep -E '^x?[h,s,v].[a-z]|^mmcblk|^nvme'");
-    listDrive = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
-
-    cmd_str = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
-              "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p'";
-    listPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
-    ui->comboDrive->clear();
-    ui->comboDrive->addItems(listDrive);
-    filterDrivePartitions();
+    listDevices();
+    auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
+    comboDrive->blockSignals(true);
+    comboDrive->clear();
+    comboDrive->blockSignals(false);
+    comboDrive->addItems(listDrive);
 }
 
 bool MainWindow::checkSizeEsp()
 {
-    QString vmlinuzPath = frugalDir + "/vmlinuz";
-    QString initrdPath = frugalDir + "/initrd.gz";
-    qint64 vmlinuzSize = QFile(vmlinuzPath).size();
-    qint64 initrdSize = QFile(initrdPath).size();
-    qint64 totalSize = vmlinuzSize + initrdSize;
+    const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
+    const QString sourceDir = isFrugal ? frugalDir : getBootLocation();
+    qDebug() << "Source Dir:" << sourceDir;
+    const QString vmlinuz
+        = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + ui->comboKernel->currentText());
+    const QString initrd
+        = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + ui->comboKernel->currentText());
+    qDebug() << "VMLINUZ:" << vmlinuz;
+    qDebug() << "INITRD :" << initrd;
+    const qint64 vmlinuzSize = QFile(vmlinuz).size();
+    const qint64 initrdSize = QFile(initrd).size();
+    const qint64 totalSize = vmlinuzSize + initrdSize;
+    qDebug() << "Total needed:" << totalSize;
 
-    qint64 espFreeSpace = QStorageInfo(espMountPoint).bytesAvailable();
+    const qint64 espFreeSpace = QStorageInfo(espMountPoint).bytesAvailable();
+    qDebug() << "ESP Free    :" << espFreeSpace;
     if (totalSize > espFreeSpace) {
         return false;
     }
@@ -347,11 +503,34 @@ bool MainWindow::checkSizeEsp()
 
 void MainWindow::filterDrivePartitions()
 {
-    ui->comboPartition->clear();
-    QString drive = ui->comboDrive->currentText().section(' ', 0, 0);
+    auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
+    auto *comboPartition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboPartition : ui->comboPartitionStub;
+
+    comboPartition->blockSignals(true);
+    comboPartition->clear();
+    comboPartition->blockSignals(false);
+    QString drive = comboDrive->currentText().section(' ', 0, 0);
     if (!drive.isEmpty()) {
         QStringList drivePart = listPart.filter(QRegularExpression("^" + drive));
-        ui->comboPartition->addItems(drivePart);
+        comboPartition->blockSignals(true);
+        comboPartition->addItems(drivePart);
+        comboPartition->blockSignals(false);
+    }
+    guessPartition();
+}
+
+void MainWindow::selectKernel()
+{
+    QDir bootDir {getBootLocation()};
+    QStringList kernelFiles = bootDir.entryList({"vmlinuz-*"}, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
+    std::transform(kernelFiles.begin(), kernelFiles.end(), kernelFiles.begin(),
+                   [](const QString &file) { return file.mid(QStringLiteral("vmlinuz-").length()); });
+    ui->comboKernel->clear();
+    kernelFiles.sort();
+    ui->comboKernel->addItems(kernelFiles);
+    QString kernel = cmd.getOut("uname -r", true).trimmed();
+    if (ui->comboKernel->findText(kernel) != -1) {
+        ui->comboKernel->setCurrentText(kernel);
     }
 }
 
@@ -377,7 +556,6 @@ void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, 
     QRegularExpression bootEntryRegex(R"(^Boot[0-9A-F]{4}\*?\s+)");
 
     for (const auto &item : qAsConst(entries)) {
-        qDebug() << "ITEM" << item;
         if (bootEntryRegex.match(item).hasMatch()) {
             auto *listItem = new QListWidgetItem(item);
             if (!item.contains("*")) {
@@ -510,10 +688,26 @@ void MainWindow::refreshEntries()
 
 void MainWindow::refreshFrugal()
 {
-    ui->stackedWidget->setCurrentIndex(Page::Location);
+    addDevToList();
+    ui->stackedFrugal->setCurrentIndex(Page::Location);
     ui->pushCancel->setEnabled(true);
     ui->pushBack->setEnabled(false);
     ui->pushNext->setEnabled(true);
+    ui->pushNext->setText(tr("Next"));
+    ui->pushNext->setIcon(QIcon::fromTheme("go-next"));
+}
+
+void MainWindow::refreshStubInstall()
+{
+    addDevToList();
+    ui->pushCancel->setEnabled(true);
+    ui->pushNext->setText(tr("Install"));
+    ui->pushNext->setIcon(QIcon::fromTheme("run-install"));
+    ui->textEntryName->setText(getDistroName(true));
+    if (!ui->comboDriveStub->currentText().isEmpty() && !ui->comboPartitionStub->currentText().isEmpty()
+        && !ui->comboKernel->currentText().isEmpty() && !ui->textEntryName->text().isEmpty()) {
+        ui->pushNext->setEnabled(true);
+    }
 }
 
 bool MainWindow::readGrubEntry()
@@ -555,6 +749,46 @@ bool MainWindow::readGrubEntry()
     return true;
 }
 
+void MainWindow::loadStubOption()
+{
+    options.bdir.clear();
+    options.persistenceType.clear();
+    options.entryName = ui->textEntryName->text();
+    options.uuid.clear();
+    options.stringOptions = ui->textKernelOptions->text();
+}
+
+QString MainWindow::openLuks(const QString &partition)
+{
+    QString uuid;
+    if (!cmd.procAsRoot("cryptsetup", {"luksUUID", partition}, &uuid) || uuid.trimmed().isEmpty()) {
+        QMessageBox::critical(this, tr("Error"), tr("Could not retrieve UUID for %1").arg(partition));
+        return {};
+    }
+    const QString mountPoint = "luks-" + uuid.trimmed();
+
+    bool ok;
+    QByteArray pass = QInputDialog::getText(this, this->windowTitle(),
+                                            tr("Enter password to unlock %1 encrypted partition:").arg(partition),
+                                            QLineEdit::Password, QString(), &ok)
+                          .toUtf8();
+
+    if (!ok || pass.isEmpty()) {
+        QMessageBox::critical(this, tr("Error"), tr("Password entry cancelled or empty for %1").arg(partition));
+        return {};
+    }
+
+    // Try to open the LUKS container
+    if (!cmd.procAsRoot("cryptsetup", {"luksOpen", "--allow-discards", partition, mountPoint, "-"}, nullptr, &pass)) {
+        QMessageBox::critical(this, tr("Error"), tr("Could not open %1 LUKS container").arg(partition));
+        pass.fill(static_cast<char>(0xA5 & 0xFF));
+        return {};
+    }
+    pass.fill(static_cast<char>(0xA5 & 0xFF));
+
+    return mountPoint;
+}
+
 void MainWindow::sortUefiBootOrder(const QStringList &order, QListWidget *list)
 {
     if (order.isEmpty()) {
@@ -579,19 +813,21 @@ void MainWindow::sortUefiBootOrder(const QStringList &order, QListWidget *list)
     emit list->itemSelectionChanged();
 }
 
-QString MainWindow::getDistroName()
+QString MainWindow::getDistroName(bool pretty, const QString &mountPoint) const
 {
-    QFile file("/etc/initrd_release");
+    QFile file(QString("%1etc/initrd_release").arg(mountPoint));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return "MX"; // Default to MX
+        return pretty ? "MX Linux" : "MX";
     }
     QTextStream in(&file);
     QString line;
     QString distroName;
 
+    const QString searchTerm = pretty ? "PRETTY_NAME=" : "NAME=";
+
     while (!in.atEnd()) {
         line = in.readLine();
-        if (line.startsWith("NAME=")) {
+        if (line.startsWith(searchTerm)) {
             distroName = line.section('=', 1, 1).remove('"').trimmed();
             break;
         }
@@ -601,24 +837,136 @@ QString MainWindow::getDistroName()
     return distroName;
 }
 
+QString MainWindow::getLuksUUID(const QString &part)
+{
+    return cmd.getOutAsRoot("cryptsetup luksUUID " + part);
+}
+
+QString MainWindow::getMountPoint(const QString &partition)
+{
+    QString command;
+    if (partition.startsWith("/dev/")) {
+        command = QString("lsblk -no MOUNTPOINT %1").arg(partition);
+    } else {
+        command = QString("lsblk -no MOUNTPOINT /dev/%1").arg(partition);
+    }
+    QString mountPoint = cmd.getOut(command).trimmed();
+
+    return mountPoint;
+}
+
+void MainWindow::getGrubOptions(const QString &mountPoint)
+{
+    QFile grubFile(QString("%1etc/default/grub").arg(mountPoint));
+    if (!grubFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open grub file for reading.";
+        return;
+    }
+
+    const QString grubConfig = grubFile.readAll();
+    grubFile.close();
+
+    QRegularExpression regex("GRUB_CMDLINE_LINUX_DEFAULT=\"([^\"]*)\"");
+    QRegularExpressionMatch match = regex.match(grubConfig);
+
+    if (match.hasMatch()) {
+        QString bootOptions = match.captured(1);
+        if (!bootOptions.isEmpty()) {
+            ui->textKernelOptions->setText(bootOptions);
+        } else {
+            qWarning() << "Captured boot options are empty.";
+        }
+    } else {
+        qWarning() << "No match found for GRUB_CMDLINE_LINUX_DEFAULT.";
+    }
+}
+
+// Try to guess root partition by checking partition labels and types
+void MainWindow::guessPartition()
+{
+    const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
+    auto *comboPartition = isFrugal ? ui->comboPartition : ui->comboPartitionStub;
+
+    if (ui->tabWidget->currentIndex() == Tab::StubInstall) {
+        disconnect(ui->comboPartitionStub, nullptr, this, nullptr);
+        connect(ui->comboPartitionStub, &QComboBox::currentTextChanged, this, [this]() {
+            if (!ui->comboPartitionStub->currentText().isEmpty()) {
+                const QString mountPoint = mountPartition(ui->comboPartitionStub->currentText().section(' ', 0, 0));
+                if (mountPoint.isEmpty()) {
+                    return;
+                }
+                getGrubOptions(mountPoint);
+                selectKernel();
+            }
+        });
+    }
+
+    const int partitionCount = comboPartition->count();
+
+    // Known identifiers for Linux root partitions
+    const QString rootMXLabel = "rootMX";
+    const QStringList linuxPartTypes = {
+        "0x83",                                 // Linux native partition
+        "0fc63daf-8483-4772-8e79-3d69d8477de4", // Linux filesystem
+        "44479540-F297-41B2-9AF7-D131D5F0458A", // Linux root (x86)
+        "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709"  // Linux root (x86-64)
+    };
+
+    // Helper function to search partitions matching a command pattern
+    auto findPartition = [&](const QString &command) -> bool {
+        for (int index = 0; index < partitionCount; ++index) {
+            const QString part = comboPartition->itemText(index).section(' ', 0, 0);
+            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, true)) {
+                comboPartition->setCurrentIndex(index);
+                return true;
+            }
+        }
+        return false;
+    };
+
+    // Try to find partition with rootMX* label
+    if (findPartition(QString("lsblk -ln -o LABEL /dev/%1 | grep -q %2").arg("%1", rootMXLabel))) {
+        return;
+    }
+
+    // Fall back to checking for any Linux partition type
+    findPartition(QString("lsblk -ln -o PARTTYPE /dev/%1 | grep -qEi '%2'").arg("%1", linuxPartTypes.join('|')));
+}
+
+void MainWindow::listDevices()
+{
+    static bool firstRun {true};
+    if (firstRun) {
+        firstRun = false;
+        QString cmd_str(
+            "lsblk -ln -o NAME,SIZE,LABEL,MODEL -d -e 2,11 -x NAME | grep -E '^x?[h,s,v].[a-z]|^mmcblk|^nvme'");
+        listDrive = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+
+        cmd_str = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
+                  "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p'";
+        listPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+    }
+}
+
 void MainWindow::validateAndLoadOptions(const QString &frugalDir)
 {
-    QString cmd_str("ls -1 " + frugalDir + " | grep -E 'vmlinuz|grub\\.entry|linuxfs'");
-    QStringList listFiles = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
-    QStringList requiredFiles = {"vmlinuz", "linuxfs", "grub.entry"};
+    QDir dir(frugalDir);
+    const QStringList requiredFiles = {"vmlinuz", "linuxfs", "grub.entry"};
+    const QStringList existingFiles = dir.entryList(requiredFiles, QDir::Files);
 
     QStringList missingFiles;
-    for (const QString &requiredFile : requiredFiles) {
-        if (!listFiles.contains(requiredFile)) {
-            missingFiles.append(requiredFile);
+    missingFiles.reserve(requiredFiles.size());
+    for (const QString &file : requiredFiles) {
+        if (!existingFiles.contains(file)) {
+            missingFiles.append(file);
         }
     }
 
     if (!missingFiles.isEmpty()) {
-        QMessageBox::critical(
-            this, tr("UEFI Installer"),
-            tr("Are you sure this is the MX or antiX Frugal installation location?\nMissing mandatory files in directory: ")
-                + missingFiles.join(", "));
+        QMessageBox::critical(this, tr("UEFI Installer"),
+                              tr("Are you sure this is the MX or antiX Frugal installation location?\nMissing "
+                                 "mandatory files in directory: ")
+                                  + missingFiles.join(", "));
         ui->pushBack->click();
         return;
     }
@@ -634,17 +982,17 @@ void MainWindow::validateAndLoadOptions(const QString &frugalDir)
         ui->comboFrugalMode->setCurrentText(options.persistenceType);
     }
     if (!options.entryName.isEmpty()) {
-        ui->textUefiEntry->setText(options.entryName);
+        ui->textUefiEntryFrugal->setText(options.entryName);
     }
-    ui->textOptions->setText(options.stringOptions);
+    ui->textOptionsFrugal->setText(options.stringOptions);
     ui->pushNext->setEnabled(true);
     ui->pushNext->setText(tr("Install"));
-    ui->pushNext->setIcon(QIcon::fromTheme("install"));
+    ui->pushNext->setIcon(QIcon::fromTheme("run-install"));
 }
 
-QString MainWindow::selectFrugalDirectory(const QString &part)
+QString MainWindow::selectFrugalDirectory(const QString &partition)
 {
-    return QFileDialog::getExistingDirectory(this, tr("Select Frugal Directory"), part, QFileDialog::ShowDirsOnly);
+    return QFileDialog::getExistingDirectory(this, tr("Select Frugal Directory"), partition, QFileDialog::ShowDirsOnly);
 }
 
 QString MainWindow::selectESP()
@@ -659,7 +1007,7 @@ QString MainWindow::selectESP()
     }
 
     if (espList.isEmpty()) {
-        QMessageBox::critical(this, tr("EFI Stub Installer"), tr("No EFI System Partitions found."));
+        QMessageBox::critical(this, QApplication::applicationDisplayName(), tr("No EFI System Partitions found."));
         return {};
     }
 
@@ -679,20 +1027,25 @@ QString MainWindow::selectESP()
     }
 
     if (!ok || selectedEsp.isEmpty()) {
-        QMessageBox::warning(this, tr("EFI Stub Installer"), tr("No EFI System Partition selected"));
+        QMessageBox::warning(this, QApplication::applicationDisplayName(), tr("No EFI System Partition selected"));
         return {};
     }
 
     espMountPoint = mountPartition(selectedEsp);
     if (espMountPoint.isEmpty()) {
-        QMessageBox::warning(this, tr("EFI Stub Installer"), tr("Could not mount selected EFI System Partition"));
+        QMessageBox::warning(this, QApplication::applicationDisplayName(),
+                             tr("Could not mount selected EFI System Partition"));
         return {};
     }
-    cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/" + distro + "/frugal/vmlinuz"});
-    cmd.procAsRoot("rm", {"-f", espMountPoint + "/EFI/" + distro + "/frugal/initrd.gz"});
+
+    const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
+    const QString subDir = isFrugal ? "/frugal" : "/stub";
+    const QString targetPath = espMountPoint + "/EFI/" + distro + subDir;
+    cmd.procAsRoot("rm", {"-f", targetPath + "/vmlinuz"});
+    cmd.procAsRoot("rm", {"-f", targetPath + "/initrd.{gz,img}"});
     if (!checkSizeEsp()) {
-        QMessageBox::critical(this, tr("EFI Stub Installer"),
-                              tr("Not enough space on the EFI System Partition to install the frugal installation."));
+        QMessageBox::critical(this, QApplication::applicationDisplayName(),
+                              tr("Not enough space on the EFI System Partition to copy the kernel and initrd files."));
         return {};
     }
     return selectedEsp;
@@ -701,38 +1054,69 @@ QString MainWindow::selectESP()
 void MainWindow::pushNext_clicked()
 {
     if (ui->tabWidget->currentIndex() == Tab::Frugal) {
-        if (ui->stackedWidget->currentIndex() == Page::Location) {
+        if (ui->stackedFrugal->currentIndex() == Page::Location) {
             ui->pushNext->setEnabled(false);
             if (!ui->comboDrive->currentText().isEmpty() && !ui->comboPartition->currentText().isEmpty()) {
                 QString part = mountPartition(ui->comboPartition->currentText().section(' ', 0, 0));
                 if (part.isEmpty()) {
                     QMessageBox::critical(
-                        this, tr("EFI Stub Installer"),
+                        this, QApplication::applicationDisplayName(),
                         tr("Could not mount partition. Please make sure you selected the correct partition."));
                     refreshFrugal();
                     return;
                 }
                 frugalDir = selectFrugalDirectory(part);
                 if (!frugalDir.isEmpty()) {
-                    ui->stackedWidget->setCurrentIndex(Page::Options);
+                    ui->stackedFrugal->setCurrentIndex(Page::Options);
                     ui->pushBack->setEnabled(true);
                 } else {
-                    QMessageBox::warning(this, tr("EFI Stub Installer"), tr("No directory selected"));
+                    QMessageBox::warning(this, QApplication::applicationDisplayName(), tr("No directory selected"));
                     refreshFrugal();
                     return;
                 }
                 validateAndLoadOptions(frugalDir);
             }
-        } else if (ui->stackedWidget->currentIndex() == Page::Options) {
+        } else if (ui->stackedFrugal->currentIndex() == Page::Options) {
             QString esp = selectESP();
             if (esp.isEmpty()) {
                 return;
             }
             if (installEfiStub(esp)) {
-                QMessageBox::information(this, tr("EFI Stub Installer"), tr("EFI stub installed successfully."));
+                QMessageBox::information(this, QApplication::applicationDisplayName(),
+                                         tr("EFI stub installed successfully."));
             } else {
-                QMessageBox::critical(this, tr("EFI Stub Installer"), tr("Failed to install EFI stub."));
+                QMessageBox::critical(this, QApplication::applicationDisplayName(), tr("Failed to install EFI stub."));
             }
+        }
+    } else if (ui->tabWidget->currentIndex() == Tab::StubInstall) {
+        if (ui->comboDriveStub->currentText().isEmpty() || ui->comboPartitionStub->currentText().isEmpty()
+            || ui->textEntryName->text().isEmpty()) {
+            QMessageBox::warning(this, QApplication::applicationDisplayName(), tr("All fields are required"));
+            return;
+        }
+        QString part = mountPartition(ui->comboPartitionStub->currentText().section(' ', 0, 0));
+        if (part.isEmpty()) {
+            QMessageBox::critical(
+                this, QApplication::applicationDisplayName(),
+                tr("Could not mount partition. Please make sure you selected the correct partition."));
+            refreshStubInstall();
+            return;
+        }
+
+        loadStubOption();
+
+        QString esp = selectESP();
+        if (esp.isEmpty()) {
+            QMessageBox::critical(this, QApplication::applicationDisplayName(), tr("Could not select ESP"));
+            refreshStubInstall();
+            return;
+        }
+        if (installEfiStub(esp)) {
+            QMessageBox::information(this, QApplication::applicationDisplayName(),
+                                     tr("EFI stub installed successfully."));
+        } else {
+            QMessageBox::critical(this, QApplication::applicationDisplayName(), tr("Failed to install EFI stub."));
+            refreshStubInstall();
         }
     }
 }
@@ -741,7 +1125,7 @@ void MainWindow::pushAbout_clicked()
 {
     this->hide();
     displayAboutMsgBox(
-        tr("About %1") + tr("UEFI Manager"),
+        tr("About %1").arg(QApplication::applicationDisplayName()),
         R"(<p align="center"><b><h2>UEFI Manager</h2></b></p><p align="center">)" + tr("Version: ")
             + QApplication::applicationVersion() + "</p><p align=\"center\"><h3>" + tr("Description goes here")
             + R"(</h3></p><p align="center"><a href="http://mxlinux.org">http://mxlinux.org</a><br /></p><p align="center">)"
@@ -759,8 +1143,8 @@ void MainWindow::pushHelp_clicked()
 
 void MainWindow::pushBack_clicked()
 {
-    if (ui->stackedWidget->currentIndex() == Page::Options) {
-        ui->stackedWidget->setCurrentIndex(Page::Location);
+    if (ui->stackedFrugal->currentIndex() == Page::Options) {
+        ui->stackedFrugal->setCurrentIndex(Page::Location);
         ui->pushBack->setEnabled(false);
         ui->pushNext->setText(tr("Next"));
         ui->pushNext->setIcon(QIcon::fromTheme("go-next"));
@@ -782,7 +1166,6 @@ void MainWindow::saveBootOrder(const QListWidget *list)
 
     QString order = orderList.join(',');
     if (!cmd.procAsRoot("efibootmgr", {"-o", order})) {
-        qDebug() << "Order:" << order;
         QMessageBox::critical(this, tr("Error"), tr("Something went wrong, could not save boot order."));
     }
 }

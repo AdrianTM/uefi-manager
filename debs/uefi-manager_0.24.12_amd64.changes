@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sun, 17 Nov 2024 20:47:33 -0500
+Source: uefi-manager
+Binary: uefi-manager
+Architecture: source amd64
+Version: 0.24.12
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ uefi-manager - uefi-nanager
+Changes:
+ uefi-manager (0.24.12) UNRELEASED; urgency=medium
+ .
+   * Initial release
+Checksums-Sha1:
+ 0e45efd7d82b64149fddbe6b366c30187344264e 1132 uefi-manager_0.24.12.dsc
+ fd29d773587436d4ec20c998f63b53e9b587e7fe 47072 uefi-manager_0.24.12.tar.xz
+ 2ec830a3e22eb21da40fe2762b1ead010a13c1dd 11090 uefi-manager_0.24.12_amd64.buildinfo
+ b394fe8a26eed1ee1c98e2c94c5a3759575a2f23 70448 uefi-manager_0.24.12_amd64.deb
+Checksums-Sha256:
+ 554cc9f68c7ad5837e7ad25d07e8d9bdc698da7bd0aac89a8ecfb05f7b87843d 1132 uefi-manager_0.24.12.dsc
+ 6ee0952e1b5c7328530f10c0a73ae64cb9da9b11272ca88d64b4fc45695bb7a9 47072 uefi-manager_0.24.12.tar.xz
+ ce2d60b3acc273b4f6cad76f977fcf065d0e4b3669fa4e70744630367b0292cb 11090 uefi-manager_0.24.12_amd64.buildinfo
+ 771888c73d31eec8859060e247c16d11f178e945dc5b8d92bb7d6164fe59e93c 70448 uefi-manager_0.24.12_amd64.deb
+Files:
+ 9edc22e563f7cd93408489a5aab5d05d 1132 admin optional uefi-manager_0.24.12.dsc
+ c368fb3f42ed7a4e85c854cfcc3bcae7 47072 admin optional uefi-manager_0.24.12.tar.xz
+ b5bfd80b133491ed9e682a3978aebd08 11090 admin optional uefi-manager_0.24.12_amd64.buildinfo
+ 5a8a765304a14c43f9048ce4849e72a8 70448 admin optional uefi-manager_0.24.12_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmdnkHQTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumI0eB/9kw3kSMoTocAB2gNnyfcCMpEuPlrfG
+NLmi3DzIsLok3+s95YIAUa6LMpmg1spoGXdsTLrObW9D1WlnD1ECnUCjEA8ILJ1E
+mS4v9qWWgSUJ1N+QLd1elH2gLd0rYTdekW5f6RpB/DhBpQeN+uhD1G+fqIEq0GPM
+58UjAlcX0ZXtfJd2gXvWlOH+0Qq/1hYVVlHjzXVKNU07KsPx95WkSYVFyQULUXY9
+ymuH81R/hs889YdIyVz05LNmnk+3k+BboDd/faXhXEFaHeaiTsEhHm2vXaID9Img
+zj3p5b1oeeDzVzEd9J2rFpttKP4R26PDCo32vvduCu1Hi6+KofYeLBBA
+=KXHb
+-----END PGP SIGNATURE-----

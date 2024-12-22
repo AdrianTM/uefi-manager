@@ -7,7 +7,7 @@
   <vendor>MX Linux</vendor>
   <vendor_url>https://mxlinux.org</vendor_url>
   <action id="org.mxlinux.pkexec.mx-uefimanager-helper">
-  <message gettext-domain="uefi-manager-l10n">UEFI Stub Installer</message>
+  <message gettext-domain="uefi-manager-l10n">UEFI Manager</message>
     <description>Run UEFI Manager</description>
     <icon_name>uefi-manager</icon_name>
     <defaults>

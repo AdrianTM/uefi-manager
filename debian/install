@@ -4,7 +4,6 @@ scripts/helper		usr/lib/uefi-manager
 scripts/uefimanager-lib	usr/lib/uefi-manager
 translations/*.qm	usr/share/uefi-manager/locale
 uefi-manager		usr/bin
-uefi-manager.conf	etc
 uefi-manager.desktop	usr/share/applications
 uefi-manager.png	usr/share/icons/hicolor/48x48/apps
 uefi-manager.png	usr/share/pixmaps

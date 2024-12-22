@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName("MX-Linux");
     QApplication::setWindowIcon(QIcon::fromTheme(QApplication::applicationName()));
     QApplication::setApplicationVersion(VERSION);
+    QApplication::setApplicationDisplayName(QObject::tr("UEFI Manager"));
 
     QTranslator qtTran;
     if (qtTran.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
@@ -79,7 +80,7 @@ int main(int argc, char *argv[])
 
     if (!isUefi()) {
         QMessageBox::critical(
-            nullptr, QObject::tr("EFI Stub Installer"),
+            nullptr, QObject::tr("UEFI Manager"),
             QObject::tr("This system doesn't seem to support UEFI, or was not booted in UEFI mode. Exiting."));
         return EXIT_FAILURE;
     }
