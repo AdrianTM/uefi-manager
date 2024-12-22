@@ -441,7 +441,7 @@ QString MainWindow::mountPartition(QString part)
 
     if (isLuks("/dev/" + part)) {
         if (cmd.run("lsblk -o NAME,MOUNTPOINT | grep -w " + part)) {
-            return cmd.getOut("lsblk -o NAME,MOUNTPOINT | grep -A1 -w " + part + "| awk '{print $2}'").trimmed();
+            return cmd.getOut("lsblk -o NAME,MOUNTPOINT | grep -A1 -w " + part + " | awk '{print $2}'").trimmed();
         }
         return openLuks("/dev/" + part);
     }
@@ -522,6 +522,9 @@ void MainWindow::filterDrivePartitions()
 void MainWindow::selectKernel()
 {
     QDir bootDir {getBootLocation()};
+    if (!bootDir.absolutePath().endsWith("/boot")) {
+        bootDir.setPath(bootDir.absolutePath() + "/boot");
+    }
     QStringList kernelFiles = bootDir.entryList({"vmlinuz-*"}, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     std::transform(kernelFiles.begin(), kernelFiles.end(), kernelFiles.begin(),
                    [](const QString &file) { return file.mid(QStringLiteral("vmlinuz-").length()); });
