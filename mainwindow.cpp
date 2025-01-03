@@ -345,7 +345,10 @@ bool MainWindow::copyKernel()
     }
 
     // Copy kernel and initrd files
-    const QString sourceDir = isFrugal ? frugalDir : getBootLocation();
+    const QString sourceDir = isFrugal ? frugalDir : [this]() {
+        QString dir = getBootLocation();
+        return dir.endsWith("/boot") ? dir : dir + "/boot";
+    }();
     const QString kernelVersion = ui->comboKernel->currentText();
     const QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
     const QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
