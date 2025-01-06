@@ -12,20 +12,20 @@ Build-Depends: debhelper (>= 10), qtbase5-dev, qttools5-dev-tools
 Package-List:
  uefi-manager deb admin optional arch=any
 Checksums-Sha1:
- f9b5026ba9c05bf0090386b6e907b7352d453600 47132 uefi-manager_0.24.12.tar.xz
+ a8fa7adce8d37be61b82197b89f500cea18fddf9 48092 uefi-manager_0.24.12.tar.xz
 Checksums-Sha256:
- a77cb9629063402de21a82b16910e299e9bc8f519dc2303f3c06b3e4d61d2a01 47132 uefi-manager_0.24.12.tar.xz
+ a12acb2d421b1ef9e9157e045e3d345382e61bb194017530c7da2bcfae4066ed 48092 uefi-manager_0.24.12.tar.xz
 Files:
- 7da3778974873814a830cf4946313c7d 47132 uefi-manager_0.24.12.tar.xz
+ 4306c32a85c3c1b7f3ad4116a82dbfbe 48092 uefi-manager_0.24.12.tar.xz
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmd3XHoTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHFvCACP58DlvMdcFXzSlR/YUCeo/v/lFNRL
-ta8rvLEGYAhryO3s26C51SF+HtRcc3Ja3lm74REpEUUOVfL7JP336BLbdHnfmDKr
-nXZ7qPLTknpynvwLf87ZAtqfvoQMrS3PpMWmSfC8PB6JQdkOqoYNEeQQgFTatIio
-t6h3MN4SAaNAPe2PMFfiVNhuzDtM7Yh0xuYM9vS/ez9yFp844Lp+d7lnDoaTUrTt
-3Vb6MMYRwz4fW+WmVo97TQ3sj0e/eHfVOW4iU3csY50XFE0Np9R2h16cK/PM4BfR
-sgETGq6fl9+Ys+QnW5raTemWUWk8gqeKAh4hhLoYmWzash1BvpkZhXL/
-=SilC
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmd77KoTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumAb+CADCxmkUi80g6MqONYUcnKKpGb4OJpsi
+ssNEt1FznF2JY/8+6tZz3J6JM6OBsdqiTRfXBxI7ui1B/mzCZ+znrzOySMmxNL4p
+sPVgoD/vNaibIXNW/krTqixJv2xM70tYF5hcnhXlBxTHNDs5P/Hw4yXntzYMlzeF
+BPCDS0KF8JtqYCapBQpls0949X+13wdhx9c4IXKXVJLtjuKgJEwj/AGusZF/lQTb
+BvUp6l12NDp9qc26hNquw/3B+y6Wi17zF4TnPestumpEwZ9ZwzxVPzYuCALMPgoo
+EgXtSIYRe3YIVGNBssxqJFvzeJgRkj4vRBb9iF3cM210x7Li77oNFm0t
+=+ADm
 -----END PGP SIGNATURE-----

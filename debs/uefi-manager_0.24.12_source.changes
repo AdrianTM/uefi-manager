@@ -15,26 +15,26 @@ Changes:
  .
    * Initial release
 Checksums-Sha1:
- f2f1c7c7e20c4817abeaebc026ef48660e01a3cd 1132 uefi-manager_0.24.12.dsc
- f9b5026ba9c05bf0090386b6e907b7352d453600 47132 uefi-manager_0.24.12.tar.xz
- 733ff8906ba85b21f926269e29ab83b0c8d0fd7b 11090 uefi-manager_0.24.12_amd64.buildinfo
+ 719520fb5949fed7078e5432d205ebe68152eb0c 1132 uefi-manager_0.24.12.dsc
+ a8fa7adce8d37be61b82197b89f500cea18fddf9 48092 uefi-manager_0.24.12.tar.xz
+ 05884e04055c34bee3d42f97d54444ca9ebadd8b 11090 uefi-manager_0.24.12_amd64.buildinfo
 Checksums-Sha256:
- 85eb6499029992206d94c1b535d023e07d0cc662634ec98d8a657a61950cf3d0 1132 uefi-manager_0.24.12.dsc
- a77cb9629063402de21a82b16910e299e9bc8f519dc2303f3c06b3e4d61d2a01 47132 uefi-manager_0.24.12.tar.xz
- 46a2b3f27548f5178fb4e8a91a13294639b2cde007e411f9b1261682c9805806 11090 uefi-manager_0.24.12_amd64.buildinfo
+ cdedcd9f6b83ddfaaf7c2fb1b9088797ac7a4b294146ecba5db544c67a02da5c 1132 uefi-manager_0.24.12.dsc
+ a12acb2d421b1ef9e9157e045e3d345382e61bb194017530c7da2bcfae4066ed 48092 uefi-manager_0.24.12.tar.xz
+ 533c6b3807dd1dd24dc615f5a718534b22c6f3e4c7f07e613b615217603a7b38 11090 uefi-manager_0.24.12_amd64.buildinfo
 Files:
- 35112aa7e667300d2d9cd1938d0267e8 1132 admin optional uefi-manager_0.24.12.dsc
- 7da3778974873814a830cf4946313c7d 47132 admin optional uefi-manager_0.24.12.tar.xz
- d729bd8ec6f36a8cb6d516ecf107ff95 11090 admin optional uefi-manager_0.24.12_amd64.buildinfo
+ 807ca2d8b6102f9d90ac10559829223b 1132 admin optional uefi-manager_0.24.12.dsc
+ 4306c32a85c3c1b7f3ad4116a82dbfbe 48092 admin optional uefi-manager_0.24.12.tar.xz
+ 427f238906ffc654f81dca6bdab050a1 11090 admin optional uefi-manager_0.24.12_amd64.buildinfo
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmd3XHoTHGFkcmlhbkBt
-eGxpbnV4Lm9yZwAKCRBwk4x4BnnumIUwCACTtARzFtWL2M+OMvpzv8iBiLhxyG5d
-Sk6ccjEj76ovVtT3Mjrmx+fuh61vL066RsASDR5pWuDcNyyFZx0b+VGj8qdfvHec
-nsZJX6YQxYmYU7TXLP/NKfxn7oo9bGJM1c81prMkNJxlO9ZsHhZV4JkZTMaAP9XH
-DZ7oqUaGn0/tzJHuv4k0oUsEJafWSPhf61y+hVWdobSdKv/ZWE4my2DArRxRv8Q1
-nfPtGfHAlD5AhQFy5MMgFZlLxXicEPd55cfIz8fTot0Z/vgN/6zV1AUtXeh8UTxK
-sn0ja4xpHgvXp8QDWwblmlomniBDo0f+fTOfviyHq6rPKudhF4OTTYku
-=Dsys
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmd77KsTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumJLSCADMRTcSoG5GgY4UvixHy3EkvDZwNkKs
+s3RIfjml9DA4tXZ32oBkhrwUwXpYyfPxMb4ZMW1tkppMrEt4R+f1Yz8CHixcV63p
+bxycWs17BnLSR9DKPqJQsEaA8x1FXD+9wGXkKHtWDk64B3xo+/1+FfALXIOYDqle
+BCcx7NJmF4MYdjvgcAhdiUP6cau4FTlKQWCqnsFoWg6FdUa+sBfO+a5z8B/HNRYB
+XmiO/LjbBJJSN1W8Z2SdRt6oaUAaDPHo1F0GaUwD2FFmN2w746jqfvOf4MrJJz2U
+dQfYvrcWt1WlVS49x9t0/3ymWpjUrY5vcSGTjwZ9RDRfRTnrRufyZn6J
+=kab/
 -----END PGP SIGNATURE-----
