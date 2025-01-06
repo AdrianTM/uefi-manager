@@ -7,3 +7,4 @@ uefi-manager		usr/bin
 uefi-manager.desktop	usr/share/applications
 uefi-manager.png	usr/share/icons/hicolor/48x48/apps
 uefi-manager.png	usr/share/pixmaps
+uefi-manager.svg	usr/share/icons/hicolor/scalable/apps
