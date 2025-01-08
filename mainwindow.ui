@@ -169,7 +169,7 @@
        <item>
         <widget class="QLabel" name="labelFrugal">
          <property name="text">
-          <string>This option is meant to great a stub installer for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</string>
+          <string>This option is meant to create a stub installer for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
