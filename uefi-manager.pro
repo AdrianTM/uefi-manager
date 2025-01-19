@@ -27,7 +27,7 @@ CONFIG(release, debug|release) {
     QMAKE_LFLAGS += -flto=auto
 }
 
-QMAKE_CXXFLAGS += -Wpedantic -pedantic -Werror
+QMAKE_CXXFLAGS += -Wpedantic -pedantic  -Werror=return-type -Werror=switch -Werror=uninitialized -Werror=return-local-addr -Werror
 
 TARGET = uefi-manager
 TEMPLATE = app
