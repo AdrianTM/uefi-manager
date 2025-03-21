@@ -28,10 +28,10 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QListWidget>
+#include <QRegularExpression>
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
-#include <QRegularExpression>
 
 #include "about.h"
 #include "cmd.h"
@@ -339,7 +339,6 @@ QString MainWindow::getBootLocation(const QString &mountPoint)
             qDebug().noquote() << "/boot partition :" << bootPartition;
             break;
         }
-
     }
     fstab.close();
 
@@ -385,7 +384,7 @@ bool MainWindow::copyKernel()
     // Copy kernel and initrd files
     const QString sourceDir = isFrugal ? frugalDir : [this]() {
         QString dir = getBootLocation();
-        //return dir.endsWith("/boot") ? dir : dir + "/boot";
+        // return dir.endsWith("/boot") ? dir : dir + "/boot";
         return dir;
     }();
     const QString kernelVersion = ui->comboKernel->currentText();
@@ -397,9 +396,8 @@ bool MainWindow::copyKernel()
     const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
     const QString intelUcode = QString("%1/intel-ucode.img").arg(sourceDir);
 
-    const QStringList filesToCopy = {vmlinuz, initrd, amdUcode, intelUcode };
+    const QStringList filesToCopy = {vmlinuz, initrd, amdUcode, intelUcode};
     const QStringList targetFiles = {"/vmlinuz", "/initrd.img", "/amducode.img", "/intucode.img"};
-
 
     for (int i = 0; i < filesToCopy.size(); ++i) {
         QString file = filesToCopy.at(i);
@@ -524,8 +522,9 @@ QString MainWindow::mountPartition(QString part)
     cmd.procAsRoot("blkid", {"--list-one", "--output", "device", "--match-token", part}, &part, nullptr, false);
 
     QString mountDir;
-    //use TARGET to get mountpoint with spaces
-    cmd.procAsRoot("findmnt", {"--noheadings", "--first-only", "--output", "TARGET", "--source", part}, &mountDir, nullptr, false);
+    // use TARGET to get mountpoint with spaces
+    cmd.procAsRoot("findmnt", {"--noheadings", "--first-only", "--output", "TARGET", "--source", part}, &mountDir,
+                   nullptr, false);
     if (!mountDir.isEmpty()) {
         return mountDir;
     }
@@ -559,7 +558,6 @@ QString MainWindow::mountPartition(QString part)
         }
     }
 
-
     if (!part.startsWith("/dev/")) {
         part = "/dev/" + part;
     }
@@ -592,7 +590,7 @@ void MainWindow::addDevToList()
     comboDrive->clear();
     comboDrive->addItems(listDrive);
 
-   QString currentDrive = comboDrive->currentText().section(' ', 0, 0);
+    QString currentDrive = comboDrive->currentText().section(' ', 0, 0);
 
     const int driveCount = comboDrive->count();
 
@@ -600,7 +598,7 @@ void MainWindow::addDevToList()
     if (!rootDrive.isEmpty() && !currentDrive.isEmpty() && rootDrive != currentDrive) {
         for (int index = 0; index < driveCount; ++index) {
             const QString drive = comboDrive->itemText(index).section(' ', 0, 0);
-            if ( drive ==  rootDrive ) {
+            if (drive == rootDrive) {
                 comboDrive->setCurrentIndex(index);
                 break;
             }
@@ -622,14 +620,14 @@ bool MainWindow::checkSizeEsp()
     const QString initrd
         = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + ui->comboKernel->currentText());
     const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
-    const QString intUcode  = QString("%1/intel-ucode.img").arg(sourceDir);
+    const QString intUcode = QString("%1/intel-ucode.img").arg(sourceDir);
 
     qDebug() << "VMLINUZ:" << vmlinuz;
     qDebug() << "INITRD :" << initrd;
-    if ( QFile(intUcode).exists()) {
+    if (QFile(intUcode).exists()) {
         qDebug() << "INTEL-UCODE :" << intUcode;
     }
-    if ( QFile(amdUcode).exists()) {
+    if (QFile(amdUcode).exists()) {
         qDebug() << "AMD-UCODE :" << amdUcode;
     }
     const qint64 vmlinuzSize = QFile(vmlinuz).size();
@@ -684,7 +682,7 @@ void MainWindow::selectKernel(const QString &rootDir)
 
     ui->comboKernel->addItems(sortedKernelFiles);
 
-    if (rootDir == "/" ) {
+    if (rootDir == "/") {
         QString kernel = cmd.getOut("uname -r", true).trimmed();
         if (ui->comboKernel->findText(kernel) != -1) {
             ui->comboKernel->setCurrentText(kernel);
@@ -693,15 +691,13 @@ void MainWindow::selectKernel(const QString &rootDir)
 
     getKernelOptions(bootDir.absolutePath(), rootDir, ui->comboKernel->currentText());
     QString distroName;
-    if (!QFile::exists(rootDir + "/etc/antix-version")
-        && !QFile::exists(rootDir + "/etc/mx-version")
-        && QFile::exists(rootDir + "/etc/os-release") )
-    {
-         distroName = getDistroName(true, rootDir, "os-release");
-         distro = getDistroName(false, rootDir, "os-release");
+    if (!QFile::exists(rootDir + "/etc/antix-version") && !QFile::exists(rootDir + "/etc/mx-version")
+        && QFile::exists(rootDir + "/etc/os-release")) {
+        distroName = getDistroName(true, rootDir, "os-release");
+        distro = getDistroName(false, rootDir, "os-release");
     } else {
-         distroName = getDistroName(true, rootDir, "lsb-release");
-         distro = getDistroName(false, rootDir, "initrd_release");
+        distroName = getDistroName(true, rootDir, "lsb-release");
+        distro = getDistroName(false, rootDir, "initrd_release");
     }
     distroName = distroName.trimmed();
 
@@ -1009,7 +1005,7 @@ QString MainWindow::getDistroName(bool pretty, const QString &mountPoint, const 
     } else if (releaseFile == "os-release") {
         searchTerm = pretty ? "PRETTY_NAME=" : "ID=";
     } else {
-      return pretty ? "MX Linux" : "MX";
+        return pretty ? "MX Linux" : "MX";
     }
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -1018,7 +1014,6 @@ QString MainWindow::getDistroName(bool pretty, const QString &mountPoint, const 
     QTextStream in(&file);
     QString line;
     QString distroName;
-
 
     while (!in.atEnd()) {
         line = in.readLine();
@@ -1039,8 +1034,8 @@ QString MainWindow::getLuksUUID(const QString &part)
 
 QString MainWindow::getMountPoint(const QString &partition)
 {
-    if ((partition == rootPartition) ||
-        (partition.startsWith("/dev/") && partition == QString("/dev/%1").arg(rootPartition))) {
+    if ((partition == rootPartition)
+        || (partition.startsWith("/dev/") && partition == QString("/dev/%1").arg(rootPartition))) {
         return "/";
     }
 
@@ -1061,7 +1056,6 @@ QString MainWindow::getMountPoint(const QString &partition)
 
     return mountPoint;
 }
-
 
 void MainWindow::getGrubOptions(const QString &mountPoint)
 {
@@ -1120,16 +1114,14 @@ void MainWindow::getKernelOptions(const QString &bootDir)
     }
 }
 
-
 void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir, const QString &kernel)
 {
     QString kernelDir;
     QString vmlinuz = kernel;
 
-    QString grubFile = bootDir.endsWith("/") ? bootDir + "grub/grub.cfg"
-                                             : bootDir + "/grub/grub.cfg";
+    QString grubFile = bootDir.endsWith("/") ? bootDir + "grub/grub.cfg" : bootDir + "/grub/grub.cfg";
 
-    if (bootDir == "/boot" || bootDir == "/boot/" ) {
+    if (bootDir == "/boot" || bootDir == "/boot/") {
         if (!Cmd().procAsRoot("mountpoint", {"-q", bootDir})) {
             kernelDir = "/boot";
         } else {
@@ -1145,16 +1137,15 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
         vmlinuz = "vmlinuz-" + kernel;
     }
 
-    QString rootDevicePath = cmd.getOut("df --output=source " + rootDir )
-                    .split('\n').last();
+    QString rootDevicePath = cmd.getOut("df --output=source " + rootDir).split('\n').last();
 
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
     cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr, false);
     if (!rootUUID.isEmpty()) {
         rootPatternList << "UUID=" + rootUUID;
-        //rootPatternList << rootUUID.toLower();
-        //rootPatternList << rootUUID.toUpper();
+        // rootPatternList << rootUUID.toLower();
+        // rootPatternList << rootUUID.toUpper();
     }
 
     if (rootDevicePath.startsWith("/dev/mapper")) {
@@ -1164,44 +1155,39 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
         QString rootParentPARTLABEL;
         QString rootDevMapper;
         QStringList rootParentPatternList;
-        rootParentDevice = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep "
-                                + rootDevicePath
-                                + "| cut -d ' ' -f1")
-                                .trimmed();
+        rootParentDevice
+            = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
 
         if (!rootParentDevice.isEmpty()) {
             rootParentPatternList << rootParentDevice;
-            //UUID
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID",
-                                    "/dev/" + rootParentDevice},
-                                    &rootParentUUID, nullptr, false);
+            // UUID
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", "/dev/" + rootParentDevice},
+                           &rootParentUUID, nullptr, false);
             if (!rootParentUUID.isEmpty()) {
                 rootParentPatternList << "UUID=" + rootParentUUID;
             }
-            //PARTUUID
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTUUID",
-                                    "/dev/" + rootParentDevice},
-                                    &rootParentPARTUUID, nullptr, false);
+            // PARTUUID
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTUUID", "/dev/" + rootParentDevice},
+                           &rootParentPARTUUID, nullptr, false);
             if (!rootParentPARTUUID.isEmpty()) {
                 rootParentPatternList << "PARTUUID=" + rootParentPARTUUID;
             }
-            //PARTLABEL
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTLABEL",
-                                    "/dev/" + rootParentDevice},
-                                    &rootParentPARTLABEL, nullptr, false);
+            // PARTLABEL
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTLABEL", "/dev/" + rootParentDevice},
+                           &rootParentPARTLABEL, nullptr, false);
             if (!rootParentPARTLABEL.isEmpty()) {
                 rootParentPARTLABEL.replace(" ", "\\040");
                 rootParentPatternList << "PARTLABEL=" + rootParentPARTLABEL;
             }
 
-            QString crypttab = rootDir.endsWith("/") ? rootDir + "etc/crypttab"
-                                                     : rootDir + "/etc/crypttab";
+            QString crypttab = rootDir.endsWith("/") ? rootDir + "etc/crypttab" : rootDir + "/etc/crypttab";
 
             if (QFile::exists(crypttab)) {
-                cmd.procAsRoot("grep", {"-m1", "-oP",
-                    QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'")
-                    .arg(rootParentPatternList.join("|")),
-                    crypttab},
+                cmd.procAsRoot(
+                    "grep",
+                    {"-m1", "-oP",
+                     QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'").arg(rootParentPatternList.join("|")),
+                     crypttab},
                     &rootDevMapper, nullptr, false);
 
                 if (!rootDevMapper.trimmed().isEmpty()) {
@@ -1215,10 +1201,8 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
         qWarning() << "GRUB file not found:" << grubFile;
         return;
     }
-    QString grep = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'").arg(
-                        kernelDir, vmlinuz,
-                        rootPatternList.join("|"),
-                        grubFile);
+    QString grep = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
+                       .arg(kernelDir, vmlinuz, rootPatternList.join("|"), grubFile);
 
     QString bootOptions = cmd.getOutAsRoot(grep).trimmed();
     const QString initSystemd = "init=/lib/systemd/systemd";
@@ -1237,7 +1221,8 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
     }
 }
 
-QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse) {
+QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse)
+{
     // Custom sort
     auto versionCompare = [reverse](const QString &a, const QString &b) {
         // Regexp to match version part
@@ -1250,8 +1235,12 @@ QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool 
         if (!matchA.hasMatch() && !matchB.hasMatch()) {
             return reverse ? a > b : a < b; // Both unmatched, sort lexicographically
         }
-        if (!matchA.hasMatch()) return reverse; // A unmatched, B matched
-        if (!matchB.hasMatch()) return !reverse; // B unmatched, A matched
+        if (!matchA.hasMatch()) {
+            return reverse; // A unmatched, B matched
+        }
+        if (!matchB.hasMatch()) {
+            return !reverse; // B unmatched, A matched
+        }
 
         // Extract version components
         int majorA = matchA.captured(1).toInt();
@@ -1263,9 +1252,15 @@ QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool 
         int patchB = matchB.captured(3).isEmpty() ? 0 : matchB.captured(3).toInt();
 
         // Compare major, minor and patch versions numerically
-        if (majorA != majorB) return reverse ? majorA > majorB : majorA < majorB;
-        if (minorA != minorB) return reverse ? minorA > minorB : minorA < minorB;
-        if (patchA != patchB) return reverse ? patchA > patchB : patchA < patchB;
+        if (majorA != majorB) {
+            return reverse ? majorA > majorB : majorA < majorB;
+        }
+        if (minorA != minorB) {
+            return reverse ? minorA > minorB : minorA < minorB;
+        }
+        if (patchA != patchB) {
+            return reverse ? patchA > patchB : patchA < patchB;
+        }
 
         // If major, minor, and patch are equal, compare suffix
         return reverse ? matchA.captured(4) > matchB.captured(4) : matchA.captured(4) < matchB.captured(4);
@@ -1276,7 +1271,6 @@ QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool 
     std::sort(sortedList.begin(), sortedList.end(), versionCompare);
     return sortedList;
 }
-
 
 // Try to guess root partition by checking partition labels and types
 void MainWindow::guessPartition()
@@ -1315,10 +1309,10 @@ void MainWindow::guessPartition()
     // Helper function to search partitions matching a command pattern
     auto findPartition = [&](const QString &command) -> bool {
         QString drive = comboDrive->currentText().section(' ', 0, 0);
-        if ( drive ==  rootDrive ) {
+        if (drive == rootDrive) {
             for (int index = 0; index < partitionCount; ++index) {
                 const QString part = comboPartition->itemText(index).section(' ', 0, 0);
-                if ( part ==  rootPartition ) {
+                if (part == rootPartition) {
                     comboPartition->setCurrentIndex(index);
                     return true;
                 }
@@ -1348,26 +1342,20 @@ void MainWindow::listDevices()
 {
     static bool firstRun {true};
 
-
     if (firstRun) {
         firstRun = false;
 
-        QString cmd_str(
-            "lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
-            "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
-            "| sort -V"
-            );
+        QString cmd_str("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
+                        "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
+                        "| sort -V");
         espList = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
 
-        rootDevicePath = cmd.getOut("df / --output=source")
-                        .split('\n').last();
+        rootDevicePath = cmd.getOut("df / --output=source").split('\n').last();
 
         if (rootDevicePath.startsWith("/dev/mapper")) {
 
-            rootPartition = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep "
-                                        + rootDevicePath
-                                        + "| cut -d ' ' -f1")
-                                        .trimmed();
+            rootPartition
+                = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
         } else {
             rootPartition = rootDevicePath.split('/').last().trimmed();
         }
@@ -1389,7 +1377,8 @@ void MainWindow::listDevices()
                   "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
                   "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
                   "| sort -V"
-                  "| sed -r '/^" + rootPartition + " /s|/[^[:space:]]+|/|'";
+                  "| sed -r '/^"
+                  + rootPartition + " /s|/[^[:space:]]+|/|'";
 
         listLinuxPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
 
@@ -1403,10 +1392,10 @@ void MainWindow::listDevices()
                   "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
                   "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
                   "| sort -V"
-                  "| sed -r '/^" + rootPartition + " /s|/[^[:space:]]+|/|'";
+                  "| sed -r '/^"
+                  + rootPartition + " /s|/[^[:space:]]+|/|'";
 
         listFrugalPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
-
 
         rootDrive = [&]() {
             // Regular expression to match the disk device name followed by digits
@@ -1605,7 +1594,8 @@ void MainWindow::pushAbout_clicked()
     displayAboutMsgBox(
         tr("About %1").arg(QApplication::applicationDisplayName()),
         R"(<p align="center"><b><h2>UEFI Manager</h2></b></p><p align="center">)" + tr("Version: ")
-            + QApplication::applicationVersion() + "</p><p align=\"center\"><h3>" + tr("Description goes here")
+            + QApplication::applicationVersion() + "</p><p align=\"center\"><h3>"
+            + tr("Tool for managing UEFI boot entries")
             + R"(</h3></p><p align="center"><a href="http://mxlinux.org">http://mxlinux.org</a><br /></p><p align="center">)"
             + tr("Copyright (c) MX Linux") + "<br /><br /></p>",
         "/usr/share/doc/uefi-manager/license.html", tr("%1 License").arg(this->windowTitle()));
@@ -1708,14 +1698,16 @@ bool MainWindow::isSystemd()
     // Check if the directory /run/systemd/system exists
     QDir systemdDir("/run/systemd/system");
     if (!systemdDir.exists()) {
-        qDebug() << "systemDir does not exist:" <<  "/run/systemd/system";
+        qDebug() << "systemDir does not exist:"
+                 << "/run/systemd/system";
         return false; // Directory does not exist, not pure systemd
     }
     return true;
 }
 
 // Helper function to check whether system under rootPath is a shim-systemd system
-bool MainWindow::isShimSystemd(const QString &rootPath) {
+bool MainWindow::isShimSystemd(const QString &rootPath)
+{
     QString root = rootPath; // Create a mutable copy of rootPath
 
     // Remove trailing slash if it exists
