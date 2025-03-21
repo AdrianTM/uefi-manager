@@ -68,10 +68,17 @@ private:
     QString distro = getDistroName();
     QString espMountPoint;
     QString frugalDir;
+    QString rootDrive;
+    QString rootPartition;
+    QString rootDevicePath;
     QSettings settings;
     QStringList listDrive;
+    QStringList espList;
     QStringList listPart;
+    QStringList listLinuxPart;
+    QStringList listFrugalPart;
     QStringList newDirectories;
+    QStringList newLuksDevices;
     QStringList newMounts;
 
     static const QMap<QString, QString> persistenceTypes;
@@ -85,7 +92,8 @@ private:
     } options;
 
     [[nodiscard]] QString getBootLocation();
-    [[nodiscard]] QString getDistroName(bool pretty = false, const QString &mountPoint = "/") const;
+    [[nodiscard]] QString getBootLocation(const QString &mountPoint);
+    [[nodiscard]] QString getDistroName(bool pretty = false, const QString &mountPoint = "/", const QString &releaseFile = "initrd_release") const;
     [[nodiscard]] QString getLuksUUID(const QString &part);
     [[nodiscard]] QString getMountPoint(const QString &part);
     [[nodiscard]] QString mountPartition(QString part);
@@ -108,6 +116,8 @@ private:
     void clearEntryWidget();
     void filterDrivePartitions();
     void getGrubOptions(const QString &mountPoint = "/");
+    void getKernelOptions(const QString &mountPoint);
+    void getKernelOptions(const QString &mountPoint, const QString &rootDir, const QString &kernel);
     void guessPartition();
     void listDevices();
     void loadStubOption();
@@ -118,6 +128,9 @@ private:
     void refreshFrugal();
     void refreshStubInstall();
     void saveBootOrder(const QListWidget *list);
-    void selectKernel();
+    void selectKernel(const QString &mountPoint);
     void validateAndLoadOptions(const QString &frugalDir);
+    QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse = true);
+    bool isSystemd();
+    bool isShimSystemd(const QString &rootPath = "/");
 };
