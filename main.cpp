@@ -36,6 +36,7 @@
 #include "mainwindow.h"
 #include "version.h"
 #include <unistd.h>
+#include "cmd.h"
 
 bool isUefi();
 
@@ -100,6 +101,13 @@ int main(int argc, char *argv[])
     }
     qDebug().noquote() << QApplication::applicationName() << QObject::tr("version:")
                        << QApplication::applicationVersion();
+
+    // Early authentication test to fill the credential cache
+    if (!Cmd().procAsRoot("true", {}, nullptr, nullptr, true)) {
+        qDebug().noquote() << "Error executing command as another user: Request dismissed or not authorized";
+        exit(EXIT_FAILURE);
+    }
+
     Log startLog;
     MainWindow w(parser);
     w.show();

@@ -1,3 +1,22 @@
+uefi-manager (25.03.01) mx; urgency=medium
+
+  * get boot partition from fstab entries like LABEL=, UUID=, PARTLABEL=,
+    PARTUUID= and /dev/disk/by... entries
+  * detect octal '\040'-space encoding in LABELs with spaces used in fstab and crypttab 
+  * adjust mountpoint detection for luks mounts and LABEL with spaces
+  * version sort listed kernel with highest version first
+  * list linux partitions with size >= 8GB and frugal partitions with size >= 1G
+  * list ESP partitions based on esp,boot flag and vfat filesystem
+  * set default entry for EFIstub to root drive and root partition
+  * get kernel boot parameter from grub.cfg
+  * use and clean temporary mountpoints below /mnt/uefi-manager
+  * authentication check at start to fill credential cache early
+  * add detected early microcode (amd-ucode.img and intel-ucode.img) to EFIstub loader
+  * use EFI subdir based on distro detection e.g. mx, antix, debian, ubuntu, manjaro...
+  * detect bootdir on luks encrypted and btrfs with subvolumes
+
+ -- fehlix <fehlix@mxlinux.org>  Fri, 21 Mar 2025 09:00:18 -0400
+
 uefi-manager (0.24.12) UNRELEASED; urgency=medium
 
   * Initial release
