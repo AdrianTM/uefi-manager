@@ -8,5 +8,5 @@ Standards-Version: 3.9.8
 Package: uefi-manager
 Architecture: any
 Depends: xdg-utils | mx-viewer, ${misc:Depends}, ${shlibs:Depends}
-Description: uefi-nanager
+Description: UEFI Manager
  Tool for managing UEFI entries
