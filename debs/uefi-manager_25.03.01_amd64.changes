@@ -1,0 +1,65 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 21 Mar 2025 09:00:18 -0400
+Source: uefi-manager
+Binary: uefi-manager
+Architecture: source amd64
+Version: 25.03.01
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: fehlix <fehlix@mxlinux.org>
+Description:
+ uefi-manager - uefi-nanager
+Changes:
+ uefi-manager (25.03.01) mx; urgency=medium
+ .
+   * get boot partition from fstab entries like LABEL=, UUID=, PARTLABEL=,
+     PARTUUID= and /dev/disk/by... entries
+   * detect octal '\040'-space encoding in LABELs with spaces used in fstab and crypttab
+   * adjust mountpoint detection for luks mounts and LABEL with spaces
+   * version sort listed kernel with highest version first
+   * list linux partitions with size >= 8GB and frugal partitions with size >= 1G
+   * list ESP partitions based on esp,boot flag and vfat filesystem
+   * set default entry for EFIstub to root drive and root partition
+   * get kernel boot parameter from grub.cfg
+   * use and clean temporary mountpoints below /mnt/uefi-manager
+   * authentication check at start to fill credential cache early
+   * add detected early microcode (amd-ucode.img and intel-ucode.img) to EFIstub loader
+   * use EFI subdir based on distro detection e.g. mx, antix, debian, ubuntu, manjaro...
+   * detect bootdir on luks encrypted and btrfs with subvolumes
+Checksums-Sha1:
+ 4be33509be6fcf187af371f1fa83bd9d0eba2125 1489 uefi-manager_25.03.01.dsc
+ c5fe795166e9304414b4cc9d1b1f73961d317f2f 170212 uefi-manager_25.03.01.tar.xz
+ 98c27b163e81f84f29535d54f25789a31d487a4e 11821 uefi-manager_25.03.01_amd64.buildinfo
+ ba329ae236443145e89160aac3565c9dacd69639 85024 uefi-manager_25.03.01_amd64.deb
+Checksums-Sha256:
+ 92db012c220ef7ab43335c36dc0a76731d7b376182534b8d6a320cfa6c94db6a 1489 uefi-manager_25.03.01.dsc
+ d9636ed224a5a3205acf6281ecf811d0ff726ab10e0ebd0b7732d1a05f5beb11 170212 uefi-manager_25.03.01.tar.xz
+ e0b121c96a05f0cce1ff24745af8958a3bbb04af987781970a6c25cc0afe246b 11821 uefi-manager_25.03.01_amd64.buildinfo
+ 9b011d4a0a1c0337538162bbae54119a39a56f1eab39c0cc508f356db4f6577f 85024 uefi-manager_25.03.01_amd64.deb
+Files:
+ 3cc273ea4c5e092d7740b7d736a8e0d3 1489 admin optional uefi-manager_25.03.01.dsc
+ cd13c5dda10c714a292a8d08213a1ad6 170212 admin optional uefi-manager_25.03.01.tar.xz
+ d6410c727696ac562c2e89a3de53ece1 11821 admin optional uefi-manager_25.03.01_amd64.buildinfo
+ e1c5ff867a4ec3cc825b5e4a9bdfb6a9 85024 admin optional uefi-manager_25.03.01_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJHBAEBCgAxFiEEgRnC8/wKXRM2S0xLL1ePG6ydm+kFAmfdapsTHGZlaGxpeEBt
+eGxpbnV4Lm9yZwAKCRAvV48brJ2b6fTQEACk8zC4KJVMdEvPS0uywz4RQbh6JL2l
+do3wFB8s+U6XwfWzjo2nRDkzfiWyn6oq1E69imgRNao9RKNFsXm7NMjFLIxIK1qd
+QENZH6WThzejpcJjMlZKhs6n27OX0lqEBEiA5Ty5SnyUzmV+E2LlZcleu9xsYFVI
+nNE/DfAuVk5I4bfvJL5N8+YqNokfFRkBTyvBenblLjt2Cgj750YCU56GwA+93xyc
+7ZyPG5IwAdBulV7WgOCfPMQ91vClKmGFNPzfwyYECk2nURn+YA4CseH7SEidOfZn
+mLx5RhdJLr2cmcK11xempwOBf1homhFDizq21Wjpe1VGBOFqKLWm7xWXkDBBDtPk
+RwMvlzaxrH6YssFLmZou0XL0hCKF4F28Rzozo6bauiM2G8aUYF43qdE/AeYPLbyz
+/N8ctsC6oGPidg1bRjR/buN9a7BVzSBGEa5xW/w1rqNL49mACrVZNzChkxNhcx7s
+jF44XFKvRlBRBUTUBwRBD8h+1hObcqYEaifsm03XWJUhrwp2QP3RkxEzAAqzoxZg
+g5MPMnHAuPV9hsf+VJBs6LReWLjwHqfPkmpuSCnpZaywTrfB+nLoETOeAVhjB8Wx
+RSOCDw66d67PNUU1M4g8pivvj+NqklnAdviCI4tWJs3Sp7RtJsB4YQ7XqfoXznfN
+oo4avUEPiaVyNQ==
+=k6Qx
+-----END PGP SIGNATURE-----
