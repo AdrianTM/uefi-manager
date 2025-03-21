@@ -134,7 +134,7 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
 
     QString partitionName = cmd.getOut("df " + fileName + " --output=source").split('\n').last().trimmed();
     QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName).trimmed();
-    QString partition = partitionName.section(QRegularExpression("[0-9]+$"), -1);
+    QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
