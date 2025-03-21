@@ -1,0 +1,41 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 21 Mar 2025 15:42:49 -0400
+Source: uefi-manager
+Architecture: source
+Version: 25.03.02
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ uefi-manager (25.03.02) mx; urgency=medium
+ .
+   * Fix getting partition number
+   * Fix typos
+Checksums-Sha1:
+ 103b940f551c20fe326d21f9033e817cd97b2bb5 1136 uefi-manager_25.03.02.dsc
+ b4494792738ad5f0471bd2f2937426d4ee290d26 53748 uefi-manager_25.03.02.tar.xz
+ 6a67f581b717af8bfc53965e2156c06ef2e07b27 11002 uefi-manager_25.03.02_amd64.buildinfo
+Checksums-Sha256:
+ cb1f7080047f03f92b05c8ae1ddc15082a3fe08fc994574a08cc632545b8a06d 1136 uefi-manager_25.03.02.dsc
+ 45f82d2adc6aee62dab9b9831749bc3411ad43c0b9512fcdb4ec12204d8bc85f 53748 uefi-manager_25.03.02.tar.xz
+ 2d652885a4a30207b3d6562b83813370885185776f45edc504a6f25339cfd7b8 11002 uefi-manager_25.03.02_amd64.buildinfo
+Files:
+ eccfa5b5f29c76f0073308b742080b1d 1136 admin optional uefi-manager_25.03.02.dsc
+ 030331585e0272dd189b51fa8204dc03 53748 admin optional uefi-manager_25.03.02.tar.xz
+ 29a40788e37cd1439215971eed05cb91 11002 admin optional uefi-manager_25.03.02_amd64.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmfdwZMTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumKjCB/9fzSBrGrhWiufQ3ykw+bHlumr1MTG6
+k/BLN3uQjT25zAcKU+7b8RTNHX2Mftl6y3vTE2Qgrwoj/fb0sUTmB7yKdwGAanXk
+V4Pl+Dbho3EN0ZATpIasbbfmKO+FAgrqTV48yCfoRA2/R/B1p/BUnxWH7Jri4sc2
+qgaQt7vCovDTVHYYJ/QL61O96u+ou0K65EMSerDI6nSwj2J3e6+G3qIXflDuIeVT
+45NeUApN1j7icjGGhodQCkeKkKW9/7XfsoGHnJ0AVwZZNBHpLVnOfQw1+BkUX7qQ
+p2+uRUn8hLHFnJmN4WfNKr+7M85NmD2mOylz8czhf5os74U6A8G1/28p
+=K97a
+-----END PGP SIGNATURE-----
