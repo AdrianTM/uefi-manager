@@ -795,7 +795,7 @@ void MainWindow::refreshEntries()
     disconnect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi, nullptr);
 
     connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
-        if (Cmd().procAsRoot("efibootmg", {"-N"})) {
+        if (Cmd().procAsRoot("efibootmgr", {"-N"})) {
             textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
         }
     });
