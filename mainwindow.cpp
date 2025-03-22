@@ -773,6 +773,7 @@ void MainWindow::refreshEntries()
     auto *pushBootNext = createButton(tr("Boot &next"), "go-next");
     auto *pushDown = createButton(tr("Move &down"), "arrow-down");
     auto *pushRemove = createButton(tr("&Remove entry"), "trash-empty");
+    auto *pushRename = createButton(tr("Re&name entry"), "edit-rename");
     auto *pushResetNext = createButton(tr("Re&set next"), "edit-undo");
     auto *pushTimeout = createButton(tr("Change &timeout"), "timer-symbolic");
     auto *pushUp = createButton(tr("Move &up"), "arrow-up");
@@ -784,15 +785,16 @@ void MainWindow::refreshEntries()
     auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageUefi);
     listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    disconnect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(pushTimeout, &QPushButton::clicked, this, nullptr);
+    disconnect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi, nullptr);
+    disconnect(pushActive, &QPushButton::clicked, ui->tabManageUefi, nullptr);
     disconnect(pushAddEntry, &QPushButton::clicked, this, nullptr);
     disconnect(pushBootNext, &QPushButton::clicked, this, nullptr);
-    disconnect(pushRemove, &QPushButton::clicked, this, nullptr);
-    disconnect(pushActive, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(pushUp, &QPushButton::clicked, ui->tabManageUefi, nullptr);
     disconnect(pushDown, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi, nullptr);
+    disconnect(pushRemove, &QPushButton::clicked, this, nullptr);
+    disconnect(pushRename, &QPushButton::clicked, this, nullptr);
+    disconnect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, nullptr);
+    disconnect(pushTimeout, &QPushButton::clicked, this, nullptr);
+    disconnect(pushUp, &QPushButton::clicked, ui->tabManageUefi, nullptr);
 
     connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
         if (Cmd().procAsRoot("efibootmgr", {"-N"})) {
@@ -807,6 +809,21 @@ void MainWindow::refreshEntries()
             [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
     connect(pushRemove, &QPushButton::clicked, this,
             [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
+    connect(pushRename, &QPushButton::clicked, this, [this, listEntries, textTimeout, textBootNext, textBootCurrent]() {
+        QString oldLabel = listEntries->currentItem()->text().section(' ', 1);
+        QString newLabel
+            = QInputDialog::getText(this, tr("Rename EFI Entry"), tr("Enter the new name for the selected entry:"),
+                                    QLineEdit::Normal, oldLabel);
+        QString oldBootNum = listEntries->currentItem()->text().section(' ', 0, 0).mid(4, 4);
+        if (!newLabel.isEmpty()) {
+            if (renameUefiEntry(oldLabel, newLabel, oldBootNum)) {
+                listEntries->clear();
+                QStringList bootorder;
+                readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
+                sortUefiBootOrder(bootorder, listEntries);
+            }
+        }
+    });
     connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
     connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
@@ -844,6 +861,7 @@ void MainWindow::refreshEntries()
     layout->addWidget(textIntro, row++, 0, 1, 2);
     layout->addWidget(listEntries, row, 0, rowspan, 1);
     layout->addWidget(pushRemove, row++, 1);
+    layout->addWidget(pushRename, row++, 1);
     layout->addWidget(pushAddEntry, row++, 1);
     layout->addWidget(pushUp, row++, 1);
     layout->addWidget(pushDown, row++, 1);
@@ -1744,4 +1762,130 @@ bool MainWindow::isShimSystemd(const QString &rootPath)
         }
     }
     return false;
+}
+
+bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabel, const QString &oldBootNum)
+{
+    // Validate input parameters
+    if (oldLabel.isEmpty() || newLabel.isEmpty()) {
+        QMessageBox::critical(this, tr("Error"), tr("Both old and new EFI labels must be specified"));
+        return false;
+    }
+
+    // Retrieve disk data
+    QString diskData = cmd.getOutAsRoot("lsblk --nodeps --noheadings --pairs | grep 'TYPE=\"disk\"'");
+    QStringList diskNames;
+    QRegularExpression diskRegex(R"delim(^NAME=\"([^\"]+)\".*$)delim");
+
+    for (const QString &line : diskData.split('\n', Qt::SkipEmptyParts)) {
+        QRegularExpressionMatch match = diskRegex.match(line);
+        if (match.hasMatch()) {
+            diskNames.append(match.captured(1));
+        }
+    }
+
+    // Map partition UUIDs to devices
+    QMap<QString, QString> partitions;
+    for (const QString &diskName : diskNames) {
+        QString partitionData = cmd.getOutAsRoot("sfdisk -d /dev/" + diskName + " 2>/dev/null | grep ': start='");
+        QRegularExpression partRegex(R"(^([^[:blank:]]+)[[:blank:]]:[[:blank:]].*[[:blank:]]uuid=([^,]+))");
+
+        for (const QString &line : partitionData.split('\n', Qt::SkipEmptyParts)) {
+            QRegularExpressionMatch match = partRegex.match(line);
+            if (match.hasMatch()) {
+                QString device = match.captured(1);
+                QString uuid = match.captured(2).toLower();
+                partitions[uuid] = device;
+            }
+        }
+    }
+
+    // Retrieve EFI data
+    QString efiData = cmd.getOutAsRoot("efibootmgr --verbose");
+    QString targetBootNum, targetPart, targetUuid, targetLoader;
+
+    QRegularExpression efiRegex(
+        R"(^Boot([[:xdigit:]]{4})\*?[[:blank:]]+(.+)[[:blank:]]+HD\(([[:digit:]]+),[^,]+,([^,]+)[^\)]+\)/File\(([^\)]+)\))");
+
+    for (const QString &line : efiData.split('\n', Qt::SkipEmptyParts)) {
+        QRegularExpressionMatch match = efiRegex.match(line);
+        if (match.hasMatch()) {
+            QString label = match.captured(2);
+            if (label == oldLabel || oldLabel == "*") {
+                if (targetBootNum.isEmpty()) {
+                    if (oldBootNum.isEmpty() || match.captured(1) == oldBootNum) {
+                        targetBootNum = match.captured(1);
+                        targetPart = match.captured(3);
+                        targetUuid = match.captured(4);
+                        targetLoader = match.captured(5);
+                    }
+                } else if (oldBootNum.isEmpty()) {
+                    QMessageBox::critical(this, tr("Error"),
+                                          tr("Multiple boot entries found for label '%1': %2 and %3;")
+                                              .arg(oldLabel, targetBootNum, match.captured(1)));
+                    return false;
+                }
+            }
+        }
+    }
+
+    // Ensure a matching label was found
+    if (targetBootNum.isEmpty()) {
+        QMessageBox::critical(this, tr("Error"), tr("No EFI data found for label '%1'.").arg(oldLabel));
+        return false;
+    }
+
+    // Find device for partition with matching UUID
+    QString deviceForUuid = partitions[targetUuid.toLower()];
+    if (deviceForUuid.isEmpty()) {
+        QMessageBox::critical(
+            this, tr("Error"),
+            tr("EFI label '%1' is linked to an unknown partition '%2'.")
+                .arg(oldLabel, targetUuid));
+        return false;
+    }
+
+    // Validate device/partition name format
+    QRegularExpression deviceRegex(
+        R"(^(/dev/sd[a-z]|nvme[[:digit:]]+n[[:digit:]]+|mmcblk[[:digit:]]+)p?([[:digit:]]+)$)");
+    QRegularExpressionMatch deviceMatch = deviceRegex.match(deviceForUuid);
+    if (!deviceMatch.hasMatch()) {
+        QMessageBox::critical(
+            this, tr("Error"),
+            tr("Unexpected device name format '%1' for partition related to the label.")
+                .arg(deviceForUuid));
+        return false;
+    }
+
+    QString deviceName = deviceMatch.captured(1);
+    QString devicePart = deviceMatch.captured(2);
+
+    // Confirm partition number matches
+    if (devicePart != targetPart) {
+        QMessageBox::critical(
+            this, tr("Error"),
+            tr("Device partition number [%1] differs from EFI entry partition number [%2].")
+                .arg(devicePart, targetPart));
+        return false;
+    }
+
+    // Execute efibootmgr commands
+    QString escapedLoader = targetLoader.replace("'", "'\\''");
+    QStringList deleteCmd = {"--bootnum", targetBootNum, "--delete-bootnum"};
+
+    QStringList createCmd
+        = {"--create", "--disk",     deviceName, "--part", targetPart, "--label", "\"" + newLabel + "\"",
+           "--loader", escapedLoader};
+
+    if (!cmd.procAsRoot("efibootmgr", deleteCmd)) {
+        QMessageBox::critical(this, tr("Error"), tr("Failed to delete old boot entry"));
+        return false;
+    }
+
+    if (!cmd.procAsRoot("efibootmgr", createCmd)) {
+        QMessageBox::critical(this, tr("Error"), tr("Failed to create new boot entry"));
+        return false;
+    }
+
+    return true;
 }

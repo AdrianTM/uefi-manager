@@ -93,7 +93,8 @@ private:
 
     [[nodiscard]] QString getBootLocation();
     [[nodiscard]] QString getBootLocation(const QString &mountPoint);
-    [[nodiscard]] QString getDistroName(bool pretty = false, const QString &mountPoint = "/", const QString &releaseFile = "initrd_release") const;
+    [[nodiscard]] QString getDistroName(bool pretty = false, const QString &mountPoint = "/",
+                                        const QString &releaseFile = "initrd_release") const;
     [[nodiscard]] QString getLuksUUID(const QString &part);
     [[nodiscard]] QString getMountPoint(const QString &part);
     [[nodiscard]] QString mountPartition(QString part);
@@ -105,6 +106,7 @@ private:
     [[nodiscard]] bool installEfiStub(const QString &esp);
     [[nodiscard]] bool isLuks(const QString &part);
     [[nodiscard]] bool readGrubEntry();
+    bool renameUefiEntry(const QString &oldLabel, const QString &newLabel, const QString &oldBootNum = QString());
     static void removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog);
     static void setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext);
     static void setUefiTimeout(QWidget *uefiDialog, QLabel *textTimeout);
