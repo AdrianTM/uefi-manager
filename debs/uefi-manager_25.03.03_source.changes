@@ -1,0 +1,40 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 21 Mar 2025 21:50:48 -0400
+Source: uefi-manager
+Architecture: source
+Version: 25.03.03
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Changes:
+ uefi-manager (25.03.03) mx; urgency=medium
+ .
+   * Fix reset boot next
+Checksums-Sha1:
+ 4dde5b2c99b4ce0019ee5b5b8d682793b52c79de 1136 uefi-manager_25.03.03.dsc
+ 1b67b2c72b8909c0a55719475a63abe7fe3364d4 53784 uefi-manager_25.03.03.tar.xz
+ a1db6219b9ce48716f61f851b2b05fe60a9896ec 11098 uefi-manager_25.03.03_amd64.buildinfo
+Checksums-Sha256:
+ 3cb94a36d3e81aab5127a45f42cf8820b8204ae0257fd53b03b2ef30b0db16e2 1136 uefi-manager_25.03.03.dsc
+ 102bcb6d7d2852ad4fff68e319feed9e75130ff517de236fa779af6609f5bc68 53784 uefi-manager_25.03.03.tar.xz
+ 4f01091eb4394b9d45c32a90bd0d73d6c1d5837cbe6ca836ad088ec17ff6e1a8 11098 uefi-manager_25.03.03_amd64.buildinfo
+Files:
+ 1f19202b4d008724702a756de0053119 1136 admin optional uefi-manager_25.03.03.dsc
+ 51d576a4778be770bde8fa7d8885ac90 53784 admin optional uefi-manager_25.03.03.tar.xz
+ 484e185b22f02ddd078de0db75736288 11098 admin optional uefi-manager_25.03.03_amd64.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmfeF90THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumHyGCAC9u3lSCd0yHACtJyR88uAdDRygWDC5
+mNFtIRHIiVTb91q6exLrBFFLWegdUjnncfJHs2ECipSbJxK4n9Rfs2ciRGT40MPK
+UzJvfsBn7m49f05m6eIVXuervz8oMCuK4OrtjnNbnHMXt7Ny6HJa7+65Jd2n4cv7
+avBROawPyUMARwkS/e0XgFt7Hka94Mkaupy3KMMjiRHAHiHjwJECe2JHdgI1fjH7
+ObxUlCHsLgvNBaS1SX52qRW6Lu9OFT8W0/npKlvH6eGhRMErfIkGoqxOA8FGhddR
+yK5om8q/YXXVZBWFPFHIFEenVfB9IoNPwRHnCdsQ2PbrWsKzJTMflpak
+=/nJX
+-----END PGP SIGNATURE-----

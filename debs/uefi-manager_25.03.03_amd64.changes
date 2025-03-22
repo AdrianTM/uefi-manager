@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Fri, 21 Mar 2025 21:50:48 -0400
+Source: uefi-manager
+Binary: uefi-manager
+Architecture: source amd64
+Version: 25.03.03
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ uefi-manager - UEFI Manager
+Changes:
+ uefi-manager (25.03.03) mx; urgency=medium
+ .
+   * Fix reset boot next
+Checksums-Sha1:
+ 4dde5b2c99b4ce0019ee5b5b8d682793b52c79de 1136 uefi-manager_25.03.03.dsc
+ 1b67b2c72b8909c0a55719475a63abe7fe3364d4 53784 uefi-manager_25.03.03.tar.xz
+ a1db6219b9ce48716f61f851b2b05fe60a9896ec 11098 uefi-manager_25.03.03_amd64.buildinfo
+ 612a304f6dc96717a42e54312eca5822fa919e08 84956 uefi-manager_25.03.03_amd64.deb
+Checksums-Sha256:
+ 3cb94a36d3e81aab5127a45f42cf8820b8204ae0257fd53b03b2ef30b0db16e2 1136 uefi-manager_25.03.03.dsc
+ 102bcb6d7d2852ad4fff68e319feed9e75130ff517de236fa779af6609f5bc68 53784 uefi-manager_25.03.03.tar.xz
+ 4f01091eb4394b9d45c32a90bd0d73d6c1d5837cbe6ca836ad088ec17ff6e1a8 11098 uefi-manager_25.03.03_amd64.buildinfo
+ 96ebbbde6dd087b65bf74e1dc1338b2e8425f2469b250d313c6b4f3b39f07141 84956 uefi-manager_25.03.03_amd64.deb
+Files:
+ 1f19202b4d008724702a756de0053119 1136 admin optional uefi-manager_25.03.03.dsc
+ 51d576a4778be770bde8fa7d8885ac90 53784 admin optional uefi-manager_25.03.03.tar.xz
+ 484e185b22f02ddd078de0db75736288 11098 admin optional uefi-manager_25.03.03_amd64.buildinfo
+ 739c6654e4768f4e9ce9d62b23566579 84956 admin optional uefi-manager_25.03.03_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmfeF90THGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumIeACACgjpq6lXYaUFeQFkpGKvh3YP70Ro3M
+qi72gGA52rA2wfr0UxGlhzucR2kwFvottMLJ8JQdfu3UbeJBM0DqHxSi6PuDZb1X
+1byYiV3BvJYSp95tWD63GH5XgahCiLVjMnHVhf/oNzdkekWtTv+n63jcjSHxx1aS
+u+wT9Bl7ih+cwobz3j038IYwk1oK/lWfyWElLb6cTC30lAWChITxxvymtdvFmtmQ
+kx8OSYoIrtR/ZOtkQCWGgnmxmMq/Vv5IXgOoYYjd3jp8QaS8nAqeGjSaTGl5cPEw
+Rl8j/ZH8i3I4whUjtpK3EYI+HSGdVWEfG8YlKI4gfqb83d+aWEz3dQ6I
+=tfI1
+-----END PGP SIGNATURE-----

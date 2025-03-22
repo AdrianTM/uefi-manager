@@ -1,3 +1,9 @@
+uefi-manager (25.03.03) mx; urgency=medium
+
+  * Fix reset boot next 
+
+ -- Adrian <adrian@mxlinux.org>  Fri, 21 Mar 2025 21:50:48 -0400
+
 uefi-manager (25.03.02) mx; urgency=medium
 
   * Fix getting partition number
