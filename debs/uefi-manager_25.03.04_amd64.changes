@@ -1,0 +1,46 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sat, 22 Mar 2025 19:36:44 -0400
+Source: uefi-manager
+Binary: uefi-manager
+Architecture: source amd64
+Version: 25.03.04
+Distribution: mx
+Urgency: medium
+Maintainer: Adrian <adrian@mxlinux.org>
+Changed-By: Adrian <adrian@mxlinux.org>
+Description:
+ uefi-manager - UEFI Manager
+Changes:
+ uefi-manager (25.03.04) mx; urgency=medium
+ .
+   * Add option to rename the UEFI entry
+Checksums-Sha1:
+ 4bee441ffd4209a59748dca643865e015a9e4662 1136 uefi-manager_25.03.04.dsc
+ 0161b51a578d0f092f4ea31a5b0c7251b6ed17f2 54964 uefi-manager_25.03.04.tar.xz
+ 8a345916cd52735cc3a073f677728004bd7fd09a 11098 uefi-manager_25.03.04_amd64.buildinfo
+ 5c3a8c55bb3c0eb2c9d67d7d952ebdede138aab7 89944 uefi-manager_25.03.04_amd64.deb
+Checksums-Sha256:
+ e18cfc621b676d96adedb10c9caf517b589a67ce57849898f0980d58ffa68e4e 1136 uefi-manager_25.03.04.dsc
+ 2b5cc485166ed36b8dc2f4eaae15adb6a2c6bb04386e512fe67d9fdb11a554a4 54964 uefi-manager_25.03.04.tar.xz
+ f5a4eae06e703ba502859421d56f743561754aa224294d107ea8bd166481827c 11098 uefi-manager_25.03.04_amd64.buildinfo
+ 92a04503b5d6fc267d66011d81bb8ae503cab9c070e71897139de0dda08e93c9 89944 uefi-manager_25.03.04_amd64.deb
+Files:
+ 254dda60fcdb5b9067451b263b94b4ef 1136 admin optional uefi-manager_25.03.04.dsc
+ 8303ebf2614ac730a840fd82acaaa753 54964 admin optional uefi-manager_25.03.04.tar.xz
+ 9e3ad5fc52ece3a8701dfc62dfcaae7e 11098 admin optional uefi-manager_25.03.04_amd64.buildinfo
+ 74fb0dbeda923ded3bf38ebf350b51c0 89944 admin optional uefi-manager_25.03.04_amd64.deb
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmffSfoTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumOtXB/4s7JuPw9TZuHsgQzDfwAGIOMJcAXyd
+vpqZxgtF6YdtotrYxic75F2QR3V8tzg9p5Wh0MRMA0eizIMswJjXR+yyNg+otZl6
+Uml3Op8FFTV3BGlf1IwbYCDjk1SyHflTcm7rSYLCwkLglQwO2NNKfuFS/bgMMGwR
++c+u4G3lVTTcQ+nAs8kXLqJ8Xhfcg6tM9zfXW7CFL7LOI9aVgh47aTAGWVlin5is
+nzv2hHBjjhYwmZ/jGJXD3ByvdGG1KOeRIvh+JxtjMv7I9aMxYltlzXu4EDRI9Rnn
+3E7pf4v709VZ1EMkQaHkWdDn1j4yUY6+cTYNOBtX4MsrE9ri+GZIr0W4
+=Hnnd
+-----END PGP SIGNATURE-----
