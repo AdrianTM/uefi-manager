@@ -18,20 +18,20 @@ Cmd::Cmd(QObject *parent)
     connect(this, &Cmd::errorAvailable, [this](const QString &out) { out_buffer += out; });
 }
 
-QString Cmd::getOut(const QString &cmd, bool quiet, bool elevate)
+QString Cmd::getOut(const QString &cmd, Quiet quiet, Elevate elevate)
 {
     QString output;
     run(cmd, &output, nullptr, quiet, elevate);
     return output;
 }
 
-QString Cmd::getOutAsRoot(const QString &cmd, bool quiet)
+QString Cmd::getOutAsRoot(const QString &cmd, Quiet quiet)
 {
-    return getOut(cmd, quiet, true);
+    return getOut(cmd, quiet, Elevate::Yes);
 }
 
-bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, const QByteArray *input, bool quiet,
-               bool elevate)
+bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, const QByteArray *input, Quiet quiet,
+               Elevate elevate)
 {
     out_buffer.clear();
     connect(this, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &Cmd::done);
@@ -39,12 +39,12 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
         qDebug() << "Process already running:" << this->program() << this->arguments();
         return false;
     }
-    if (!quiet) {
+    if (quiet == Quiet::No) {
         qDebug() << cmd << args;
     }
     QEventLoop loop;
     connect(this, &Cmd::done, &loop, &QEventLoop::quit);
-    if (elevate && getuid() != 0) {
+    if (elevate == Elevate::Yes && getuid() != 0) {
         QStringList cmdAndArgs = QStringList() << helper << cmd << args;
         start(asRoot, {cmdAndArgs});
     } else {
@@ -61,24 +61,21 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     return (exitStatus() == QProcess::NormalExit && exitCode() == 0);
 }
 
-bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *output, const QByteArray *input, bool quiet)
+bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *output, const QByteArray *input, Quiet quiet)
 {
-    return proc(cmd, args, output, input, quiet, true);
+    return proc(cmd, args, output, input, quiet, Elevate::Yes);
 }
 
-bool Cmd::run(const QString &cmd, QString *output, const QByteArray *input, bool quiet, bool elevate)
+bool Cmd::run(const QString &cmd, QString *output, const QByteArray *input, Quiet quiet, Elevate elevate)
 {
-    if (!quiet) {
-        qDebug().noquote() << cmd;
-    }
-    if (elevate && getuid() != 0) {
-        return proc(asRoot, {helper, cmd}, output, input, true);
+    if (elevate == Elevate::Yes && getuid() != 0) {
+        return proc(asRoot, {helper, cmd}, output, input, quiet);
     } else {
-        return proc("/bin/bash", {"-c", cmd}, output, input, true);
+        return proc("/bin/bash", {"-c", cmd}, output, input, quiet);
     }
 }
 
-bool Cmd::runAsRoot(const QString &cmd, QString *output, const QByteArray *input, bool quiet)
+bool Cmd::runAsRoot(const QString &cmd, QString *output, const QByteArray *input, Quiet quiet)
 {
-    return run(cmd, output, input, quiet, true);
+    return run(cmd, output, input, quiet, Elevate::Yes);
 }

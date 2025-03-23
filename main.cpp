@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
                        << QApplication::applicationVersion();
 
     // Early authentication test to fill the credential cache
-    if (!Cmd().procAsRoot("true", {}, nullptr, nullptr, true)) {
+    if (!Cmd().procAsRoot("true", {}, nullptr, nullptr, Quiet::Yes)) {
         qDebug().noquote() << "Error executing command as another user: Request dismissed or not authorized";
         exit(EXIT_FAILURE);
     }

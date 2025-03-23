@@ -515,16 +515,16 @@ QString MainWindow::mountPartition(QString part)
         if (!part.startsWith("/dev/")) {
             part = "/dev/" + part;
         }
-        cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", part}, &uuid, nullptr, false);
+        cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", part}, &uuid, nullptr);
         part = "UUID=" + uuid.trimmed();
     }
     // get /dev/devicename  from token UUID, LABEL=, PARTUUID=, PARTLABEL= and /dev/disk-by/...
-    cmd.procAsRoot("blkid", {"--list-one", "--output", "device", "--match-token", part}, &part, nullptr, false);
+    cmd.procAsRoot("blkid", {"--list-one", "--output", "device", "--match-token", part}, &part, nullptr);
 
     QString mountDir;
     // use TARGET to get mountpoint with spaces
     cmd.procAsRoot("findmnt", {"--noheadings", "--first-only", "--output", "TARGET", "--source", part}, &mountDir,
-                   nullptr, false);
+                   nullptr);
     if (!mountDir.isEmpty()) {
         return mountDir;
     }
@@ -683,7 +683,7 @@ void MainWindow::selectKernel(const QString &rootDir)
     ui->comboKernel->addItems(sortedKernelFiles);
 
     if (rootDir == "/") {
-        QString kernel = cmd.getOut("uname -r", true).trimmed();
+        QString kernel = cmd.getOut("uname -r", Quiet::Yes).trimmed();
         if (ui->comboKernel->findText(kernel) != -1) {
             ui->comboKernel->setCurrentText(kernel);
         }
@@ -1160,7 +1160,7 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
 
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
-    cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr, false);
+    cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr);
     if (!rootUUID.isEmpty()) {
         rootPatternList << "UUID=" + rootUUID;
         // rootPatternList << rootUUID.toLower();
@@ -1181,19 +1181,19 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
             rootParentPatternList << rootParentDevice;
             // UUID
             cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", "/dev/" + rootParentDevice},
-                           &rootParentUUID, nullptr, false);
+                           &rootParentUUID, nullptr);
             if (!rootParentUUID.isEmpty()) {
                 rootParentPatternList << "UUID=" + rootParentUUID;
             }
             // PARTUUID
             cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTUUID", "/dev/" + rootParentDevice},
-                           &rootParentPARTUUID, nullptr, false);
+                           &rootParentPARTUUID, nullptr);
             if (!rootParentPARTUUID.isEmpty()) {
                 rootParentPatternList << "PARTUUID=" + rootParentPARTUUID;
             }
             // PARTLABEL
             cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTLABEL", "/dev/" + rootParentDevice},
-                           &rootParentPARTLABEL, nullptr, false);
+                           &rootParentPARTLABEL, nullptr);
             if (!rootParentPARTLABEL.isEmpty()) {
                 rootParentPARTLABEL.replace(" ", "\\040");
                 rootParentPatternList << "PARTLABEL=" + rootParentPARTLABEL;
@@ -1207,7 +1207,7 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
                     {"-m1", "-oP",
                      QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'").arg(rootParentPatternList.join("|")),
                      crypttab},
-                    &rootDevMapper, nullptr, false);
+                    &rootDevMapper, nullptr);
 
                 if (!rootDevMapper.trimmed().isEmpty()) {
                     rootPatternList << "/dev/mapper/" + rootDevMapper.trimmed();
@@ -1340,7 +1340,7 @@ void MainWindow::guessPartition()
 
         for (int index = 0; index < partitionCount; ++index) {
             const QString part = comboPartition->itemText(index).section(' ', 0, 0);
-            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, true)) {
+            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, Quiet::Yes)) {
                 comboPartition->setCurrentIndex(index);
                 return true;
             }
