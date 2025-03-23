@@ -49,11 +49,18 @@ void displayDoc(const QString &url, const QString &title)
         if (getuid() != 0) {
             QProcess::startDetached("xdg-open", {url});
         } else {
-            QProcess proc;
-            proc.start("logname", {}, QIODevice::ReadOnly);
-            proc.waitForFinished();
-            QString user = QString::fromUtf8(proc.readAllStandardOutput()).trimmed();
-            QProcess::startDetached("runuser", {"-u", user, "--", "xdg-open", url});
+            QString user = QString::fromUtf8(getlogin());
+            if (user.isEmpty()) {
+                QProcess proc;
+                proc.start("logname");
+                proc.waitForFinished();
+                user = QString::fromUtf8(proc.readAllStandardOutput().trimmed());
+            }
+            if (!user.isEmpty()) {
+                QProcess::startDetached("runuser", {"-u", user, "--", "xdg-open", url});
+            } else {
+                qWarning("Failed to determine the username to run xdg-open as.");
+            }
         }
     }
     if (started_as_root) {
