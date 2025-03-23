@@ -169,7 +169,7 @@
        <item>
         <widget class="QLabel" name="labelFrugal">
          <property name="text">
-          <string>This option is meant to create a stub installer for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</string>
+          <string>This option is meant to create a bootable entry for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -201,7 +201,7 @@
           <item>
            <widget class="QStackedWidget" name="stackedFrugal">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="pageLocation">
              <layout class="QFormLayout" name="formLayout">
@@ -260,32 +260,32 @@
                 </property>
                 <item>
                  <property name="text">
-                  <string>persist_all</string>
+                  <string notr="true">persist_all</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>persist_root</string>
+                  <string notr="true">persist_root</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>persist_static</string>
+                  <string notr="true">persist_static</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>persist_static_root</string>
+                  <string notr="true">persist_static_root</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>persist_home</string>
+                  <string notr="true">persist_home</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>frugal_only</string>
+                  <string notr="true">frugal_only</string>
                  </property>
                 </item>
                </widget>
