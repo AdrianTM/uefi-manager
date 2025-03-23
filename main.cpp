@@ -31,12 +31,12 @@
 #include <QMessageBox>
 #include <QTranslator>
 
+#include "cmd.h"
 #include "common.h"
 #include "log.h"
 #include "mainwindow.h"
 #include "version.h"
 #include <unistd.h>
-#include "cmd.h"
 
 bool isUefi();
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOption({{"f", "frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
-    parser.addOption({{"u", "update-frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
+    // parser.addOption({{"u", "update-frugal"}, QObject::tr("Update EFI Stub installation for frugal installation.")});
     parser.process(app);
 
     if (!isUefi()) {
