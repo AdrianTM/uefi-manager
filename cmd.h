@@ -4,8 +4,8 @@
 
 class QTextStream;
 
-enum struct Elevate { No, Yes };
-enum struct Quiet { No, Yes };
+enum struct Elevation { No, Yes };
+enum struct QuietMode { No, Yes };
 
 class Cmd : public QProcess
 {
@@ -13,23 +13,28 @@ class Cmd : public QProcess
 public:
     explicit Cmd(QObject *parent = nullptr);
     bool proc(const QString &cmd, const QStringList &args = {}, QString *output = nullptr,
-              const QByteArray *input = nullptr, Quiet quiet = Quiet::No, Elevate elevate = Elevate::No);
+              const QByteArray *input = nullptr, QuietMode quiet = QuietMode::No, Elevation elevation = Elevation::No);
     bool procAsRoot(const QString &cmd, const QStringList &args = {}, QString *output = nullptr,
-                    const QByteArray *input = nullptr, Quiet quiet = Quiet::No);
-    bool run(const QString &cmd, QString *output = nullptr, const QByteArray *input = nullptr, Quiet quiet = Quiet::No,
-             Elevate elevate = Elevate::No);
+                    const QByteArray *input = nullptr, QuietMode quiet = QuietMode::No);
+    bool run(const QString &cmd, QString *output = nullptr, const QByteArray *input = nullptr,
+             QuietMode quiet = QuietMode::No, Elevation elevation = Elevation::No);
     bool runAsRoot(const QString &cmd, QString *output = nullptr, const QByteArray *input = nullptr,
-                   Quiet quiet = Quiet::No);
-    [[nodiscard]] QString getOut(const QString &cmd, Quiet quiet = Quiet::No, Elevate elevate = Elevate::No);
-    [[nodiscard]] QString getOutAsRoot(const QString &cmd, Quiet quiet = Quiet::No);
+                   QuietMode quiet = QuietMode::No);
+    [[nodiscard]] QString getOut(const QString &cmd, QuietMode quiet = QuietMode::No,
+                                 Elevation elevation = Elevation::No);
+    [[nodiscard]] QString getOutAsRoot(const QString &cmd, QuietMode quiet = QuietMode::No);
 
 signals:
     void done();
     void errorAvailable(const QString &err);
     void outputAvailable(const QString &out);
 
+private slots:
+    void handleStandardError();
+    void handleStandardOutput();
+
 private:
-    QString out_buffer;
-    QString asRoot;
+    QString outBuffer;
+    QString elevationCommand;
     QString helper;
 };

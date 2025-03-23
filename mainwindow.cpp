@@ -585,6 +585,7 @@ QString MainWindow::mountPartition(QString part)
 void MainWindow::addDevToList()
 {
     listDevices();
+
     auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
     comboDrive->blockSignals(true);
     comboDrive->clear();
@@ -683,7 +684,7 @@ void MainWindow::selectKernel(const QString &rootDir)
     ui->comboKernel->addItems(sortedKernelFiles);
 
     if (rootDir == "/") {
-        QString kernel = cmd.getOut("uname -r", Quiet::Yes).trimmed();
+        QString kernel = cmd.getOut("uname -r", QuietMode::Yes).trimmed();
         if (ui->comboKernel->findText(kernel) != -1) {
             ui->comboKernel->setCurrentText(kernel);
         }
@@ -1340,7 +1341,7 @@ void MainWindow::guessPartition()
 
         for (int index = 0; index < partitionCount; ++index) {
             const QString part = comboPartition->itemText(index).section(' ', 0, 0);
-            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, Quiet::Yes)) {
+            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, QuietMode::Yes)) {
                 comboPartition->setCurrentIndex(index);
                 return true;
             }
@@ -1372,7 +1373,6 @@ void MainWindow::listDevices()
         rootDevicePath = cmd.getOut("df / --output=source").split('\n').last();
 
         if (rootDevicePath.startsWith("/dev/mapper")) {
-
             rootPartition
                 = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
         } else {
