@@ -773,7 +773,7 @@ void MainWindow::refreshEntries()
     auto *pushBootNext = createButton(tr("Boot &next"), "go-next");
     auto *pushDown = createButton(tr("Move &down"), "arrow-down");
     auto *pushRemove = createButton(tr("&Remove entry"), "trash-empty");
-    auto *pushRename = createButton(tr("Re&name entry"), "edit-rename");
+    // auto *pushRename = createButton(tr("Re&name entry"), "edit-rename");
     auto *pushResetNext = createButton(tr("Re&set next"), "edit-undo");
     auto *pushTimeout = createButton(tr("Change &timeout"), "timer-symbolic");
     auto *pushUp = createButton(tr("Move &up"), "arrow-up");
@@ -791,7 +791,7 @@ void MainWindow::refreshEntries()
     disconnect(pushBootNext, &QPushButton::clicked, this, nullptr);
     disconnect(pushDown, &QPushButton::clicked, ui->tabManageUefi, nullptr);
     disconnect(pushRemove, &QPushButton::clicked, this, nullptr);
-    disconnect(pushRename, &QPushButton::clicked, this, nullptr);
+    // disconnect(pushRename, &QPushButton::clicked, this, nullptr);
     disconnect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, nullptr);
     disconnect(pushTimeout, &QPushButton::clicked, this, nullptr);
     disconnect(pushUp, &QPushButton::clicked, ui->tabManageUefi, nullptr);
@@ -809,21 +809,22 @@ void MainWindow::refreshEntries()
             [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
     connect(pushRemove, &QPushButton::clicked, this,
             [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
-    connect(pushRename, &QPushButton::clicked, this, [this, listEntries, textTimeout, textBootNext, textBootCurrent]() {
-        QString oldLabel = listEntries->currentItem()->text().section(' ', 1);
-        QString newLabel
-            = QInputDialog::getText(this, tr("Rename EFI Entry"), tr("Enter the new name for the selected entry:"),
-                                    QLineEdit::Normal, oldLabel);
-        QString oldBootNum = listEntries->currentItem()->text().section(' ', 0, 0).mid(4, 4);
-        if (!newLabel.isEmpty()) {
-            if (renameUefiEntry(oldLabel, newLabel, oldBootNum)) {
-                listEntries->clear();
-                QStringList bootorder;
-                readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
-                sortUefiBootOrder(bootorder, listEntries);
-            }
-        }
-    });
+    // connect(pushRename, &QPushButton::clicked, this, [this, listEntries, textTimeout, textBootNext,
+    // textBootCurrent]() {
+    //     QString oldLabel = listEntries->currentItem()->text().section(' ', 1);
+    //     QString newLabel
+    //         = QInputDialog::getText(this, tr("Rename EFI Entry"), tr("Enter the new name for the selected entry:"),
+    //                                 QLineEdit::Normal, oldLabel);
+    //     QString oldBootNum = listEntries->currentItem()->text().section(' ', 0, 0).mid(4, 4);
+    //     if (!newLabel.isEmpty()) {
+    //         if (renameUefiEntry(oldLabel, newLabel, oldBootNum)) {
+    //             listEntries->clear();
+    //             QStringList bootorder;
+    //             readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
+    //             sortUefiBootOrder(bootorder, listEntries);
+    //         }
+    //     }
+    // });
     connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
     connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
@@ -861,7 +862,7 @@ void MainWindow::refreshEntries()
     layout->addWidget(textIntro, row++, 0, 1, 2);
     layout->addWidget(listEntries, row, 0, rowspan, 1);
     layout->addWidget(pushRemove, row++, 1);
-    layout->addWidget(pushRename, row++, 1);
+    // layout->addWidget(pushRename, row++, 1);
     layout->addWidget(pushAddEntry, row++, 1);
     layout->addWidget(pushUp, row++, 1);
     layout->addWidget(pushDown, row++, 1);
@@ -1838,10 +1839,8 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     // Find device for partition with matching UUID
     QString deviceForUuid = partitions[targetUuid.toLower()];
     if (deviceForUuid.isEmpty()) {
-        QMessageBox::critical(
-            this, tr("Error"),
-            tr("EFI label '%1' is linked to an unknown partition '%2'.")
-                .arg(oldLabel, targetUuid));
+        QMessageBox::critical(this, tr("Error"),
+                              tr("EFI label '%1' is linked to an unknown partition '%2'.").arg(oldLabel, targetUuid));
         return false;
     }
 
@@ -1852,8 +1851,7 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     if (!deviceMatch.hasMatch()) {
         QMessageBox::critical(
             this, tr("Error"),
-            tr("Unexpected device name format '%1' for partition related to the label.")
-                .arg(deviceForUuid));
+            tr("Unexpected device name format '%1' for partition related to the label.").arg(deviceForUuid));
         return false;
     }
 
@@ -1862,10 +1860,9 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
 
     // Confirm partition number matches
     if (devicePart != targetPart) {
-        QMessageBox::critical(
-            this, tr("Error"),
-            tr("Device partition number [%1] differs from EFI entry partition number [%2].")
-                .arg(devicePart, targetPart));
+        QMessageBox::critical(this, tr("Error"),
+                              tr("Device partition number [%1] differs from EFI entry partition number [%2].")
+                                  .arg(devicePart, targetPart));
         return false;
     }
 
