@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="sl">
 <context>
     <name>Cmd</name>
     <message>
@@ -20,105 +20,133 @@
         <location filename="../mainwindow.ui" line="57"/>
         <location filename="../mainwindow.ui" line="198"/>
         <source>Please select the location of your installation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite mesto za namestitev:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="71"/>
         <location filename="../mainwindow.ui" line="211"/>
         <source>Select drive:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite pogon:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="78"/>
         <location filename="../mainwindow.ui" line="228"/>
         <source>Select partition:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite razdelek:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="249"/>
         <source>Frugal mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vtiki način:</translation>
+    </message>
+    <message>
+        <source>persist_all</source>
+        <translation type="vanished">persist_all</translation>
+    </message>
+    <message>
+        <source>persist_root</source>
+        <translation type="vanished">persist_root</translation>
+    </message>
+    <message>
+        <source>persist_static</source>
+        <translation type="vanished">persist_static</translation>
+    </message>
+    <message>
+        <source>persist_static_root</source>
+        <translation type="vanished">persist_static_root</translation>
+    </message>
+    <message>
+        <source>persist_home</source>
+        <translation type="vanished">persist_home</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zagonske možnosti:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
         <location filename="../mainwindow.ui" line="313"/>
         <source>UEFI entry name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime UEFI vnosa:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="20"/>
         <source>UEFI manager</source>
-        <translation type="unfinished"></translation>
+        <translation>UEFI upravljalnik</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="41"/>
         <source>EFI stub installer</source>
-        <translation type="unfinished"></translation>
+        <translation>Namestilnik EFI škrbine</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="47"/>
         <source>This options copies the kernel and initrd files to ESP (EFI System Partition) and creates an UEFI entry that allows to boot the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta možnost prekopira jedro in initrd datoteke na ESP (EFI sistemski razdelek) in ustvari UEFI vnos, ki mogoča neposredni zagone brez uporabe GRUB ali drugega zagonskega nalagalnika. Za zagon ustvarjenega UEFI vnosa je potrebno uporabiti meni za izbiro UEFI zagona s pomočjo ustrezne tipke za vašo napravo (npr. F12, F9 ali escape - odvisno od proizvajalca).</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="115"/>
         <source>Kernel to boot:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jedro za zagon:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="122"/>
         <source>Kernel options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti jedra:</translation>
+    </message>
+    <message>
+        <source>This option is meant to create a stub installer for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
+        <translation type="vanished">Ta možnosti ustvari škrbinast namestilnik za vitke MX in antiX namestitve. Ustvari EFI zagonski vnos, ki neposredno zažene namestitev, brez uporabe GRUB ali drugih zagonskih nalagalnikov. Za zagon ustvarjenega UEFI vnosa je potrebno uporabiti meni za izbiro UEFI zagona s pomočjo ustrezne tipke za vašo napravo (npr. F12, F9 ali escape - odvisno od proizvajalca).</translation>
+    </message>
+    <message>
+        <source>frugal_only</source>
+        <translation type="vanished">zgolj_vitko</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation type="unfinished"></translation>
+        <translation>O tem programu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>O programu...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>Alt+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapri aplikacijo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapri</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži pomoč</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="36"/>
         <source>Manage UEFI entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravljanje UEFI vnosov</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="166"/>
         <source>Frugal EFI stub installer</source>
-        <translation type="unfinished"></translation>
+        <translation>Namestilnik vitke EFI škrbine</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="172"/>
@@ -128,24 +156,24 @@
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoč</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="452"/>
         <source>Alt+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="465"/>
         <location filename="../mainwindow.cpp" line="887"/>
         <location filename="../mainwindow.cpp" line="1630"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Naprej</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="711"/>
@@ -153,68 +181,69 @@
         <location filename="../mainwindow.cpp" line="1454"/>
         <location filename="../mainwindow.cpp" line="1464"/>
         <source>UEFI Installer</source>
-        <translation type="unfinished"></translation>
+        <translation>UEFI namestilnik</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="712"/>
         <source>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaznana je bila nedavna vtika namestitev. Ali želite dodati UEFI vnos neposredno v vaš UEFI meni?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="958"/>
         <source>Could not retrieve UUID for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Za %1 ni mogoče pridobiti UUID</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="965"/>
         <source>Enter passphrase to unlock %1 encrypted partition:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnesite geslo za odklep %1 šifriranih razdelkov:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="970"/>
         <source>Passphrase entry cancelled or empty for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnos gesla je bil prekinjen ali prazen za %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="976"/>
         <source>Could not open %1 LUKS container</source>
-        <translation type="unfinished"></translation>
+        <translation>LUKS zabojnika %1 ni bilo mogočer odpreti</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1455"/>
         <source>Are you sure this is the MX or antiX Frugal installation location?
 Missing mandatory files in directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ali ste prepričani, da je to pravilna lokacija MX ali antiX vtike namestitve?
+V mapi manjkajo obvezne datoteke:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1528"/>
         <source>Not enough space on the EFI System Partition to copy the kernel and initrd files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Na EFI sistemskem razdelku ni dovolj prostora za kopiranje jedra in initrd datotek.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1574"/>
         <source>All fields are required</source>
-        <translation type="unfinished"></translation>
+        <translation>Vsa polja so obvezna</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1590"/>
         <source>Could not select ESP</source>
-        <translation type="unfinished"></translation>
+        <translation>ESP ni bilo mogoče izbrati</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1608"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>Select EFI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite EFI datoteko</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI datoteke (*.efi *.EFI)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
@@ -232,34 +261,34 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="1872"/>
         <location filename="../mainwindow.cpp" line="1877"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Priklopne točke vira za %1 ni bilo mogoče najti</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Set name</source>
-        <translation type="unfinished"></translation>
+        <translation>Določi ime</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vnesite ime za UEFI predmet menija:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="154"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekaj je šlo narobe. Vnosa ni bilo mogoče dodati.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="738"/>
         <location filename="../mainwindow.cpp" line="780"/>
         <location filename="../mainwindow.cpp" line="1662"/>
         <source>Timeout: %1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Časovna omejitev: %1 sekund</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="740"/>
@@ -267,231 +296,246 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="796"/>
         <location filename="../mainwindow.cpp" line="1675"/>
         <source>Boot Next: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Naslednji zagon: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="742"/>
         <source>Boot Current: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trenutni zagon: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="755"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lahko uporabite tipke gor/dol ali vlečete in spustite predmete, da spremenite zagonsko zaporedje.
+- Predmeti so navedeni po vrstnem redu zagona.
+- Osivele vrstice niso aktivne.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="766"/>
         <location filename="../mainwindow.cpp" line="840"/>
         <source>Set ac&amp;tive</source>
-        <translation type="unfinished"></translation>
+        <translation>Določi za akt&amp;ivno</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="767"/>
         <source>&amp;Add entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Dod&amp;aj vnos</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="768"/>
         <source>Boot &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Naslednji zagon</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="769"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>Premakni &amp;dol</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="770"/>
         <source>&amp;Remove entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Odst&amp;rani vnos</translation>
+    </message>
+    <message>
+        <source>Re&amp;name entry</source>
+        <translation type="vanished">Preime&amp;nuj vnos</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="772"/>
         <source>Re&amp;set next</source>
-        <translation type="unfinished"></translation>
+        <translation>Pona&amp;stavi naslednjega</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="773"/>
         <source>Change &amp;timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Spremeni &amp;časovno omejitev</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="774"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>Premakni &amp;gor</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="779"/>
         <location filename="../mainwindow.cpp" line="796"/>
         <source>not set, will boot using list order</source>
-        <translation type="unfinished"></translation>
+        <translation>ni določen. Zagon bo potekal po seznamu</translation>
+    </message>
+    <message>
+        <source>Rename EFI Entry</source>
+        <translation type="vanished">Preimenuj EFI vnos</translation>
+    </message>
+    <message>
+        <source>Enter the new name for the selected entry:</source>
+        <translation type="vanished">Vnesite novo ime za izbrani vnos:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="837"/>
         <source>Set &amp;inactive</source>
-        <translation type="unfinished"></translation>
+        <translation>Določi za neakt&amp;ivno</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="910"/>
         <source>Failed to open grub.entry file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri odpiranju grub.entry datoteke.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1611"/>
         <source>Tool for managing UEFI boot entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Orodje za upravljanje UEFI zagonskih vnosov</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1766"/>
         <source>Both old and new EFI labels must be specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Podani morata biti tako stara, kot nova EFI oznaka</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1819"/>
         <source>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</source>
-        <translation type="unfinished"></translation>
+        <translation>Za oznako &apos;%1&apos;:%2 in %3 je bilo najdenih več vnosov;</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1829"/>
         <source>No EFI data found for label &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za oznako &apos;%1&apos; ni bilo najdenih podatkov.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1837"/>
         <source>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI oznaka &apos;%1&apos; je povezana z neznanim razdelkom &apos;%2&apos;.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1848"/>
         <source>Unexpected device name format &apos;%1&apos; for partition related to the label.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepričakovana oblika zapisa imena naprave &apos;%1&apos; za razdelek, ki je povezan z oznako.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1858"/>
         <source>Device partition number [%1] differs from EFI entry partition number [%2].</source>
-        <translation type="unfinished"></translation>
+        <translation>Številka razdelka naprave [%1] se razlikuje od številke razdelke EFI vnosa [%2].</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1872"/>
         <source>Failed to delete old boot entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri odstranjevanju starega zagonskega vnosa</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1877"/>
         <source>Failed to create new boot entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri ustvarjanju novega zagonskega vnosa</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1464"/>
         <source>Failed to read grub.entry file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri branju grub.entry datoteke.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="895"/>
         <location filename="../mainwindow.cpp" line="1477"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Namesti</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1483"/>
         <source>Select Frugal Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite mapo za vitko namestitev</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1490"/>
         <source>No EFI System Partitions found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Noben EFI sistemski razdelek ni bi najden.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1496"/>
         <source>Select EFI System Partition</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberite EFI sistemski razdelek</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1497"/>
         <source>EFI System Partitions:</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI sistemski razdelki:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1510"/>
         <source>No EFI System Partition selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Noben EFI sistemski razdelek ni izbran</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1517"/>
         <source>Could not mount selected EFI System Partition</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbranega EFI sistemskega razdelka ni bilo mogoče priklopiti</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1544"/>
         <location filename="../mainwindow.cpp" line="1581"/>
         <source>Could not mount partition. Please make sure you selected the correct partition.</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdelka ni bilo mogoče priklopiti. Prepričajte se, da ste izbrali pravi razdelek.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1553"/>
         <source>No directory selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Noben imenik ni izbran</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1566"/>
         <location filename="../mainwindow.cpp" line="1596"/>
         <source>EFI stub installed successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI škrbina je bila uspešno nameščena.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1568"/>
         <location filename="../mainwindow.cpp" line="1598"/>
         <source>Failed to install EFI stub.</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka pri namestitvi EFI škrbine.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1609"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Različica:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1613"/>
         <source>Copyright (c) MX Linux</source>
-        <translation type="unfinished"></translation>
+        <translation>Avtorska zaščita (c) MX Linux</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1614"/>
         <source>%1 License</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 licenca</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1622"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 pomoč</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1650"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekaj je šlo narobe. Zagonskega zaporedja ni bilo mogoče dodati.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Set timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Določi časovno omejitev</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Timeout in seconds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Časovna omejitev v sekundah</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1689"/>
         <source>Removal confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Potrjevanje odstranitve</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1690"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali ste prepričani, da želite ta zagonski vnos?
+%1</translation>
     </message>
 </context>
 <context>
@@ -499,17 +543,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="99"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licenca</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dnevnik sprememb</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="125"/>
@@ -524,43 +568,43 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zapri</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="75"/>
         <source>uefi-manager is a tool for managing UEFI boot entries</source>
-        <translation type="unfinished"></translation>
+        <translation>uefi-manager je orodje za upravljanje UEFI zagonskih vnosov</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="78"/>
         <source>Perform EFI Stub installation for frugal installation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvedi namestitev EFI škrbine za vitko namestitev.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="56"/>
         <location filename="../main.cpp" line="84"/>
         <source>UEFI Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>UEFI upravljalnik</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="85"/>
         <source>This system doesn&apos;t seem to support UEFI, or was not booted in UEFI mode. Exiting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta sistem nima podpore za UEFI ali ni bil zagnan v UEFI načinu. Končujem.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="96"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Napaka</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="97"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prijavljeni ste kot korenski (root) uporabnik. Odjavite se in se ponovno prijavite kot običajen uporabnik, če želite uporabljati ta program.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="102"/>
         <source>version:</source>
-        <translation type="unfinished"></translation>
+        <translation>različica:</translation>
     </message>
 </context>
 </TS>

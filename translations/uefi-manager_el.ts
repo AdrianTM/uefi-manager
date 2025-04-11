@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="el">
 <context>
     <name>Cmd</name>
     <message>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ρυθμίσεις φορτωτή εκκίνησης:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
@@ -78,37 +78,37 @@
     <message>
         <location filename="../mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί της εφαρμογής</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>Alt+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο εφαρμογής</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Κλείσιμο</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation type="unfinished"></translation>
+        <translation>Εμφάνιση βοήθειας </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="36"/>
@@ -128,24 +128,24 @@
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Βοήθεια</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="452"/>
         <source>Alt+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="465"/>
         <location filename="../mainwindow.cpp" line="887"/>
         <location filename="../mainwindow.cpp" line="1630"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Επόμενο</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Πίσω</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="711"/>
@@ -204,17 +204,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1608"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Περί του %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>Select EFI file</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογή αρχείου EFI</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχεία EFI (*.efi *.EFI)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
@@ -232,34 +232,34 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="1872"/>
         <location filename="../mainwindow.cpp" line="1877"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν βρέθηκε σημείο προσάρτησης για το %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Set name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός ονόματος</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation type="unfinished"></translation>
+        <translation>Εισαγωγή ονόματος για το μενού UEFI:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="154"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάτι πήγε λάθος, δεν προστέθηκε η καταχώρηση.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="738"/>
         <location filename="../mainwindow.cpp" line="780"/>
         <location filename="../mainwindow.cpp" line="1662"/>
         <source>Timeout: %1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρονική διάρκεια: %1 δευτερόλεπτα</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="740"/>
@@ -267,71 +267,73 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="796"/>
         <location filename="../mainwindow.cpp" line="1675"/>
         <source>Boot Next: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Επόμενη εκκίνηση: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="742"/>
         <source>Boot Current: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Τρέχουσα εκκίνηση: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="755"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Για να αλλάξετε τη σειρά εκκίνησης μπορείτε να χρησιμοποιήσετε τα κουμπιά Επάνω/Κάτω ή να σύρετε και να αποθέσετε τις καταχωρήσεις.
+- Οι καταχωρήσεις εμφανίζονται με τη σειρά εκκίνησης.
+- Οι γραμμές με γκρίζο χρώμα είναι ανενεργές.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="766"/>
         <location filename="../mainwindow.cpp" line="840"/>
         <source>Set ac&amp;tive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός ε&amp;νεργού</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="767"/>
         <source>&amp;Add entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσ&amp;θήκη καταχώρησης</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="768"/>
         <source>Boot &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Εκκίνηση ε&amp;πόμενου</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="769"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση &amp;κάτω</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="770"/>
         <source>&amp;Remove entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Α&amp;φαίρεση καταχώρησης</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="772"/>
         <source>Re&amp;set next</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναφο&amp;ρά επόμενου</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="773"/>
         <source>Change &amp;timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Αλλαγή &amp;χρονικής διάρκειας</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="774"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>Μετακίνηση &amp;επάνω</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="779"/>
         <location filename="../mainwindow.cpp" line="796"/>
         <source>not set, will boot using list order</source>
-        <translation type="unfinished"></translation>
+        <translation>δεν ορίστηκε, θα εκκινήσει με τη σειρά της λίστας</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="837"/>
         <source>Set &amp;inactive</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός ανενε&amp;ργού</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="910"/>
@@ -392,7 +394,7 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="895"/>
         <location filename="../mainwindow.cpp" line="1477"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Εγκατάσταση</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1483"/>
@@ -450,48 +452,49 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1609"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Έκδοση: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1613"/>
         <source>Copyright (c) MX Linux</source>
-        <translation type="unfinished"></translation>
+        <translation>Πνευματικά δικαιώματα (c) MX Linux</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1614"/>
         <source>%1 License</source>
-        <translation type="unfinished"></translation>
+        <translation>Άδεια %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1622"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Βοήθεια %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1650"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Κάτι πήγε λάθος, δεν αποθηκεύτηκε η σειρά εκκίνησης.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Set timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ορισμός χρονικής διάρκειας</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Timeout in seconds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρονική διάρκεια σε δευτερόλεπτα:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1689"/>
         <source>Removal confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιβεβαίωση αφαίρεσης</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1690"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Θέλετε σίγουρα να διαγράψετε την καταχώρηση εκκίνησης;
+%1</translation>
     </message>
 </context>
 <context>
@@ -499,17 +502,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="99"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Άδεια</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Αρχείο αλλαγών</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="125"/>
@@ -524,7 +527,7 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Κλείσιμο</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="75"/>
@@ -550,17 +553,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../main.cpp" line="96"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="97"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Φαίνεται ότι έχετε συνδεθεί ως διαχειριστής, για να χρησιμοποιήσετε αυτό το πρόγραμμα αποσυνδεθείτε και συνδεθείτε ως απλός χρήστης.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="102"/>
         <source>version:</source>
-        <translation type="unfinished"></translation>
+        <translation>έκδοση:</translation>
     </message>
 </context>
 </TS>

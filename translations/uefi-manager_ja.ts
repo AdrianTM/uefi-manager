@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="ja">
 <context>
     <name>Cmd</name>
     <message>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation type="unfinished"></translation>
+        <translation>起動オプション:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
@@ -78,37 +78,37 @@
     <message>
         <location filename="../mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation type="unfinished"></translation>
+        <translation>このアプリケーションについて</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>情報...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>Alt+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションの終了</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプの表示</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="36"/>
@@ -128,24 +128,24 @@
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="452"/>
         <source>Alt+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="465"/>
         <location filename="../mainwindow.cpp" line="887"/>
         <location filename="../mainwindow.cpp" line="1630"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>次へ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>戻る</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="711"/>
@@ -204,17 +204,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1608"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation> %1 について</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>Select EFI file</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI ファイルの選択</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI ファイル (*.efi *.EFI)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
@@ -232,34 +232,34 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="1872"/>
         <location filename="../mainwindow.cpp" line="1877"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 のソース・マウントポイントが見つかりません</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Set name</source>
-        <translation type="unfinished"></translation>
+        <translation>名前の設定</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation type="unfinished"></translation>
+        <translation>UEFI メニューの項目名を入力します。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="154"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>問題が発生したため、項目を追加できませんでした。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="738"/>
         <location filename="../mainwindow.cpp" line="780"/>
         <location filename="../mainwindow.cpp" line="1662"/>
         <source>Timeout: %1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムアウト: %1 秒</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="740"/>
@@ -267,71 +267,73 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="796"/>
         <location filename="../mainwindow.cpp" line="1675"/>
         <source>Boot Next: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>次回以降の既定の起動: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="742"/>
         <source>Boot Current: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の起動設定: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="755"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Up/Down ボタン、または項目のドラッグ＆ドロップで起動順序を変更できます。
+- 項目は起動順に表示します。
+- 灰色になっている行は有効ではありません。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="766"/>
         <location filename="../mainwindow.cpp" line="840"/>
         <source>Set ac&amp;tive</source>
-        <translation type="unfinished"></translation>
+        <translation>アクティブにする(&amp;T)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="767"/>
         <source>&amp;Add entry</source>
-        <translation type="unfinished"></translation>
+        <translation>エントリの追加(&amp;A)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="768"/>
         <source>Boot &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>次回の起動(&amp;N)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="769"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>下へ移動(&amp;D)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="770"/>
         <source>&amp;Remove entry</source>
-        <translation type="unfinished"></translation>
+        <translation>エントリの削除(&amp;R)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="772"/>
         <source>Re&amp;set next</source>
-        <translation type="unfinished"></translation>
+        <translation>次回リセット(&amp;S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="773"/>
         <source>Change &amp;timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムアウトの時間変更(&amp;T)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="774"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>上へ移動(&amp;U)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="779"/>
         <location filename="../mainwindow.cpp" line="796"/>
         <source>not set, will boot using list order</source>
-        <translation type="unfinished"></translation>
+        <translation>設定せず、リスト順に起動</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="837"/>
         <source>Set &amp;inactive</source>
-        <translation type="unfinished"></translation>
+        <translation>非アクティブにする(&amp;I)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="910"/>
@@ -392,7 +394,7 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="895"/>
         <location filename="../mainwindow.cpp" line="1477"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>インストール</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1483"/>
@@ -450,48 +452,49 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1609"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン：</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1613"/>
         <source>Copyright (c) MX Linux</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1614"/>
         <source>%1 License</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ライセンス</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1622"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ヘルプ</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1650"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation type="unfinished"></translation>
+        <translation>問題が発生したので、起動順序を保存できませんでした。</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Set timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムアウトの設定</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Timeout in seconds:</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムアウトの秒数:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1689"/>
         <source>Removal confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>削除の確認</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1690"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>本当にこの起動のエントリーを削除しても良いのですか？
+%1</translation>
     </message>
 </context>
 <context>
@@ -499,17 +502,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="99"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>ライセンス</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>更新履歴</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="125"/>
@@ -524,7 +527,7 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="75"/>
@@ -550,17 +553,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../main.cpp" line="96"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="97"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation type="unfinished"></translation>
+        <translation>root でログインしているようです。このプログラムを使用するには、一度ログアウトして通常のユーザでログインしてください。</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="102"/>
         <source>version:</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン:</translation>
     </message>
 </context>
 </TS>

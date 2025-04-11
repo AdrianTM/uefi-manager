@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<TS version="2.1" language="de">
 <context>
     <name>Cmd</name>
     <message>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boot-Optionen:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="129"/>
@@ -78,37 +78,37 @@
     <message>
         <location filename="../mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Über diese Anwendung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>Über...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="402"/>
         <source>Alt+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+B</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwendung beenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+N</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe anzeigen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="36"/>
@@ -128,24 +128,24 @@
     <message>
         <location filename="../mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="452"/>
         <source>Alt+H</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="465"/>
         <location filename="../mainwindow.cpp" line="887"/>
         <location filename="../mainwindow.cpp" line="1630"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Weiter</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="711"/>
@@ -204,17 +204,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1608"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Über %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>Select EFI file</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI-Datei auswählen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="129"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation type="unfinished"></translation>
+        <translation>EFI-Dateien (*.efi *.EFI)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
@@ -232,34 +232,34 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="1872"/>
         <location filename="../mainwindow.cpp" line="1877"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="140"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konnte den Quell-Einhängepunkt für %1 nicht finden</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Set name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name festlegen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="144"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation type="unfinished"></translation>
+        <translation>Name des UEFI-Menüpunkts eingeben</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="154"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwas lief schief, Eintrag konnte nicht erstellt werden</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="738"/>
         <location filename="../mainwindow.cpp" line="780"/>
         <location filename="../mainwindow.cpp" line="1662"/>
         <source>Timeout: %1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout: %1 Sekunden</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="740"/>
@@ -267,71 +267,73 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="796"/>
         <location filename="../mainwindow.cpp" line="1675"/>
         <source>Boot Next: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Boote nächstes: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="742"/>
         <source>Boot Current: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Boote aktuelles: %1</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="755"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit den Schaltflächen Auf/Ab oder durch Ziehen und Ablegen von Elementen können Sie die Boot-Reihenfolge ändern.
+- Die Elemente werden in der Startreihenfolge aufgelistet.
+- Ausgegraute Zeilen sind inaktiv.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="766"/>
         <location filename="../mainwindow.cpp" line="840"/>
         <source>Set ac&amp;tive</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf ak&amp;tiv setzen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="767"/>
         <source>&amp;Add entry</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eintrag hinzufügen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="768"/>
         <source>Boot &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>Boote &amp;nächstes</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="769"/>
         <source>Move &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verschieben abwärts</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="770"/>
         <source>&amp;Remove entry</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eintrag entfernen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="772"/>
         <source>Re&amp;set next</source>
-        <translation type="unfinished"></translation>
+        <translation>Näch&amp;stes zurücksetzen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="773"/>
         <source>Change &amp;timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändern &amp;Timeout</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="774"/>
         <source>Move &amp;up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Verschieben aufwärts</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="779"/>
         <location filename="../mainwindow.cpp" line="796"/>
         <source>not set, will boot using list order</source>
-        <translation type="unfinished"></translation>
+        <translation>nicht gesetzt, boote mit Reihenfolge in Liste</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="837"/>
         <source>Set &amp;inactive</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf &amp;inaktiv setzen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="910"/>
@@ -392,7 +394,7 @@ Missing mandatory files in directory: </source>
         <location filename="../mainwindow.cpp" line="895"/>
         <location filename="../mainwindow.cpp" line="1477"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>Installieren</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1483"/>
@@ -450,48 +452,49 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1609"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Version:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1613"/>
         <source>Copyright (c) MX Linux</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1614"/>
         <source>%1 License</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Lizenz</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1622"/>
         <source>%1 Help</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Hilfe</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1650"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Etwas lief schief, Boot-Reihenfolge konnte nicht gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Set timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout einstellen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1658"/>
         <source>Timeout in seconds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Timeout in Sekunden:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1689"/>
         <source>Removal confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen bestätigen</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1690"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie diesen Booteintrag löschen wollen??
+%1</translation>
     </message>
 </context>
 <context>
@@ -499,17 +502,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="99"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Lizenz</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungsprotokoll</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../about.cpp" line="125"/>
@@ -524,7 +527,7 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Schließen</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="75"/>
@@ -550,17 +553,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../main.cpp" line="96"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="97"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie sind als Administrator am System angemeldet. Bitte melden Sie sich ab und dann als normaler Benutzer wieder an, um dieses Programm zu verwenden.</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="102"/>
         <source>version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Version:</translation>
     </message>
 </context>
 </TS>
