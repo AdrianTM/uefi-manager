@@ -478,12 +478,6 @@ bool MainWindow::installEfiStub(const QString &esp)
             = QString("'bdir=%1 buuid=%2 %3 %4 %5'")
                   .arg(options.bdir, options.uuid, options.stringOptions, ui->comboFrugalMode->currentText(), initrd);
     } else {
-        // Get drive and partition info
-        QString rootDev = "/dev/" + ui->comboPartitionStub->currentText().section(' ', 0, 0);
-        QString rootLabel = cmd.getOutAsRoot("blkid -s LABEL -o value " + rootDev).trimmed();
-
-        QString root = "UUID=" + cmd.getOutAsRoot("blkid -s UUID -o value " + rootDev).trimmed();
-
         bootOptions = QString("'%1 %2'").arg(options.stringOptions, initrd);
     }
 
