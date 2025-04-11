@@ -4,6 +4,10 @@
 #include <QDebug>
 #include <QEventLoop>
 #include <QFile>
+#include <QMessageBox>
+#include <QTimer>
+
+#include "mainwindow.h"
 
 #include <unistd.h>
 
@@ -92,6 +96,13 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     closeWriteChannel();
     loop.exec();
 
+    // Check for permission denied or command not found errors
+    // These can occur when elevation fails (canceled dialog or incorrect password)
+    if (elevation == Elevation::Yes
+        && (exitCode() == EXIT_CODE_PERMISSION_DENIED || exitCode() == EXIT_CODE_COMMAND_NOT_FOUND)) {
+        handleElevationError();
+    }
+
     // Provide output if requested
     if (output) {
         *output = outBuffer.trimmed();
@@ -109,13 +120,28 @@ bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *outpu
 bool Cmd::run(const QString &cmd, QString *output, const QByteArray *input, QuietMode quiet, Elevation elevation)
 {
     if (elevation == Elevation::Yes && getuid() != 0) {
-        return proc(elevationCommand, {helper, cmd}, output, input, quiet);
-    } else {
-        return proc("/bin/bash", {"-c", cmd}, output, input, quiet);
+        bool result = proc(elevationCommand, {helper, cmd}, output, input, quiet);
+        // Command-not-found is returned when password is entered incorrectly
+        if (exitCode() == EXIT_CODE_PERMISSION_DENIED || exitCode() == EXIT_CODE_COMMAND_NOT_FOUND) {
+            handleElevationError();
+        }
+        return result;
     }
+    return proc("/bin/bash", {"-c", cmd}, output, input, quiet);
 }
 
 bool Cmd::runAsRoot(const QString &cmd, QString *output, const QByteArray *input, QuietMode quiet)
 {
     return run(cmd, output, input, quiet, Elevation::Yes);
+}
+
+void Cmd::handleElevationError()
+{
+    if (qobject_cast<MainWindow *>(qApp->activeWindow())) {
+        QMessageBox::critical(nullptr, tr("Administrator Access Required"),
+                              tr("This operation requires administrator privileges. Please restart the application "
+                                 "and enter your password when prompted."));
+    }
+    QTimer::singleShot(0, qApp, &QApplication::quit);
+    exit(EXIT_FAILURE);
 }
