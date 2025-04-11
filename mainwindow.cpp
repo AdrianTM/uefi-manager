@@ -201,7 +201,7 @@ void MainWindow::setup()
     }
 
     // Refresh blkid cache early
-    cmd.procAsRoot("blkid");
+    cmd.proc("/usr/sbin/blkid");
 
     // Refresh appropriate tab content based on current tab
     const auto currentTab = ui->tabWidget->currentIndex();
@@ -724,7 +724,7 @@ void MainWindow::promptFrugalStubInstall()
 void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext,
                                  QLabel *textBootCurrent, QStringList *bootorder)
 {
-    QStringList entries = cmd.getOutAsRoot("efibootmgr").split('\n', Qt::SkipEmptyParts);
+    QStringList entries = cmd.getOut("efibootmgr").split('\n', Qt::SkipEmptyParts);
     QRegularExpression bootEntryRegex(R"(^Boot[0-9A-F]{4}\*?\s+)");
 
     for (const auto &item : qAsConst(entries)) {
