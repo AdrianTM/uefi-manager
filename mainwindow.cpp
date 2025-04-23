@@ -111,7 +111,7 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
                  "lsblk -no PATH,PARTTYPE | grep -iE 'c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef' | cut -d' ' -f1")
               .split("\n", Qt::SkipEmptyParts);
 
-    for (const auto &device : qAsConst(partList)) {
+    for (const auto &device : std::as_const(partList)) {
         if (!cmd.procAsRoot("findmnt", {"-n", device})) {
             QString partName = device.section('/', -1);
             QString mountDir = "/boot/efi/" + partName;
@@ -727,7 +727,7 @@ void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, 
     QStringList entries = cmd.getOut("efibootmgr").split('\n', Qt::SkipEmptyParts);
     QRegularExpression bootEntryRegex(R"(^Boot[0-9A-F]{4}\*?\s+)");
 
-    for (const auto &item : qAsConst(entries)) {
+    for (const auto &item : std::as_const(entries)) {
         if (bootEntryRegex.match(item).hasMatch()) {
             auto *listItem = new QListWidgetItem(item);
             if (!item.contains("*")) {
