@@ -174,7 +174,9 @@ void MainWindow::clearEntryWidget()
     if (ui->tabManageUefi->layout() != nullptr) {
         QLayoutItem *child;
         while ((child = ui->tabManageUefi->layout()->takeAt(0))) {
-            delete child->widget();
+            if (child->widget()) {
+                delete child->widget();
+            }
             delete child;
         }
     }
@@ -251,6 +253,10 @@ void MainWindow::setConnections()
 
 void MainWindow::toggleUefiActive(QListWidget *listEntries)
 {
+    if (!listEntries) {
+        return;
+    }
+
     auto currentItem = listEntries->currentItem();
     if (!currentItem) {
         return;
@@ -831,9 +837,15 @@ void MainWindow::refreshEntries()
     });
     connect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi,
             [listEntries, pushUp, pushDown, pushActive]() {
+                if (!listEntries || !pushUp || !pushDown || !pushActive) {
+                    return;
+                }
+
                 pushUp->setEnabled(listEntries->currentRow() != 0);
                 pushDown->setEnabled(listEntries->currentRow() != listEntries->count() - 1);
-                if (listEntries->currentItem()->text().section(' ', 0, 0).endsWith('*')) {
+
+                auto currentItem = listEntries->currentItem();
+                if (currentItem && currentItem->text().section(' ', 0, 0).endsWith('*')) {
                     pushActive->setText(tr("Set &inactive"));
                     pushActive->setIcon(QIcon::fromTheme("star-off"));
                 } else {
@@ -1698,6 +1710,10 @@ void MainWindow::setUefiTimeout(QWidget *uefiDialog, QLabel *textTimeout)
 
 void MainWindow::setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext)
 {
+    if (!listEntries || !textBootNext) {
+        return;
+    }
+
     if (auto currentItem = listEntries->currentItem()) {
         QString item = currentItem->text().section(' ', 0, 0);
         item.remove(QRegularExpression("^Boot"));
@@ -1712,6 +1728,10 @@ void MainWindow::setUefiBootNext(QListWidget *listEntries, QLabel *textBootNext)
 
 void MainWindow::removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog)
 {
+    if (!listEntries || !uefiDialog) {
+        return;
+    }
+
     auto *currentItem = listEntries->currentItem();
     if (!currentItem) {
         return;
