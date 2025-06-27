@@ -1663,7 +1663,7 @@ void MainWindow::pushAbout_clicked()
 
 void MainWindow::pushHelp_clicked()
 {
-    const QString url = "https://forum.mxlinux.org";
+    const QString url = "https://mxlinux.org/wiki/system/uefi/";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()));
 }
 
