@@ -1240,7 +1240,8 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
             QString linuxOptions = cmd.getOutAsRoot(grepCmdLinux).trimmed();
 
             // Get options from GRUB_CMDLINE_LINUX_DEFAULT
-            QString grepCmdLinuxDefault = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX_DEFAULT=\"\\K[^\"]+'") + " " + defaultGrubFile;
+            QString grepCmdLinuxDefault
+                = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX_DEFAULT=\"\\K[^\"]+'") + " " + defaultGrubFile;
             QString defaultOptions = cmd.getOutAsRoot(grepCmdLinuxDefault).trimmed();
 
             // Combine both options
@@ -1259,8 +1260,9 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
             }
         }
     } else {
-        QString grep = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
-                       .arg(kernelDir, vmlinuz, rootPatternList.join("|"), grubFile);
+        QString grep
+            = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
+                  .arg(kernelDir, vmlinuz, rootPatternList.join("|"), grubFile);
 
         bootOptions = cmd.getOutAsRoot(grep).trimmed();
     }
@@ -1663,7 +1665,7 @@ void MainWindow::pushAbout_clicked()
 
 void MainWindow::pushHelp_clicked()
 {
-    const QString url = "https://mxlinux.org/wiki/system/uefi/";
+    const QString url = "https://mxlinux.org/wiki/uefi-manager/";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()));
 }
 
