@@ -1,7 +1,7 @@
 /**********************************************************************
- *
+ *  version.h.in
  **********************************************************************
- * Copyright (C) 2024 MX Authors
+ * Copyright (C) 2024-2025 MX Authors
  *
  * Authors: Adrian <adrian@mxlinux.org>
  *          MX Linux <http://mxlinux.org>
@@ -21,17 +21,6 @@
  **********************************************************************/
 #pragma once
 
-#include <QDebug>
-#include <QFile>
 #include <QString>
 
-class Log
-{
-public:
-    explicit Log(const QString &file_name = "/tmp/uefi-manager.log");
-    static QString getLog();
-    static void messageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
-
-private:
-    inline static QFile logFile;
-};
+const QString VERSION {"@PROJECT_VERSION@"};

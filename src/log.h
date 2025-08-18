@@ -1,7 +1,7 @@
 /**********************************************************************
- *  about.h
+ *
  **********************************************************************
- * Copyright (C) 2024 MX Authors
+ * Copyright (C) 2024-2025 MX Authors
  *
  * Authors: Adrian <adrian@mxlinux.org>
  *          MX Linux <http://mxlinux.org>
@@ -21,8 +21,17 @@
  **********************************************************************/
 #pragma once
 
-class QString;
+#include <QDebug>
+#include <QFile>
+#include <QString>
 
-void displayDoc(const QString &url, const QString &title);
-void displayAboutMsgBox(const QString &title, const QString &message, const QString &licence_url,
-                        const QString &license_title);
+class Log
+{
+public:
+    explicit Log(const QString &file_name = "/tmp/uefi-manager.log");
+    static QString getLog();
+    static void messageHandler(QtMsgType type, const QMessageLogContext &, const QString &msg);
+
+private:
+    inline static QFile logFile;
+};
