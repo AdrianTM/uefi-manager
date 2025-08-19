@@ -32,8 +32,7 @@ execute_process(
 )
 
 if(NOT DPKG_RESULT EQUAL 0)
-    message(WARNING "Failed to get version from debian/changelog using dpkg-parsechangelog, using fallback version")
-    set(PROJECT_VERSION_FROM_CHANGELOG "25.6.01")
+    message(FATAL_ERROR "Failed to get version from debian/changelog using dpkg-parsechangelog")
 endif()
 
 project(uefi-manager
