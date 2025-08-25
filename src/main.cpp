@@ -35,8 +35,11 @@
 #include "common.h"
 #include "log.h"
 #include "mainwindow.h"
-#include "version.h"
 #include <unistd.h>
+
+#ifndef VERSION
+    #define VERSION "?.?.?.?"
+#endif
 
 bool isUefi();
 
