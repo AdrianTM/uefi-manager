@@ -86,10 +86,11 @@ int main(int argc, char *argv[])
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOption({{"f", "frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
+    parser.addOption({{"t", "test"}, QObject::tr("Run in test mode (bypass UEFI detection for GUI testing).")});
     // parser.addOption({{"u", "update-frugal"}, QObject::tr("Update EFI Stub installation for frugal installation.")});
     parser.process(app);
 
-    if (!isUefi()) {
+    if (!parser.isSet("test") && !isUefi()) {
         QMessageBox::critical(
             nullptr, QObject::tr("UEFI Manager"),
             QObject::tr("This system doesn't seem to support UEFI, or was not booted in UEFI mode. Exiting."));
