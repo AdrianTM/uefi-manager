@@ -684,7 +684,7 @@ void MainWindow::selectKernel(const QString &rootDir)
     ui->comboKernel->addItems(sortedKernelFiles);
 
     if (rootDir == "/") {
-        QString kernel = cmd.getOut("uname -r", QuietMode::Yes).trimmed();
+        const QString kernel = cmd.getOut("uname -r", QuietMode::Yes).trimmed();
         if (ui->comboKernel->findText(kernel) != -1) {
             ui->comboKernel->setCurrentText(kernel);
         }
@@ -1692,7 +1692,7 @@ void MainWindow::saveBootOrder(const QListWidget *list)
         }
     }
 
-    QString order = orderList.join(',');
+    const QString order = orderList.join(',');
     if (!cmd.procAsRoot("efibootmgr", {"-o", order})) {
         QMessageBox::critical(this, tr("Error"), tr("Something went wrong, could not save boot order."));
     }

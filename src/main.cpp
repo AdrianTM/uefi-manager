@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
     // Root guard
     QFile loginUidFile {"/proc/self/loginuid"};
     if (loginUidFile.open(QIODevice::ReadOnly)) {
-        QString loginUid = QString(loginUidFile.readAll()).trimmed();
+        const QString loginUid = QString(loginUidFile.readAll()).trimmed();
         loginUidFile.close();
         if (loginUid == "0") {
             QMessageBox::critical(
