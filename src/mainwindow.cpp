@@ -390,7 +390,7 @@ bool MainWindow::copyKernel()
     // Copy kernel and initrd files
     const QString sourceDir = isFrugal ? frugalDir : [this]() {
         QString dir = getBootLocation();
-        // return dir.endsWith("/boot") ? dir : dir + "/boot";
+
         return dir;
     }();
     const QString kernelVersion = ui->comboKernel->currentText();
@@ -774,7 +774,7 @@ void MainWindow::refreshEntries()
     auto *pushBootNext = createButton(tr("Boot &next"), "go-next");
     auto *pushDown = createButton(tr("Move &down"), "arrow-down");
     auto *pushRemove = createButton(tr("&Remove entry"), "trash-empty");
-    // auto *pushRename = createButton(tr("Re&name entry"), "edit-rename");
+
     auto *pushResetNext = createButton(tr("Re&set next"), "edit-undo");
     auto *pushTimeout = createButton(tr("Change &timeout"), "timer-symbolic");
     auto *pushUp = createButton(tr("Move &up"), "arrow-up");
@@ -810,22 +810,7 @@ void MainWindow::refreshEntries()
             [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
     connect(pushRemove, &QPushButton::clicked, this,
             [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
-    // connect(pushRename, &QPushButton::clicked, this, [this, listEntries, textTimeout, textBootNext,
-    // textBootCurrent]() {
-    //     QString oldLabel = listEntries->currentItem()->text().section(' ', 1);
-    //     QString newLabel
-    //         = QInputDialog::getText(this, tr("Rename EFI Entry"), tr("Enter the new name for the selected entry:"),
-    //                                 QLineEdit::Normal, oldLabel);
-    //     QString oldBootNum = listEntries->currentItem()->text().section(' ', 0, 0).mid(4, 4);
-    //     if (!newLabel.isEmpty()) {
-    //         if (renameUefiEntry(oldLabel, newLabel, oldBootNum)) {
-    //             listEntries->clear();
-    //             QStringList bootorder;
-    //             readBootEntries(listEntries, textTimeout, textBootNext, textBootCurrent, &bootorder);
-    //             sortUefiBootOrder(bootorder, listEntries);
-    //         }
-    //     }
-    // });
+
     connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
     connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
@@ -869,7 +854,7 @@ void MainWindow::refreshEntries()
     layout->addWidget(textIntro, row++, 0, 1, 2);
     layout->addWidget(listEntries, row, 0, rowspan, 1);
     layout->addWidget(pushRemove, row++, 1);
-    // layout->addWidget(pushRename, row++, 1);
+
     layout->addWidget(pushAddEntry, row++, 1);
     layout->addWidget(pushUp, row++, 1);
     layout->addWidget(pushDown, row++, 1);

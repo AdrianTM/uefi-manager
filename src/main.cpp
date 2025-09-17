@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     parser.addVersionOption();
     parser.addOption({{"f", "frugal"}, QObject::tr("Perform EFI Stub installation for frugal installation.")});
     parser.addOption({{"t", "test"}, QObject::tr("Run in test mode (bypass UEFI detection for GUI testing).")});
-    // parser.addOption({{"u", "update-frugal"}, QObject::tr("Update EFI Stub installation for frugal installation.")});
+
     parser.process(app);
 
     if (!parser.isSet("test") && !isUefi()) {
