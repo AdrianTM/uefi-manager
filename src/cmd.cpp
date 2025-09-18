@@ -52,6 +52,8 @@ Cmd::Cmd(QObject *parent)
     helper = QString("/usr/lib/%1/helper").arg(QApplication::applicationName());
 
     // Connect signals for output handling
+    connect(this, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &Cmd::done,
+            Qt::UniqueConnection);
     connect(this, &Cmd::readyReadStandardOutput, this, &Cmd::handleStandardOutput);
     connect(this, &Cmd::readyReadStandardError, this, &Cmd::handleStandardError);
 }
@@ -88,7 +90,6 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     outBuffer.clear();
 
     // Check if process is already running
-    connect(this, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &Cmd::done);
     if (state() != QProcess::NotRunning) {
         qDebug() << "Process already running:" << program() << arguments();
         return false;
