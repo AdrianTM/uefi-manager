@@ -1,15 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="he_IL">
 <context>
     <name>Cmd</name>
     <message>
         <location filename="../src/cmd.cpp" line="163"/>
         <source>Administrator Access Required</source>
-        <translation>Lyp Hyrje Përgjegjësi</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/cmd.cpp" line="164"/>
         <source>This operation requires administrator privileges. Please restart the application and enter your password when prompted.</source>
-        <translation>Ky veprim lyp privilegje përgjegjësi. Ju lutemi, rinisni aplikacionin dhe jepni fjalëkalimin tuaj kur t’ju kërkohet.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation>Mundësi nisjeje:</translation>
+        <translation>אפשרויות טעינה:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="129"/>
@@ -76,12 +76,12 @@
     <message>
         <location filename="../src/mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation>Mbi këtë aplikacion</translation>
+        <translation>אודות יישום זה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation>Mbi…</translation>
+        <translation>אודות...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="402"/>
@@ -91,22 +91,22 @@
     <message>
         <location filename="../src/mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation>Mbylle aplikacionin</translation>
+        <translation>יציאה מהיישום</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation>Mbylle</translation>
+        <translation>סגירה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation>Alt+M</translation>
+        <translation>Alt+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation>Shfaq ndihmë </translation>
+        <translation>הצגת עזרה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="36"/>
@@ -126,24 +126,24 @@
     <message>
         <location filename="../src/mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation>Ndihmë</translation>
+        <translation>עזרה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
         <source>Alt+H</source>
-        <translation>Alt+N</translation>
+        <translation>Alt+H</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="465"/>
         <location filename="../src/mainwindow.cpp" line="899"/>
         <location filename="../src/mainwindow.cpp" line="1677"/>
         <source>Next</source>
-        <translation>Pasuesi</translation>
+        <translation>קדימה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation>Mbrapsht</translation>
+        <translation>אחורה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="717"/>
@@ -161,7 +161,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="970"/>
         <source>Could not retrieve UUID for %1</source>
-        <translation>S’u mor dot UUID për %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="977"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="988"/>
         <source>Could not open %1 LUKS container</source>
-        <translation>S’u hap dot kontejner LUKS %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1502"/>
@@ -202,17 +202,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1655"/>
         <source>About %1</source>
-        <translation>Mbi %1</translation>
+        <translation>על אודות %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="129"/>
         <source>Select EFI file</source>
-        <translation>Përzgjidhni kartelë EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="129"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation>Kartela EFI (*.efi *.EFI)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="140"/>
@@ -230,34 +230,34 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="1927"/>
         <location filename="../src/mainwindow.cpp" line="1932"/>
         <source>Error</source>
-        <translation>Gabim</translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="140"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation>S’u gjet dot pikë montimi burimi për %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="144"/>
         <source>Set name</source>
-        <translation>I vini emër</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="144"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation>Jepni emrin për zërin e menusë UEFI:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="154"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation>Diç shkoi ters, s’u shtua dot zëri.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="744"/>
         <location filename="../src/mainwindow.cpp" line="786"/>
         <location filename="../src/mainwindow.cpp" line="1709"/>
         <source>Timeout: %1 seconds</source>
-        <translation>Mbarim kohe: %1 sekonda</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="746"/>
@@ -265,47 +265,45 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="802"/>
         <location filename="../src/mainwindow.cpp" line="1726"/>
         <source>Boot Next: %1</source>
-        <translation>Nisja Pasuese: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="748"/>
         <source>Boot Current: %1</source>
-        <translation>Nis të Tanishmin: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="761"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation>Që të ndryshoni rendin e nisjes, mund të përdorni butonat Sipër/Poshtë, ose të merrni &amp; lini zëra.
-- Zërat paraqiten te rendi i nisjes.
-- Rreshtat e paraqitur me gri janë joaktivë.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="772"/>
         <location filename="../src/mainwindow.cpp" line="852"/>
         <source>Set ac&amp;tive</source>
-        <translation>Kaloje ak&amp;tiv</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="773"/>
         <source>&amp;Add entry</source>
-        <translation>Shtoni &amp;zë</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="774"/>
         <source>Boot &amp;next</source>
-        <translation>Nis &amp;pasuesin</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="775"/>
         <source>Move &amp;down</source>
-        <translation>Ule p&amp;oshtë</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="776"/>
         <source>&amp;Remove entry</source>
-        <translation>&amp;Hiqe zërin</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="778"/>
@@ -315,23 +313,23 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="779"/>
         <source>Change &amp;timeout</source>
-        <translation>Ndryshoni &amp;mbarim kohe</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="780"/>
         <source>Move &amp;up</source>
-        <translation>Ngjite &amp;sipër</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="785"/>
         <location filename="../src/mainwindow.cpp" line="802"/>
         <source>not set, will boot using list order</source>
-        <translation>e pacaktuar, do të bëhet nisje duke përdorur radhën në listë</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="849"/>
         <source>Set &amp;inactive</source>
-        <translation>Kaloje &amp;joaktiv  </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="922"/>
@@ -392,7 +390,7 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="907"/>
         <location filename="../src/mainwindow.cpp" line="1524"/>
         <source>Install</source>
-        <translation>Instaloje</translation>
+        <translation>התקנה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1530"/>
@@ -450,49 +448,48 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1656"/>
         <source>Version: </source>
-        <translation>Version: </translation>
+        <translation>גרסה:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1660"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Të drejta kopjimi (c) MX Linux</translation>
+        <translation>זכויות היוצרים (c) שמורות ל־MX Linux</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1661"/>
         <source>%1 License</source>
-        <translation>Licencë %1</translation>
+        <translation>רישיון של %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1669"/>
         <source>%1 Help</source>
-        <translation>Ndihmë për %1</translation>
+        <translation>עזרה עבור %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1697"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation>Diç shkoi ters, s’u ruajt dot rend nisjeje.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1705"/>
         <source>Set timeout</source>
-        <translation>Ujdisni mbarim kohe</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1705"/>
         <source>Timeout in seconds:</source>
-        <translation>Mbarim kohe, në sekonda:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1744"/>
         <source>Removal confirmation</source>
-        <translation>Ripohim heqjeje</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1745"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation>Jeni i sigurt se doni të fshihet ky zë nisjeje?
-%1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -500,17 +497,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="99"/>
         <source>License</source>
-        <translation>Licencë</translation>
+        <translation>רישיון</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation>Regjistër ndryshimesh</translation>
+        <translation>יומן שינויים</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation>Anuloje</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="125"/>
@@ -525,7 +522,7 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation>&amp;Mbylle</translation>
+        <translation>&amp;סגירה</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="85"/>
@@ -541,7 +538,7 @@ Missing mandatory files in directory: </source>
         <location filename="../src/main.cpp" line="66"/>
         <location filename="../src/main.cpp" line="95"/>
         <source>UEFI Manager</source>
-        <translation>Përgjegjës UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="89"/>
@@ -556,17 +553,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/main.cpp" line="107"/>
         <source>Error</source>
-        <translation>Gabim</translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="108"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation>Duket të jeni futur si rrënjë, ju lutemi, që të përdorni këtë program, dilni nga llogaria dhe hyni si përdorues i zakonshëm.</translation>
+        <translation>כנראה שנכנסת למערכת בתור משתמש על (root), נא לצאת ולהיכנס כמשתמש רגיל כדי להשתמש בתוכנית הזאת.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>version:</source>
-        <translation>version:</translation>
+        <translation>גרסה:</translation>
     </message>
 </context>
 </TS>
