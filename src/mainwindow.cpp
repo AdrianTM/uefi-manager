@@ -658,7 +658,7 @@ void MainWindow::filterDrivePartitions()
     comboPartition->blockSignals(false);
     QString drive = comboDrive->currentText().section(' ', 0, 0);
     if (!drive.isEmpty()) {
-        QStringList drivePart = listPartition.filter(QRegularExpression("^" + drive));
+        QStringList drivePart = listPartition.filter(QRegularExpression("^" + QRegularExpression::escape(drive)));
         comboPartition->blockSignals(true);
         comboPartition->addItems(drivePart);
         comboPartition->blockSignals(false);
@@ -1247,7 +1247,7 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
     } else {
         QString grep
             = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
-                  .arg(kernelDir, vmlinuz, rootPatternList.join("|"), grubFile);
+                  .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatternList.join("|"), grubFile);
 
         bootOptions = cmd.getOutAsRoot(grep).trimmed();
     }
