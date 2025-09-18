@@ -47,7 +47,7 @@ class MainWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit MainWindow(const QCommandLineParser &arg_parser, QWidget *parent = nullptr);
+    explicit MainWindow(const QCommandLineParser &argParser, QWidget *parent = nullptr);
     ~MainWindow() override;
     void centerWindow();
     void setup();
@@ -55,12 +55,12 @@ public:
 private slots:
     void cmdDone();
     void cmdStart();
-    void pushAbout_clicked();
-    void pushHelp_clicked();
-    void pushBack_clicked();
-    void pushNext_clicked();
+    void pushAboutClicked();
+    void pushHelpClicked();
+    void pushBackClicked();
+    void pushNextClicked();
     void setConnections();
-    void tabWidget_currentChanged();
+    void tabWidgetCurrentChanged();
 
 private:
     Ui::MainWindow *ui;
@@ -72,16 +72,16 @@ private:
     QString rootPartition;
     QString rootDevicePath;
     QSettings settings;
-    QStringList listDrive;
+    QStringList driveList;
     QStringList espList;
-    QStringList listPart;
-    QStringList listLinuxPart;
-    QStringList listFrugalPart;
+    QStringList partitionList;
+    QStringList linuxPartitionList;
+    QStringList frugalPartitionList;
     QStringList newDirectories;
     QStringList newLuksDevices;
     QStringList newMounts;
 
-    static const QMap<QString, QString> persistenceTypes;
+    static const QMap<QString, QString> PERSISTENCE_TYPES;
 
     struct Options {
         QString entryName;
@@ -132,7 +132,7 @@ private:
     void saveBootOrder(const QListWidget *list);
     void selectKernel(const QString &mountPoint);
     void validateAndLoadOptions(const QString &frugalDir);
-    QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse = true);
-    bool isSystemd();
-    bool isShimSystemd(const QString &rootPath = "/");
+    QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse = true) const;
+    bool isSystemd() const;
+    bool isShimSystemd(const QString &rootPath = "/") const;
 };

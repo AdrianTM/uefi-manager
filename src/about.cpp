@@ -37,27 +37,27 @@
 // Display doc as normal user when run as root
 void displayDoc(const QString &url, const QString &title)
 {
-    bool started_as_root = false;
-    QString logname;
+    bool startedAsRoot = false;
+    QString logName;
     if (getuid() == 0) {
-        started_as_root = true;
-        logname = QString::fromUtf8(getlogin());
-        if (logname.isEmpty()) {
+        startedAsRoot = true;
+        logName = QString::fromUtf8(getlogin());
+        if (logName.isEmpty()) {
             QProcess proc;
             proc.start("logname", {}, QIODevice::ReadOnly);
             proc.waitForFinished();
-            logname = QString::fromUtf8(proc.readAllStandardOutput().trimmed());
+            logName = QString::fromUtf8(proc.readAllStandardOutput().trimmed());
         }
-        if (!logname.isEmpty()) {
+        if (!logName.isEmpty()) {
             QString homeDir;
-            struct passwd *pw = getpwnam(logname.toUtf8().constData());
+            struct passwd *pw = getpwnam(logName.toUtf8().constData());
             if (pw != nullptr) {
                 homeDir = QString::fromUtf8(pw->pw_dir);
             }
             if (!homeDir.isEmpty()) {
                 qputenv("HOME", homeDir.toUtf8()); // Use original home for theming purposes
             } else {
-                qWarning("Failed to determine home directory for user: %s", qPrintable(logname));
+                qWarning("Failed to determine home directory for user: %s", qPrintable(logName));
             }
         } else {
             qWarning("Failed to determine the username to set HOME environment variable.");
@@ -68,14 +68,14 @@ void displayDoc(const QString &url, const QString &title)
     if (!executablePath.isEmpty()) {
         QProcess::startDetached("mx-viewer", {url, title});
     } else {
-        if (!started_as_root) {
+        if (!startedAsRoot) {
             QProcess::startDetached("xdg-open", {url});
-        } else if (!logname.isEmpty()) {
+        } else if (!logName.isEmpty()) {
             static const QString runuserPath = QStandardPaths::findExecutable("runuser");
             if (!runuserPath.isEmpty()) {
                 QUrl parsedUrl(url);
                 if (parsedUrl.isValid() && (parsedUrl.scheme() == "http" || parsedUrl.scheme() == "https")) {
-                    QProcess::startDetached("runuser", {"-u", logname, "--", "xdg-open", url});
+                    QProcess::startDetached("runuser", {"-u", logName, "--", "xdg-open", url});
                 } else {
                     qWarning("Invalid URL provided: %s", qPrintable(url));
                 }
@@ -86,13 +86,13 @@ void displayDoc(const QString &url, const QString &title)
             qWarning("Failed to determine the username to run xdg-open as.");
         }
     }
-    if (started_as_root) {
-        qputenv("HOME", starting_home.toUtf8());
+    if (startedAsRoot) {
+        qputenv("HOME", STARTING_HOME.toUtf8());
     }
 }
 
-void displayAboutMsgBox(const QString &title, const QString &message, const QString &licence_url,
-                        const QString &license_title)
+void displayAboutMsgBox(const QString &title, const QString &message, const QString &licenseUrl,
+                        const QString &licenseTitle)
 {
     QMessageBox msgBox(QMessageBox::NoIcon, title, message);
 
@@ -104,7 +104,7 @@ void displayAboutMsgBox(const QString &title, const QString &message, const QStr
     msgBox.exec();
 
     if (msgBox.clickedButton() == btnLicense) {
-        displayDoc(licence_url, license_title);
+        displayDoc(licenseUrl, licenseTitle);
     } else if (msgBox.clickedButton() == btnChangelog) {
         QDialog changelog;
         auto *text = new QTextEdit(&changelog);

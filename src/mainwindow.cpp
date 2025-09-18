@@ -38,7 +38,7 @@
 
 // Trying to map all the persitence type to values that make sense
 // when passed to the kernel at boot time for frugal installation
-const QMap<QString, QString> MainWindow::persistenceTypes = {{"persist_all", "persist_all"},
+const QMap<QString, QString> MainWindow::PERSISTENCE_TYPES = {{"persist_all", "persist_all"},
                                                              {"persist_root", "persist_root"},
                                                              {"persist_static", "persist_static"},
                                                              {"persist_static_root", "persist_static_root"},
@@ -52,7 +52,7 @@ const QMap<QString, QString> MainWindow::persistenceTypes = {{"persist_all", "pe
                                                              {"frugal_home", "persist_home"},
                                                              {"frugal_only", "frugal_only"}};
 
-MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
+MainWindow::MainWindow(const QCommandLineParser &argParser, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::MainWindow)
 {
@@ -63,7 +63,7 @@ MainWindow::MainWindow(const QCommandLineParser &arg_parser, QWidget *parent)
     setup();
     setConnections();
 
-    if (arg_parser.isSet("frugal")) {
+    if (argParser.isSet("frugal")) {
         qDebug() << "Frugal mode";
         promptFrugalStubInstall();
         ui->tabWidget->setCurrentIndex(Tab::Frugal);
@@ -124,7 +124,7 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         }
     }
 
-    QString initialPath = QFile::exists("/boot/efi/EFI") ? "/boot/efi/EFI" : "/boot/efi/";
+    const QString initialPath = QFile::exists("/boot/efi/EFI") ? "/boot/efi/EFI" : "/boot/efi/";
     QString fileName
         = QFileDialog::getOpenFileName(dialogUefi, tr("Select EFI file"), initialPath, tr("EFI files (*.efi *.EFI)"));
 
@@ -132,9 +132,9 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         return;
     }
 
-    QString partitionName = cmd.getOut("df " + fileName + " --output=source").split('\n').last().trimmed();
-    QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName).trimmed();
-    QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
+    const QString partitionName = cmd.getOut("df " + fileName + " --output=source").split('\n').last().trimmed();
+    const QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName).trimmed();
+    const QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
@@ -147,8 +147,8 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     }
 
     fileName = "/EFI/" + fileName.section("/EFI/", 1);
-    QString command = QString("efibootmgr -cL \"%1\" -d %2 -p %3 -l %4").arg(name, disk, partition, fileName);
-    QString out = cmd.getOutAsRoot(command);
+    const QString command = QString("efibootmgr -cL \"%1\" -d %2 -p %3 -l %4").arg(name, disk, partition, fileName);
+    const QString out = cmd.getOutAsRoot(command);
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Something went wrong, could not add entry."));
@@ -237,12 +237,12 @@ void MainWindow::setConnections()
 
     connect(ui->comboDrive, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
     connect(ui->comboDriveStub, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
-    connect(ui->pushAbout, &QPushButton::clicked, this, &MainWindow::pushAbout_clicked);
-    connect(ui->pushBack, &QPushButton::clicked, this, &MainWindow::pushBack_clicked);
+    connect(ui->pushAbout, &QPushButton::clicked, this, &MainWindow::pushAboutClicked);
+    connect(ui->pushBack, &QPushButton::clicked, this, &MainWindow::pushBackClicked);
     connect(ui->pushCancel, &QPushButton::pressed, this, &MainWindow::close);
-    connect(ui->pushHelp, &QPushButton::clicked, this, &MainWindow::pushHelp_clicked);
-    connect(ui->pushNext, &QPushButton::clicked, this, &MainWindow::pushNext_clicked);
-    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidget_currentChanged);
+    connect(ui->pushHelp, &QPushButton::clicked, this, &MainWindow::pushHelpClicked);
+    connect(ui->pushNext, &QPushButton::clicked, this, &MainWindow::pushNextClicked);
+    connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
 
     connect(ui->comboDriveStub, &QComboBox::currentTextChanged, this, &MainWindow::checkDoneStub);
     connect(ui->comboKernel, &QComboBox::currentTextChanged, this, &MainWindow::checkDoneStub);
@@ -282,7 +282,7 @@ void MainWindow::toggleUefiActive(QListWidget *listEntries)
     emit listEntries->itemSelectionChanged();
 }
 
-void MainWindow::tabWidget_currentChanged()
+void MainWindow::tabWidgetCurrentChanged()
 {
     const int currentTab = ui->tabWidget->currentIndex();
     ui->pushNext->setVisible(currentTab == Tab::Frugal || currentTab == Tab::StubInstall);
@@ -439,7 +439,7 @@ bool MainWindow::installEfiStub(const QString &esp)
     }
 
     QString disk;
-    for (const QString &drive : listDrive) {
+    for (const QString &drive : driveList) {
         const QString driveName = drive.section(' ', 0, 0);
         if (esp.startsWith(driveName)) {
             disk = "/dev/" + driveName;
@@ -589,7 +589,7 @@ void MainWindow::addDevToList()
     auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
     comboDrive->blockSignals(true);
     comboDrive->clear();
-    comboDrive->addItems(listDrive);
+    comboDrive->addItems(driveList);
 
     QString currentDrive = comboDrive->currentText().section(' ', 0, 0);
 
@@ -651,14 +651,14 @@ void MainWindow::filterDrivePartitions()
     auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
     auto *comboPartition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboPartition : ui->comboPartitionStub;
 
-    QStringList listPartition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? listFrugalPart : listLinuxPart;
+    QStringList partitionListition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? frugalPartitionList : linuxPartitionList;
 
     comboPartition->blockSignals(true);
     comboPartition->clear();
     comboPartition->blockSignals(false);
     QString drive = comboDrive->currentText().section(' ', 0, 0);
     if (!drive.isEmpty()) {
-        QStringList drivePart = listPartition.filter(QRegularExpression("^" + QRegularExpression::escape(drive)));
+        QStringList drivePart = partitionListition.filter(QRegularExpression("^" + QRegularExpression::escape(drive)));
         comboPartition->blockSignals(true);
         comboPartition->addItems(drivePart);
         comboPartition->blockSignals(false);
@@ -926,8 +926,8 @@ bool MainWindow::readGrubEntry()
             for (const QString &option : optionsList) {
                 if (option.startsWith("bdir=")) {
                     options.bdir = option.section('=', 1, 1).trimmed();
-                } else if (persistenceTypes.contains(option)) {
-                    options.persistenceType = persistenceTypes[option];
+                } else if (PERSISTENCE_TYPES.contains(option)) {
+                    options.persistenceType = PERSISTENCE_TYPES[option];
                 } else if (!option.startsWith("buuid=") && !option.endsWith("vmlinuz")) {
                     options.stringOptions.append(option + ' ');
                 }
@@ -1267,7 +1267,7 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
     }
 }
 
-QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse)
+QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse) const
 {
     // Custom sort
     auto versionCompare = [reverse](const QString &a, const QString &b) {
@@ -1391,10 +1391,10 @@ void MainWindow::listDevices()
     if (firstRun) {
         firstRun = false;
 
-        QString cmd_str("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
+        QString cmdStr("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
                         "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
                         "| sort -V");
-        espList = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+        espList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         rootDevicePath = cmd.getOut("df / --output=source").split('\n').last();
 
@@ -1405,17 +1405,17 @@ void MainWindow::listDevices()
             rootPartition = rootDevicePath.split('/').last().trimmed();
         }
 
-        cmd_str = "lsblk -ln -o NAME,SIZE,LABEL,MODEL -d -e 2,11 -x NAME | grep -E '^x?[h,s,v].[a-z]|^mmcblk|^nvme'";
-        listDrive = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+        cmdStr = "lsblk -ln -o NAME,SIZE,LABEL,MODEL -d -e 2,11 -x NAME | grep -E '^x?[h,s,v].[a-z]|^mmcblk|^nvme'";
+        driveList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
-        cmd_str = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
+        cmdStr = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
                   "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' | sort -V";
-        listPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+        partitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         // linux partions: without ntfs, exfat, vfat, Bitloaker, and swap
         // size >= 6 GB
         // version sorted
-        cmd_str = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
+        cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
                   "| grep -v -P '^(BitLocker|ntfs|exfat|vfat|swap|[[:space:]])' "
                   "| grep -oP '^[a-z][[:alnum:]_]+[[:space:]]+\\K.*' "
                   "| grep -vE '^[1-5]([,.][0-9])?G[[:space:]]' "
@@ -1425,13 +1425,13 @@ void MainWindow::listDevices()
                   "| sed -r '/^"
                   + rootPartition + " /s|/[^[:space:]]+|/|'";
 
-        listLinuxPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+        linuxPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         // data partions for frugal: any linux and ntfs, vfat, exfat without Bitloaker and swap
         // size >= 1 GB
         // version sorted
 
-        cmd_str = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
+        cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
                   "| grep -v -P '^(swap|BitLocker|[[:space:]])' "
                   "| grep -oP '^[a-z][[:alnum:]]+[[:space:]]+\\K.*' "
                   "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
@@ -1440,7 +1440,7 @@ void MainWindow::listDevices()
                   "| sed -r '/^"
                   + rootPartition + " /s|/[^[:space:]]+|/|'";
 
-        listFrugalPart = cmd.getOut(cmd_str).split('\n', Qt::SkipEmptyParts);
+        frugalPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         rootDrive = [&]() {
             // Regular expression to match the disk device name followed by digits
@@ -1563,7 +1563,7 @@ QString MainWindow::selectESP()
     return selectedEsp;
 }
 
-void MainWindow::pushNext_clicked()
+void MainWindow::pushNextClicked()
 {
     if (ui->tabWidget->currentIndex() == Tab::Frugal) {
         if (ui->stackedFrugal->currentIndex() == Page::Location) {
@@ -1633,7 +1633,7 @@ void MainWindow::pushNext_clicked()
     }
 }
 
-void MainWindow::pushAbout_clicked()
+void MainWindow::pushAboutClicked()
 {
     this->hide();
     displayAboutMsgBox(
@@ -1648,13 +1648,13 @@ void MainWindow::pushAbout_clicked()
     this->show();
 }
 
-void MainWindow::pushHelp_clicked()
+void MainWindow::pushHelpClicked()
 {
     const QString url = "https://mxlinux.org/wiki/uefi-manager/";
     displayDoc(url, tr("%1 Help").arg(this->windowTitle()));
 }
 
-void MainWindow::pushBack_clicked()
+void MainWindow::pushBackClicked()
 {
     if (ui->stackedFrugal->currentIndex() == Page::Options) {
         ui->stackedFrugal->setCurrentIndex(Page::Location);
@@ -1746,7 +1746,7 @@ void MainWindow::removeUefiEntry(QListWidget *listEntries, QWidget *uefiDialog)
 }
 
 // Helper function to check system is running with systemd
-bool MainWindow::isSystemd()
+bool MainWindow::isSystemd() const
 {
     // Check if the directory /run/systemd/system exists
     QDir systemdDir("/run/systemd/system");
@@ -1759,7 +1759,7 @@ bool MainWindow::isSystemd()
 }
 
 // Helper function to check whether system under rootPath is a shim-systemd system
-bool MainWindow::isShimSystemd(const QString &rootPath)
+bool MainWindow::isShimSystemd(const QString &rootPath) const
 {
     QString root = rootPath; // Create a mutable copy of rootPath
 
