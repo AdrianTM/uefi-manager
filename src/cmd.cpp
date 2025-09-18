@@ -28,8 +28,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QTimer>
-
-#include "mainwindow.h"
+#include <QWidget>
 
 #include <unistd.h>
 
@@ -160,11 +159,10 @@ bool Cmd::runAsRoot(const QString &cmd, QString *output, const QByteArray *input
 
 void Cmd::handleElevationError()
 {
-    if (qobject_cast<MainWindow *>(qApp->activeWindow())) {
-        QMessageBox::critical(nullptr, tr("Administrator Access Required"),
-                              tr("This operation requires administrator privileges. Please restart the application "
-                                 "and enter your password when prompted."));
-    }
+    QWidget *parentWidget = qobject_cast<QWidget *>(qApp->activeWindow());
+    QMessageBox::critical(parentWidget, tr("Administrator Access Required"),
+                          tr("This operation requires administrator privileges. Please restart the application "
+                             "and enter your password when prompted."));
+
     QTimer::singleShot(0, qApp, &QApplication::quit);
-    exit(EXIT_FAILURE);
 }
