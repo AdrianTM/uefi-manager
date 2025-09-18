@@ -29,6 +29,7 @@
 #include <QInputDialog>
 #include <QListWidget>
 #include <QRegularExpression>
+#include <QScopeGuard>
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
@@ -1589,6 +1590,13 @@ void MainWindow::pushNextClicked()
                 validateAndLoadOptions(frugalDir);
             }
         } else if (ui->stackedFrugal->currentIndex() == Page::Options) {
+            ui->pushNext->setEnabled(false);
+            ui->pushCancel->setEnabled(false);
+            const auto restoreButtons = qScopeGuard([this]() {
+                ui->pushNext->setEnabled(true);
+                ui->pushCancel->setEnabled(true);
+            });
+
             QString esp = selectESP();
             if (esp.isEmpty()) {
                 return;
@@ -1616,6 +1624,13 @@ void MainWindow::pushNextClicked()
         }
 
         loadStubOption();
+
+        ui->pushNext->setEnabled(false);
+        ui->pushCancel->setEnabled(false);
+        const auto restoreButtons = qScopeGuard([this]() {
+            ui->pushNext->setEnabled(true);
+            ui->pushCancel->setEnabled(true);
+        });
 
         QString esp = selectESP();
         if (esp.isEmpty()) {
