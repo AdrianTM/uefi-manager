@@ -822,13 +822,21 @@ void MainWindow::refreshEntries()
             [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
 
     connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
-    connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
+    connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [this, listEntries, pushUp, pushDown]() {
+        pushUp->setEnabled(false);
+        pushDown->setEnabled(false);
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow(), QModelIndex(),
                                       listEntries->currentRow() - 1);
+        pushUp->setEnabled(listEntries->currentRow() != 0);
+        pushDown->setEnabled(listEntries->currentRow() != listEntries->count() - 1);
     });
-    connect(pushDown, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() {
+    connect(pushDown, &QPushButton::clicked, ui->tabManageUefi, [this, listEntries, pushUp, pushDown]() {
+        pushUp->setEnabled(false);
+        pushDown->setEnabled(false);
         listEntries->model()->moveRow(QModelIndex(), listEntries->currentRow() + 1, QModelIndex(),
                                       listEntries->currentRow()); // move next entry down
+        pushUp->setEnabled(listEntries->currentRow() != 0);
+        pushDown->setEnabled(listEntries->currentRow() != listEntries->count() - 1);
     });
     connect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi,
             [listEntries, pushUp, pushDown, pushActive]() {
