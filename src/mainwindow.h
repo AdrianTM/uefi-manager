@@ -120,6 +120,11 @@ private:
     void getGrubOptions(const QString &mountPoint = "/");
     void getKernelOptions(const QString &mountPoint);
     void getKernelOptions(const QString &mountPoint, const QString &rootDir, const QString &kernel);
+    QString determineKernelDir(const QString &bootDir, const QString &rootDir);
+    QPair<QStringList, QString> getRootIdentifiers(const QString &rootDir);
+    QString parseGrubOptions(const QString &grubFile, const QStringList &rootPatterns, const QString &kernelDir, const QString &vmlinuz);
+    QString getFallbackOptions(const QString &rootDir, const QString &rootUUID);
+    QString combineBootOptions(const QString &parsedOptions, const QString &rootDir);
     void guessPartition();
     void listDevices();
     void loadStubOption();

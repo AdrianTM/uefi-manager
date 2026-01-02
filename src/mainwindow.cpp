@@ -29,7 +29,7 @@
 #include <QInputDialog>
 #include <QListWidget>
 #include <QRegularExpression>
-#include <QScopeGuard>
+
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
@@ -1137,11 +1137,25 @@ void MainWindow::getKernelOptions(const QString &bootDir)
 
 void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir, const QString &kernel)
 {
-    QString kernelDir;
+    QString kernelDir = determineKernelDir(bootDir, rootDir);
     QString vmlinuz = kernel;
+    if (!vmlinuz.startsWith("vmlinuz-")) {
+        vmlinuz = "vmlinuz-" + kernel;
+    }
 
+    auto [rootPatterns, rootUUID] = getRootIdentifiers(rootDir);
     QString grubFile = bootDir.endsWith("/") ? bootDir + "grub/grub.cfg" : bootDir + "/grub/grub.cfg";
 
+    QString bootOptions = parseGrubOptions(grubFile, rootPatterns, kernelDir, vmlinuz);
+    if (bootOptions.isEmpty()) {
+        bootOptions = getFallbackOptions(rootDir, rootUUID);
+    }
+    bootOptions = combineBootOptions(bootOptions, rootDir);
+    ui->textKernelOptions->setText(bootOptions);
+}
+QString MainWindow::determineKernelDir(const QString &bootDir, const QString &rootDir)
+{
+    QString kernelDir;
     if (bootDir == "/boot" || bootDir == "/boot/") {
         if (!Cmd().procAsRoot("mountpoint", {"-q", bootDir})) {
             kernelDir = "/boot";
@@ -1153,20 +1167,17 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
     } else {
         kernelDir = "";
     }
+    return kernelDir;
+}
 
-    if (!vmlinuz.startsWith("vmlinuz-")) {
-        vmlinuz = "vmlinuz-" + kernel;
-    }
-
+QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDir)
+{
     QString rootDevicePath = cmd.getOut("df --output=source " + rootDir).split('\n').last();
-
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
     cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr);
     if (!rootUUID.isEmpty()) {
         rootPatternList << "UUID=" + rootUUID;
-        // rootPatternList << rootUUID.toLower();
-        // rootPatternList << rootUUID.toUpper();
     }
 
     if (rootDevicePath.startsWith("/dev/mapper")) {
@@ -1176,26 +1187,22 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
         QString rootParentPARTLABEL;
         QString rootDevMapper;
         QStringList rootParentPatternList;
-        rootParentDevice
-            = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
+        rootParentDevice = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
 
         if (!rootParentDevice.isEmpty()) {
             rootParentPatternList << rootParentDevice;
             // UUID
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", "/dev/" + rootParentDevice},
-                           &rootParentUUID, nullptr);
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", "/dev/" + rootParentDevice}, &rootParentUUID, nullptr);
             if (!rootParentUUID.isEmpty()) {
                 rootParentPatternList << "UUID=" + rootParentUUID;
             }
             // PARTUUID
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTUUID", "/dev/" + rootParentDevice},
-                           &rootParentPARTUUID, nullptr);
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTUUID", "/dev/" + rootParentDevice}, &rootParentPARTUUID, nullptr);
             if (!rootParentPARTUUID.isEmpty()) {
                 rootParentPatternList << "PARTUUID=" + rootParentPARTUUID;
             }
             // PARTLABEL
-            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTLABEL", "/dev/" + rootParentDevice},
-                           &rootParentPARTLABEL, nullptr);
+            cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "PARTLABEL", "/dev/" + rootParentDevice}, &rootParentPARTLABEL, nullptr);
             if (!rootParentPARTLABEL.isEmpty()) {
                 rootParentPARTLABEL.replace(" ", "\\040");
                 rootParentPatternList << "PARTLABEL=" + rootParentPARTLABEL;
@@ -1204,77 +1211,82 @@ void MainWindow::getKernelOptions(const QString &bootDir, const QString &rootDir
             QString crypttab = rootDir.endsWith("/") ? rootDir + "etc/crypttab" : rootDir + "/etc/crypttab";
 
             if (QFile::exists(crypttab)) {
-                cmd.procAsRoot(
-                    "grep",
-                    {"-m1", "-oP",
-                     QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'").arg(rootParentPatternList.join("|")),
-                     crypttab},
-                    &rootDevMapper, nullptr);
-
+                cmd.procAsRoot("grep", {"-m1", "-oP", QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'").arg(rootParentPatternList.join("|")), crypttab}, &rootDevMapper, nullptr);
                 if (!rootDevMapper.trimmed().isEmpty()) {
                     rootPatternList << "/dev/mapper/" + rootDevMapper.trimmed();
                 }
             }
         }
     }
+    return {rootPatternList, rootUUID};
+}
 
+QString MainWindow::parseGrubOptions(const QString &grubFile, const QStringList &rootPatterns, const QString &kernelDir, const QString &vmlinuz)
+{
     QString bootOptions;
     if (!QFile::exists(grubFile)) {
         qWarning() << "GRUB file not found:" << grubFile;
-
-        // Obtain root= from rootUUID
-        if (!rootUUID.isEmpty()) {
-            bootOptions = "root=UUID=" + rootUUID;
-        }
-
-        // Try to read options from /etc/default/grub if it exists
-        QString defaultGrubFile = rootDir.endsWith("/") ? rootDir + "etc/default/grub" : rootDir + "/etc/default/grub";
-        if (QFile::exists(defaultGrubFile)) {
-            // Get options from GRUB_CMDLINE_LINUX
-            QString grepCmdLinux = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX=\"\\K[^\"]+'") + " " + defaultGrubFile;
-            QString linuxOptions = cmd.getOutAsRoot(grepCmdLinux).trimmed();
-
-            // Get options from GRUB_CMDLINE_LINUX_DEFAULT
-            QString grepCmdLinuxDefault
-                = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX_DEFAULT=\"\\K[^\"]+'") + " " + defaultGrubFile;
-            QString defaultOptions = cmd.getOutAsRoot(grepCmdLinuxDefault).trimmed();
-
-            // Combine both options
-            if (!linuxOptions.isEmpty()) {
-                bootOptions += " " + linuxOptions;
-                qDebug() << "Boot options from GRUB_CMDLINE_LINUX:" << linuxOptions;
-            }
-
-            if (!defaultOptions.isEmpty()) {
-                bootOptions += " " + defaultOptions;
-                qDebug() << "Boot options from GRUB_CMDLINE_LINUX_DEFAULT:" << defaultOptions;
-            }
-
-            if (!linuxOptions.isEmpty() || !defaultOptions.isEmpty()) {
-                qDebug() << "Combined boot options:" << bootOptions;
-            }
-        }
+        return "";
     } else {
-        QString grep
-            = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
-                  .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatternList.join("|"), grubFile);
-
+        QString grep = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
+                       .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatterns.join("|"), grubFile);
         bootOptions = cmd.getOutAsRoot(grep).trimmed();
     }
+    return bootOptions;
+}
+
+QString MainWindow::getFallbackOptions(const QString &rootDir, const QString &rootUUID)
+{
+    QString bootOptions;
+    // Obtain root= from rootUUID
+    if (!rootUUID.isEmpty()) {
+        bootOptions = "root=UUID=" + rootUUID;
+    }
+
+    // Try to read options from /etc/default/grub if it exists
+    QString defaultGrubFile = rootDir.endsWith("/") ? rootDir + "etc/default/grub" : rootDir + "/etc/default/grub";
+    if (QFile::exists(defaultGrubFile)) {
+        // Get options from GRUB_CMDLINE_LINUX
+        QString grepCmdLinux = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX=\"\\K[^\"]+'") + " " + defaultGrubFile;
+        QString linuxOptions = cmd.getOutAsRoot(grepCmdLinux).trimmed();
+
+        // Get options from GRUB_CMDLINE_LINUX_DEFAULT
+        QString grepCmdLinuxDefault = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX_DEFAULT=\"\\K[^\"]+'") + " " + defaultGrubFile;
+        QString defaultOptions = cmd.getOutAsRoot(grepCmdLinuxDefault).trimmed();
+
+        // Combine both options
+        if (!linuxOptions.isEmpty()) {
+            bootOptions += " " + linuxOptions;
+            qDebug() << "Boot options from GRUB_CMDLINE_LINUX:" << linuxOptions;
+        }
+
+        if (!defaultOptions.isEmpty()) {
+            bootOptions += " " + defaultOptions;
+            qDebug() << "Boot options from GRUB_CMDLINE_LINUX_DEFAULT:" << defaultOptions;
+        }
+
+        if (!linuxOptions.isEmpty() || !defaultOptions.isEmpty()) {
+            qDebug() << "Combined boot options:" << bootOptions;
+        }
+    }
+    return bootOptions.trimmed();
+}
+
+QString MainWindow::combineBootOptions(const QString &parsedOptions, const QString &rootDir)
+{
+    QString bootOptions = parsedOptions;
     const QString initSystemd = "init=/lib/systemd/systemd";
     if (!bootOptions.isEmpty()) {
         if (isSystemd() && !bootOptions.contains(initSystemd)) {
-            // add initSystemd;
             if (isShimSystemd(rootDir)) {
                 bootOptions = bootOptions + " " + initSystemd;
                 qDebug() << "System init boot options added:" << bootOptions;
             }
         }
-        ui->textKernelOptions->setText(bootOptions);
     } else {
-        ui->textKernelOptions->setText("");
         qWarning() << "Captured boot options are empty.";
     }
+    return bootOptions;
 }
 
 QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse) const
