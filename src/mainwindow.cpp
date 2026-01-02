@@ -40,18 +40,18 @@
 // Trying to map all the persitence type to values that make sense
 // when passed to the kernel at boot time for frugal installation
 const QMap<QString, QString> MainWindow::PERSISTENCE_TYPES = {{"persist_all", "persist_all"},
-                                                             {"persist_root", "persist_root"},
-                                                             {"persist_static", "persist_static"},
-                                                             {"persist_static_root", "persist_static_root"},
-                                                             {"p_static_root", "persist_static_root"},
-                                                             {"persist_home", "persist_home"},
-                                                             {"frugal_persist", "persist_all"},
-                                                             {"frugal_root", "persist_root"},
-                                                             {"frugal_static", "persist_static"},
-                                                             {"frugal_static_root", "persist_static_root"},
-                                                             {"f_static_root", "persist_static_root"},
-                                                             {"frugal_home", "persist_home"},
-                                                             {"frugal_only", "frugal_only"}};
+                                                              {"persist_root", "persist_root"},
+                                                              {"persist_static", "persist_static"},
+                                                              {"persist_static_root", "persist_static_root"},
+                                                              {"p_static_root", "persist_static_root"},
+                                                              {"persist_home", "persist_home"},
+                                                              {"frugal_persist", "persist_all"},
+                                                              {"frugal_root", "persist_root"},
+                                                              {"frugal_static", "persist_static"},
+                                                              {"frugal_static_root", "persist_static_root"},
+                                                              {"f_static_root", "persist_static_root"},
+                                                              {"frugal_home", "persist_home"},
+                                                              {"frugal_only", "frugal_only"}};
 
 MainWindow::MainWindow(const QCommandLineParser &argParser, QWidget *parent)
     : QDialog(parent),
@@ -204,7 +204,7 @@ void MainWindow::setup()
     }
 
     // Refresh blkid cache early
-    cmd.proc("/usr/sbin/blkid");
+    cmd.proc("blkid");
 
     // Refresh appropriate tab content based on current tab
     const auto currentTab = ui->tabWidget->currentIndex();
@@ -395,10 +395,18 @@ bool MainWindow::copyKernel()
         return dir;
     }();
     const QString kernelVersion = ui->comboKernel->currentText();
-    const QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
+    QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
+    if (!QFile::exists(vmlinuz)) {
+        // Fallback for Arch-style
+        vmlinuz = QString("%1/vmlinuz-linux").arg(sourceDir);
+    }
 
-    const QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
-    const QString initramfs = QString("%1/initramfs-%2").arg(sourceDir, isFrugal ? "" : kernelVersion + ".img");
+    QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
+    QString initramfs = QString("%1/initramfs-%2").arg(sourceDir, isFrugal ? "" : kernelVersion + ".img");
+    if (!QFile::exists(initrd) && !QFile::exists(initramfs)) {
+        // Fallback for Arch-style initramfs
+        initramfs = QString("%1/initramfs-linux.img").arg(sourceDir);
+    }
 
     const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
     const QString intelUcode = QString("%1/intel-ucode.img").arg(sourceDir);
@@ -652,7 +660,8 @@ void MainWindow::filterDrivePartitions()
     auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
     auto *comboPartition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboPartition : ui->comboPartitionStub;
 
-    QStringList partitionListition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? frugalPartitionList : linuxPartitionList;
+    QStringList partitionListition
+        = (ui->tabWidget->currentIndex() == Tab::Frugal) ? frugalPartitionList : linuxPartitionList;
 
     comboPartition->blockSignals(true);
     comboPartition->clear();
@@ -1393,8 +1402,8 @@ void MainWindow::listDevices()
         firstRun = false;
 
         QString cmdStr("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
-                        "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
-                        "| sort -V");
+                       "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
+                       "| sort -V");
         espList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         rootDevicePath = cmd.getOut("df / --output=source").split('\n').last();
@@ -1410,21 +1419,21 @@ void MainWindow::listDevices()
         driveList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         cmdStr = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
-                  "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' | sort -V";
+                 "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' | sort -V";
         partitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         // linux partions: without ntfs, exfat, vfat, Bitloaker, and swap
         // size >= 6 GB
         // version sorted
         cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
-                  "| grep -v -P '^(BitLocker|ntfs|exfat|vfat|swap|[[:space:]])' "
-                  "| grep -oP '^[a-z][[:alnum:]_]+[[:space:]]+\\K.*' "
-                  "| grep -vE '^[1-5]([,.][0-9])?G[[:space:]]' "
-                  "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
-                  "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
-                  "| sort -V"
-                  "| sed -r '/^"
-                  + rootPartition + " /s|/[^[:space:]]+|/|'";
+                 "| grep -v -P '^(BitLocker|ntfs|exfat|vfat|swap|[[:space:]])' "
+                 "| grep -oP '^[a-z][[:alnum:]_]+[[:space:]]+\\K.*' "
+                 "| grep -vE '^[1-5]([,.][0-9])?G[[:space:]]' "
+                 "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
+                 "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
+                 "| sort -V"
+                 "| sed -r '/^"
+                 + rootPartition + " /s|/[^[:space:]]+|/|'";
 
         linuxPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
@@ -1433,13 +1442,13 @@ void MainWindow::listDevices()
         // version sorted
 
         cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
-                  "| grep -v -P '^(swap|BitLocker|[[:space:]])' "
-                  "| grep -oP '^[a-z][[:alnum:]]+[[:space:]]+\\K.*' "
-                  "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
-                  "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
-                  "| sort -V"
-                  "| sed -r '/^"
-                  + rootPartition + " /s|/[^[:space:]]+|/|'";
+                 "| grep -v -P '^(swap|BitLocker|[[:space:]])' "
+                 "| grep -oP '^[a-z][[:alnum:]]+[[:space:]]+\\K.*' "
+                 "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
+                 "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
+                 "| sort -V"
+                 "| sed -r '/^"
+                 + rootPartition + " /s|/[^[:space:]]+|/|'";
 
         frugalPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
@@ -1788,14 +1797,21 @@ bool MainWindow::isShimSystemd(const QString &rootPath) const
         root.chop(strlen("/usr/sbin/init"));
     } else if (root.endsWith("/sbin/init")) {
         root.chop(strlen("/sbin/init"));
+    } else if (root.endsWith("/usr/bin/init")) {
+        root.chop(strlen("/usr/bin/init"));
     } else if (root.endsWith("/usr/lib/systemd/systemd")) {
         root.chop(strlen("/usr/lib/systemd/systemd"));
     } else if (root.endsWith("/lib/systemd/systemd")) {
         root.chop(strlen("/lib/systemd/systemd"));
     }
 
-    // Check if /sbin/init is a symlink to /lib/systemd/systemd
-    QFile initFile(root + "/sbin/init");
+    // Check if /sbin/init or /bin/init is a symlink to /lib/systemd/systemd
+    QFile initFile;
+    if (QFile::exists(root + "/sbin/init")) {
+        initFile.setFileName(root + "/sbin/init");
+    } else {
+        initFile.setFileName(root + "/bin/init");
+    }
     QFile initSystemd(root + "/lib/systemd/systemd");
 
     QFileInfo initInfo(initFile);
