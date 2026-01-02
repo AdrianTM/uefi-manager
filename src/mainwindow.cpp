@@ -37,7 +37,7 @@
 #include "about.h"
 #include "cmd.h"
 
-// Trying to map all the persitence type to values that make sense
+// Trying to map all the persistence type to values that make sense
 // when passed to the kernel at boot time for frugal installation
 const QMap<QString, QString> MainWindow::PERSISTENCE_TYPES = {{"persist_all", "persist_all"},
                                                               {"persist_root", "persist_root"},
@@ -302,7 +302,7 @@ void MainWindow::tabWidgetCurrentChanged()
     }
 }
 
-QString MainWindow::getBootLocation()
+[[nodiscard]] QString MainWindow::getBootLocation()
 {
     QString partition = ui->comboPartitionStub->currentText().section(' ', 0, 0);
     QString mountPoint = getMountPoint(partition);
@@ -317,7 +317,7 @@ QString MainWindow::getBootLocation()
     return getBootLocation(mountPoint);
 }
 
-QString MainWindow::getBootLocation(const QString &mountPoint)
+[[nodiscard]] QString MainWindow::getBootLocation(const QString &mountPoint)
 {
 
     // Check /etc/fstab for separate /boot partition
@@ -1053,7 +1053,7 @@ QString MainWindow::getLuksUUID(const QString &part)
     return cmd.getOutAsRoot("cryptsetup luksUUID " + part);
 }
 
-QString MainWindow::getMountPoint(const QString &partition)
+[[nodiscard]] QString MainWindow::getMountPoint(const QString &partition)
 {
     if ((partition == rootPartition)
         || (partition.startsWith("/dev/") && partition == QString("/dev/%1").arg(rootPartition))) {
