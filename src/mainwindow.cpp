@@ -194,6 +194,10 @@ void MainWindow::centerWindow()
 
 void MainWindow::setup()
 {
+#ifdef IS_ARCH_BUILD
+    ui->tabWidget->setTabVisible(Tab::Frugal, false);
+#endif
+
     auto size = this->size();
     if (settings.contains("geometry")) {
         restoreGeometry(settings.value("geometry").toByteArray());

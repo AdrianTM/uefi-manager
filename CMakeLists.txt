@@ -22,6 +22,16 @@
 
 cmake_minimum_required(VERSION 3.16)
 
+# Check if building on Arch or with an explicit PKGBUILD environment flag.
+execute_process(
+    COMMAND sh -c "grep -q '^ID=arch' /etc/os-release"
+    RESULT_VARIABLE IS_ARCH_RESULT
+)
+if(IS_ARCH_RESULT EQUAL 0 OR DEFINED ENV{UEFI_MANAGER_ARCH_BUILD})
+    add_definitions(-DIS_ARCH_BUILD)
+    message(STATUS "Arch build detected - disabling Frugal tab")
+endif()
+
 set(PROJECT_VERSION_FROM_CHANGELOG "")
 
 if(DEFINED PROJECT_VERSION_OVERRIDE AND NOT "${PROJECT_VERSION_OVERRIDE}" STREQUAL "")

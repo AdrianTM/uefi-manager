@@ -25,6 +25,9 @@ build() {
     # Get version from git tag (strip any extra pkgver info for CMake)
     _version=$(git describe --tags --abbrev=0 | sed 's/^v//')
 
+    # Flag Arch packaging builds for CMake
+    export UEFI_MANAGER_ARCH_BUILD=1
+
     # Clean any previous build artifacts
     rm -rf build
 
