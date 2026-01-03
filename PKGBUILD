@@ -1,29 +1,21 @@
 # Maintainer: Adrian <adrian@mxlinux.org>
-pkgname=uefi-manager-git
-pkgrel=2
+pkgname=uefi-manager
+pkgrel=1
 pkgdesc="A graphical tool for managing UEFI boot entries"
-pkgver=25.09.1.r5.g5c4b181
+pkgver=25.09.1
 arch=('x86_64' 'i686')
 url="https://mxlinux.org"
 license=('GPL3')
 depends=('efibootmgr' 'qt6-base' 'polkit')
 provides=('uefi-manager')
 conflicts=('uefi-manager')
-makedepends=('cmake' 'ninja' 'qt6-tools' 'git')
-source=("$pkgname::git+https://github.com/MX-Linux/uefi-manager.git")
-sha256sums=('SKIP')
-
-pkgver() {
-    cd "$srcdir/$pkgname"
-    # Get version from git tags with commit count and short hash
-    git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
-}
+makedepends=('cmake' 'ninja' 'qt6-tools')
+source=()
+sha256sums=()
 
 build() {
-    cd "$srcdir/$pkgname"
-
-    # Get version from git tag (strip any extra pkgver info for CMake)
-    _version=$(git describe --tags --abbrev=0 | sed 's/^v//')
+    # Get version from pkgver (strip any extra pkgver info for CMake)
+    _version="${pkgver}"
 
     # Flag Arch packaging builds for CMake
     export UEFI_MANAGER_ARCH_BUILD=1
@@ -44,7 +36,6 @@ build() {
 }
 
 package() {
-    cd "$srcdir/$pkgname"
 
     # Install binary
     install -Dm755 build/uefi-manager "${pkgdir}/usr/bin/uefi-manager"
