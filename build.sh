@@ -81,7 +81,7 @@ if [ "$DEBIAN_BUILD" = true ]; then
     echo "Creating debs directory and moving debian artifacts..."
     mkdir -p debs
     mv ../*.deb debs/ 2>/dev/null || true
-    mv ../*.changes debs/ 2>/dev/null || true  
+    mv ../*.changes debs/ 2>/dev/null || true
     mv ../*.dsc debs/ 2>/dev/null || true
     mv ../*.tar.* debs/ 2>/dev/null || true
     mv ../*.buildinfo debs/ 2>/dev/null || true
@@ -121,8 +121,13 @@ if [ "$ARCH_BUILD" = true ]; then
     fi
     echo "Using version ${ARCH_VERSION} from debian/changelog"
 
-    ARCH_BUILDDIR=$(mktemp -d -p "$PWD" archpkgbuild.XXXXXX)
+    ARCH_BUILDDIR=$(mktemp -d --tmpdir archpkgbuild.XXXXXX)
     trap 'rm -rf "$ARCH_BUILDDIR"' EXIT
+
+    # Copy repository contents and PKGBUILD to build directory
+    mkdir -p "$ARCH_BUILDDIR/src"
+    cp -r "$PWD"/* "$ARCH_BUILDDIR/src/"
+    cp PKGBUILD "$ARCH_BUILDDIR/"
 
     # Clean previous build artifacts
     rm -rf pkg *.pkg.tar.zst
@@ -131,6 +136,7 @@ if [ "$ARCH_BUILD" = true ]; then
     mkdir -p "$PKG_DEST_DIR"
 
     # Build package (without --clean to preserve directories)
+    cd "$ARCH_BUILDDIR"
     BUILDDIR="$ARCH_BUILDDIR" PKGDEST="$PKG_DEST_DIR" PKGVER="$ARCH_VERSION" makepkg -f
 
     # Clean makepkg artifacts
