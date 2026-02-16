@@ -107,10 +107,17 @@ MainWindow::~MainWindow()
 void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
 {
     // Mount all ESPs
-    QStringList partList
-        = cmd.getOutAsRoot(
-                 "lsblk -no PATH,PARTTYPE | grep -iE 'c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef' | cut -d' ' -f1")
-              .split("\n", Qt::SkipEmptyParts);
+    QString lsblkOut;
+    cmd.procAsRoot("lsblk", {"-no", "PATH,PARTTYPE"}, &lsblkOut);
+    QStringList partList;
+    static const QRegularExpression espRegex("^(\\S+)\\s+(?:c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)\\s*$",
+                                             QRegularExpression::CaseInsensitiveOption);
+    for (const QString &line : lsblkOut.split('\n', Qt::SkipEmptyParts)) {
+        QRegularExpressionMatch m = espRegex.match(line);
+        if (m.hasMatch()) {
+            partList.append(m.captured(1));
+        }
+    }
 
     for (const auto &device : std::as_const(partList)) {
         if (!cmd.procAsRoot("findmnt", {"-n", device})) {
@@ -133,8 +140,12 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         return;
     }
 
-    const QString partitionName = cmd.getOut("df " + fileName + " --output=source").split('\n').last().trimmed();
-    const QString disk = "/dev/" + cmd.getOut("lsblk -no PKNAME " + partitionName).trimmed();
+    QString dfOut;
+    cmd.proc("df", {"--output=source", fileName}, &dfOut);
+    const QString partitionName = dfOut.split('\n').last().trimmed();
+    QString pkname;
+    cmd.proc("lsblk", {"-no", "PKNAME", partitionName}, &pkname);
+    const QString disk = "/dev/" + pkname.trimmed();
     const QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
 
     if (cmd.exitCode() != 0) {
@@ -148,8 +159,8 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     }
 
     fileName = "/EFI/" + fileName.section("/EFI/", 1);
-    const QString command = QString("efibootmgr -cL \"%1\" -d %2 -p %3 -l %4").arg(name, disk, partition, fileName);
-    const QString out = cmd.getOutAsRoot(command);
+    QString out;
+    cmd.procAsRoot("efibootmgr", {"-c", "-L", name, "-d", disk, "-p", partition, "-l", fileName}, &out);
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Something went wrong, could not add entry."));
@@ -1062,7 +1073,9 @@ QString MainWindow::getDistroName(bool pretty, const QString &mountPoint, const 
 
 QString MainWindow::getLuksUUID(const QString &part)
 {
-    return cmd.getOutAsRoot("cryptsetup luksUUID " + part);
+    QString uuid;
+    cmd.procAsRoot("cryptsetup", {"luksUUID", part}, &uuid);
+    return uuid;
 }
 
 [[nodiscard]] QString MainWindow::getMountPoint(const QString &partition)
@@ -1072,22 +1085,15 @@ QString MainWindow::getLuksUUID(const QString &part)
         return "/";
     }
 
-    QString command = "lsblk --pairs --output MOUNTPOINT '%1' | grep -m1 -oE 'MOUNTPOINT=\"[^\"]+\"'";
+    QString device = partition.startsWith("/dev/") ? partition : "/dev/" + partition;
 
-    if (partition.startsWith("/dev/")) {
-        command = QString(command).arg(partition);
-    } else {
-        command = QString(command).arg("/dev/" + partition);
-    }
+    QString lsblkOut;
+    cmd.proc("lsblk", {"--pairs", "--output", "MOUNTPOINT", device}, &lsblkOut);
 
-    QString mountPoint = cmd.getOut(command).trimmed();
-
-    // Remove the prefix and suffix
-    if (mountPoint.startsWith("MOUNTPOINT=\"") && mountPoint.endsWith("\"")) {
-        mountPoint = mountPoint.mid(12, mountPoint.length() - 13); // Remove prefix and suffix
-    }
-
-    return mountPoint;
+    // Parse MOUNTPOINT="..." from first matching line
+    static const QRegularExpression mpRegex(R"delim(MOUNTPOINT="([^"]+)")delim");
+    QRegularExpressionMatch match = mpRegex.match(lsblkOut);
+    return match.hasMatch() ? match.captured(1) : QString();
 }
 
 void MainWindow::getGrubOptions(const QString &mountPoint)
@@ -1132,9 +1138,9 @@ void MainWindow::getKernelOptions(const QString &bootDir)
         return;
     }
 
-    QString grep = "grep -m1 -oP '^[[:space:]]*linux[[:space:]]+(/boot)?/vmlinuz-[^[:space:]]+\\K.*' '%1'";
-    grep = QString(grep).arg(grubFile);
-    QString bootOptions = cmd.getOutAsRoot(grep).trimmed();
+    QString grepOut;
+    cmd.procAsRoot("grep", {"-m1", "-oP", R"(^[[:space:]]*linux[[:space:]]+(/boot)?/vmlinuz-[^[:space:]]+\K.*)", grubFile}, &grepOut);
+    QString bootOptions = grepOut.trimmed();
     if (isSystemd()) {
         bootOptions = bootOptions + " init=/lib/systemd/systemd";
     }
@@ -1184,7 +1190,9 @@ QString MainWindow::determineKernelDir(const QString &bootDir, const QString &ro
 
 QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDir)
 {
-    QString rootDevicePath = cmd.getOut("df --output=source " + rootDir).split('\n').last();
+    QString dfOut;
+    cmd.proc("df", {"--output=source", rootDir}, &dfOut);
+    QString rootDevicePath = dfOut.split('\n').last();
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
     cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr);
@@ -1199,7 +1207,8 @@ QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDi
         QString rootParentPARTLABEL;
         QString rootDevMapper;
         QStringList rootParentPatternList;
-        rootParentDevice = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
+        cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootParentDevice);
+        rootParentDevice = rootParentDevice.trimmed();
 
         if (!rootParentDevice.isEmpty()) {
             rootParentPatternList << rootParentDevice;
@@ -1223,7 +1232,7 @@ QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDi
             QString crypttab = rootDir.endsWith("/") ? rootDir + "etc/crypttab" : rootDir + "/etc/crypttab";
 
             if (QFile::exists(crypttab)) {
-                cmd.procAsRoot("grep", {"-m1", "-oP", QString("'^([^[:space:]]+)[[:space:]]+(?=(%1).*)'").arg(rootParentPatternList.join("|")), crypttab}, &rootDevMapper, nullptr);
+                cmd.procAsRoot("grep", {"-m1", "-oP", QString("^([^[:space:]]+)[[:space:]]+(?=(%1).*)").arg(rootParentPatternList.join("|")), crypttab}, &rootDevMapper, nullptr);
                 if (!rootDevMapper.trimmed().isEmpty()) {
                     rootPatternList << "/dev/mapper/" + rootDevMapper.trimmed();
                 }
@@ -1240,9 +1249,10 @@ QString MainWindow::parseGrubOptions(const QString &grubFile, const QStringList 
         qWarning() << "GRUB file not found:" << grubFile;
         return "";
     } else {
-        QString grep = QString("grep -m1 -oiP '^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*' '%4'")
-                       .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatterns.join("|"), grubFile);
-        bootOptions = cmd.getOutAsRoot(grep).trimmed();
+        QString pattern = QString("^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*")
+                              .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatterns.join("|"));
+        cmd.procAsRoot("grep", {"-m1", "-oiP", pattern, grubFile}, &bootOptions);
+        bootOptions = bootOptions.trimmed();
     }
     return bootOptions;
 }
@@ -1259,12 +1269,14 @@ QString MainWindow::getFallbackOptions(const QString &rootDir, const QString &ro
     QString defaultGrubFile = rootDir.endsWith("/") ? rootDir + "etc/default/grub" : rootDir + "/etc/default/grub";
     if (QFile::exists(defaultGrubFile)) {
         // Get options from GRUB_CMDLINE_LINUX
-        QString grepCmdLinux = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX=\"\\K[^\"]+'") + " " + defaultGrubFile;
-        QString linuxOptions = cmd.getOutAsRoot(grepCmdLinux).trimmed();
+        QString linuxOptions;
+        cmd.procAsRoot("grep", {"-m1", "-oP", R"(^GRUB_CMDLINE_LINUX="\K[^"]+)", defaultGrubFile}, &linuxOptions);
+        linuxOptions = linuxOptions.trimmed();
 
         // Get options from GRUB_CMDLINE_LINUX_DEFAULT
-        QString grepCmdLinuxDefault = QString("grep -m1 -oP '^GRUB_CMDLINE_LINUX_DEFAULT=\"\\K[^\"]+'") + " " + defaultGrubFile;
-        QString defaultOptions = cmd.getOutAsRoot(grepCmdLinuxDefault).trimmed();
+        QString defaultOptions;
+        cmd.procAsRoot("grep", {"-m1", "-oP", R"(^GRUB_CMDLINE_LINUX_DEFAULT="\K[^"]+)", defaultGrubFile}, &defaultOptions);
+        defaultOptions = defaultOptions.trimmed();
 
         // Combine both options
         if (!linuxOptions.isEmpty()) {
@@ -1386,8 +1398,8 @@ void MainWindow::guessPartition()
         "4F68BCE3-E8CD-4DB1-96E7-FBCAF984B709"  // Linux root (x86-64)
     };
 
-    // Helper function to search partitions matching a command pattern
-    auto findPartition = [&](const QString &command) -> bool {
+    // Helper: check lsblk field for a partition against a regex pattern
+    auto findPartition = [&](const QString &field, const QRegularExpression &pattern) -> bool {
         QString drive = comboDrive->currentText().section(' ', 0, 0);
         if (drive == rootDrive) {
             for (int index = 0; index < partitionCount; ++index) {
@@ -1401,7 +1413,9 @@ void MainWindow::guessPartition()
 
         for (int index = 0; index < partitionCount; ++index) {
             const QString part = comboPartition->itemText(index).section(' ', 0, 0);
-            if (cmd.runAsRoot(command.arg(part), nullptr, nullptr, QuietMode::Yes)) {
+            QString value;
+            cmd.procAsRoot("lsblk", {"-ln", "-o", field, "/dev/" + part}, &value, nullptr, QuietMode::Yes);
+            if (pattern.match(value.trimmed()).hasMatch()) {
                 comboPartition->setCurrentIndex(index);
                 return true;
             }
@@ -1410,9 +1424,9 @@ void MainWindow::guessPartition()
     };
 
     // Try to find partition with rootMX* label
-    if (!findPartition(QString("lsblk -ln -o LABEL /dev/%1 | grep -q %2").arg("%1", rootMXLabel))) {
+    if (!findPartition("LABEL", QRegularExpression(rootMXLabel))) {
         // Fall back to checking for any Linux partition type
-        findPartition(QString("lsblk -ln -o PARTTYPE /dev/%1 | grep -qEi '%2'").arg("%1", linuxPartTypes.join('|')));
+        findPartition("PARTTYPE", QRegularExpression(linuxPartTypes.join('|'), QRegularExpression::CaseInsensitiveOption));
     }
 
     findKernel();
@@ -1430,11 +1444,13 @@ void MainWindow::listDevices()
                        "| sort -V");
         espList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
-        rootDevicePath = cmd.getOut("df / --output=source").split('\n').last();
+        QString dfRoot;
+        cmd.proc("df", {"--output=source", "/"}, &dfRoot);
+        rootDevicePath = dfRoot.split('\n').last();
 
         if (rootDevicePath.startsWith("/dev/mapper")) {
-            rootPartition
-                = cmd.getOut("lsblk -ln -o PKNAME,PATH | grep " + rootDevicePath + "| cut -d ' ' -f1").trimmed();
+            cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootPartition);
+            rootPartition = rootPartition.trimmed();
         } else {
             rootPartition = rootDevicePath.split('/').last().trimmed();
         }
@@ -1863,7 +1879,16 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     }
 
     // Retrieve disk data
-    QString diskData = cmd.getOutAsRoot("lsblk --nodeps --noheadings --pairs | grep 'TYPE=\"disk\"'");
+    QString lsblkRaw;
+    cmd.procAsRoot("lsblk", {"--nodeps", "--noheadings", "--pairs"}, &lsblkRaw);
+    // Filter to only disk type entries
+    QStringList diskDataLines;
+    for (const QString &line : lsblkRaw.split('\n', Qt::SkipEmptyParts)) {
+        if (line.contains("TYPE=\"disk\"")) {
+            diskDataLines.append(line);
+        }
+    }
+    QString diskData = diskDataLines.join('\n');
     QStringList diskNames;
     QRegularExpression diskRegex(R"delim(^NAME=\"([^\"]+)\".*$)delim");
 
@@ -1877,7 +1902,16 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     // Map partition UUIDs to devices
     QMap<QString, QString> partitions;
     for (const QString &diskName : diskNames) {
-        QString partitionData = cmd.getOutAsRoot("sfdisk -d /dev/" + diskName + " 2>/dev/null | grep ': start='");
+        QString sfdiskOut;
+        cmd.procAsRoot("sfdisk", {"-d", "/dev/" + diskName}, &sfdiskOut);
+        // Filter to partition lines only
+        QStringList partLines;
+        for (const QString &line : sfdiskOut.split('\n', Qt::SkipEmptyParts)) {
+            if (line.contains(": start=")) {
+                partLines.append(line);
+            }
+        }
+        QString partitionData = partLines.join('\n');
         QRegularExpression partRegex(R"(^([^[:blank:]]+)[[:blank:]]:[[:blank:]].*[[:blank:]]uuid=([^,]+))");
 
         for (const QString &line : partitionData.split('\n', Qt::SkipEmptyParts)) {
@@ -1891,7 +1925,8 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     }
 
     // Retrieve EFI data
-    QString efiData = cmd.getOutAsRoot("efibootmgr --verbose");
+    QString efiData;
+    cmd.procAsRoot("efibootmgr", {"--verbose"}, &efiData);
     QString targetBootNum, targetPart, targetUuid, targetLoader;
 
     QRegularExpression efiRegex(
