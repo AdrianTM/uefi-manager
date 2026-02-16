@@ -1033,7 +1033,9 @@ void MainWindow::sortUefiBootOrder(const QStringList &order, QListWidget *list)
     }
 
     list->setCurrentRow(0);
-    list->currentItem()->setSelected(true);
+    if (list->currentItem()) {
+        list->currentItem()->setSelected(true);
+    }
     emit list->itemSelectionChanged();
 }
 
