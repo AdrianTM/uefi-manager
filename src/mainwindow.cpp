@@ -675,7 +675,7 @@ void MainWindow::filterDrivePartitions()
     auto *comboDrive = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboDrive : ui->comboDriveStub;
     auto *comboPartition = (ui->tabWidget->currentIndex() == Tab::Frugal) ? ui->comboPartition : ui->comboPartitionStub;
 
-    QStringList partitionListition
+    QStringList filteredPartitionList
         = (ui->tabWidget->currentIndex() == Tab::Frugal) ? frugalPartitionList : linuxPartitionList;
 
     comboPartition->blockSignals(true);
@@ -683,7 +683,7 @@ void MainWindow::filterDrivePartitions()
     comboPartition->blockSignals(false);
     QString drive = comboDrive->currentText().section(' ', 0, 0);
     if (!drive.isEmpty()) {
-        QStringList drivePart = partitionListition.filter(QRegularExpression("^" + QRegularExpression::escape(drive)));
+        QStringList drivePart = filteredPartitionList.filter(QRegularExpression("^" + QRegularExpression::escape(drive)));
         comboPartition->blockSignals(true);
         comboPartition->addItems(drivePart);
         comboPartition->blockSignals(false);
