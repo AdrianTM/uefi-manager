@@ -90,8 +90,8 @@ MainWindow::~MainWindow()
     if (dir.exists()) {
         for (const QString &subDir : subDirs) {
             QString subDirPath = dir.filePath(subDir);
-            cmd.procAsRoot("umount", {QString("'%1'").arg(subDirPath)});
-            cmd.procAsRoot("rmdir", {QString("'%1'").arg(subDirPath)});
+            cmd.procAsRoot("umount", {subDirPath});
+            cmd.procAsRoot("rmdir", {subDirPath});
         }
         cmd.procAsRoot("rmdir", {mountDir});
     }
@@ -435,7 +435,7 @@ bool MainWindow::copyKernel()
             return false;
         }
 
-        if (!cmd.procAsRoot("cp", {QString("'%1'").arg(file), QString("'%1'").arg(targetFile)})) {
+        if (!cmd.procAsRoot("cp", {file, targetFile})) {
             qWarning() << "Failed to copy file:" << file << "to" << targetFile;
             return false;
         }
@@ -1587,8 +1587,8 @@ QString MainWindow::selectESP()
     const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
     const QString subDir = isFrugal ? "/frugal" : "/stub";
     const QString targetPath = espMountPoint + "/EFI/" + distro + subDir;
-    cmd.procAsRoot("rm", {"-f", targetPath + "/vmlinuz"});
-    cmd.procAsRoot("rm", {"-f", targetPath + "/{initrd,amducode,intucode}.{gz,img}"});
+    cmd.procAsRoot("rm", {"-f", targetPath + "/vmlinuz", targetPath + "/initrd.img",
+                          targetPath + "/amducode.img", targetPath + "/intucode.img"});
     if (!checkSizeEsp()) {
         QMessageBox::critical(this, QApplication::applicationDisplayName(),
                               tr("Not enough space on the EFI System Partition to copy the kernel and initrd files."));
