@@ -811,17 +811,6 @@ void MainWindow::refreshEntries()
     auto *textTimeout = new QLabel(tr("Timeout: %1 seconds").arg("0"), ui->tabManageUefi);
     listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    disconnect(listEntries, &QListWidget::itemSelectionChanged, ui->tabManageUefi, nullptr);
-    disconnect(pushActive, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(pushAddEntry, &QPushButton::clicked, this, nullptr);
-    disconnect(pushBootNext, &QPushButton::clicked, this, nullptr);
-    disconnect(pushDown, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(pushRemove, &QPushButton::clicked, this, nullptr);
-    // disconnect(pushRename, &QPushButton::clicked, this, nullptr);
-    disconnect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-    disconnect(pushTimeout, &QPushButton::clicked, this, nullptr);
-    disconnect(pushUp, &QPushButton::clicked, ui->tabManageUefi, nullptr);
-
     connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
         if (Cmd().procAsRoot("efibootmgr", {"-N"})) {
             textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
