@@ -36,6 +36,7 @@
 
 #include "about.h"
 #include "cmd.h"
+#include "common.h"
 
 // Trying to map all the persistence type to values that make sense
 // when passed to the kernel at boot time for frugal installation
@@ -82,7 +83,7 @@ MainWindow::~MainWindow()
         cmd.procAsRoot("rmdir", {dir});
     }
 
-    QString mountDir = "/mnt/uefi-manager";
+    QString mountDir = MOUNT_BASE;
     QDir dir(mountDir);
     QStringList subDirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
 
@@ -110,7 +111,7 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     QString lsblkOut;
     cmd.procAsRoot("lsblk", {"-no", "PATH,PARTTYPE"}, &lsblkOut);
     QStringList partList;
-    static const QRegularExpression espRegex("^(\\S+)\\s+(?:c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)\\s*$",
+    static const QRegularExpression espRegex(QString("^(\\S+)\\s+(?:%1|%2)\\s*$").arg(ESP_GUID_GPT, ESP_TYPE_MBR),
                                              QRegularExpression::CaseInsensitiveOption);
     for (const QString &line : lsblkOut.split('\n', Qt::SkipEmptyParts)) {
         QRegularExpressionMatch m = espRegex.match(line);
@@ -567,7 +568,7 @@ QString MainWindow::mountPartition(QString part)
             // todo : close luks device when done
             // newLuksDevices.append(luksDevice);
 
-            mountDir = "/mnt/uefi-manager/" + luksDevice;
+            mountDir = MOUNT_BASE + "/" + luksDevice;
             if (!QDir(mountDir).exists()) {
                 if (!cmd.procAsRoot("mkdir", {"-p", mountDir})) {
                     return {};
@@ -587,7 +588,7 @@ QString MainWindow::mountPartition(QString part)
         part = part.mid(5);
     }
 
-    mountDir = "/mnt/uefi-manager/" + part;
+    mountDir = MOUNT_BASE + "/" + part;
     if (!QDir(mountDir).exists()) {
         if (!cmd.procAsRoot("mkdir", {"-p", mountDir})) {
             return {};
@@ -990,10 +991,10 @@ QString MainWindow::openLuks(const QString &partition)
     // Try to open the LUKS container
     if (!cmd.procAsRoot("cryptsetup", {"luksOpen", "--allow-discards", partition, luksDevice, "-"}, nullptr, &pass)) {
         QMessageBox::critical(this, tr("Error"), tr("Could not open %1 LUKS container").arg(partition));
-        pass.fill(static_cast<char>(0xA5 & 0xFF));
+        pass.fill(SCRUB_BYTE);
         return {};
     }
-    pass.fill(static_cast<char>(0xA5 & 0xFF));
+    pass.fill(SCRUB_BYTE);
     qDebug() << "openLuks:" << luksDevice;
     newLuksDevices.append(luksDevice);
     return luksDevice;
@@ -1427,9 +1428,10 @@ void MainWindow::listDevices()
     if (firstRun) {
         firstRun = false;
 
-        QString cmdStr("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
-                       "| grep -ioP '^(c12a7328-f81f-11d2-ba4b-00a0c93ec93b|0xef)[[:space:]]+vfat[[:space:]]+\\K.*' "
-                       "| sort -V");
+        QString cmdStr = QString("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
+                                 "| grep -ioP '^(%1|%2)[[:space:]]+vfat[[:space:]]+\\K.*' "
+                                 "| sort -V")
+                             .arg(ESP_GUID_GPT, ESP_TYPE_MBR);
         espList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
 
         QString dfRoot;
