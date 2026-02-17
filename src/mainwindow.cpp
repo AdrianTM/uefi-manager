@@ -30,6 +30,10 @@
 #include <QListWidget>
 #include <QRegularExpression>
 
+#include <QCollator>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
@@ -1428,12 +1432,7 @@ void MainWindow::listDevices()
     if (firstRun) {
         firstRun = false;
 
-        QString cmdStr = QString("lsblk -ln -o PARTTYPE,FSTYPE,NAME,SIZE,LABEL "
-                                 "| grep -ioP '^(%1|%2)[[:space:]]+vfat[[:space:]]+\\K.*' "
-                                 "| sort -V")
-                             .arg(ESP_GUID_GPT, ESP_TYPE_MBR);
-        espList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
-
+        // Detect root device/partition (stable, only needed once)
         QString dfRoot;
         cmd.proc("df", {"--output=source", "/"}, &dfRoot);
         rootDevicePath = dfRoot.split('\n').last();
@@ -1445,67 +1444,115 @@ void MainWindow::listDevices()
             rootPartition = rootDevicePath.split('/').last().trimmed();
         }
 
-        cmdStr = "lsblk -ln -o NAME,SIZE,LABEL,MODEL -d -e 2,11 -x NAME | grep -E '^x?[h,s,v].[a-z]|^mmcblk|^nvme'";
-        driveList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
-
-        cmdStr = "lsblk -ln -o NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME | grep -E "
-                 "'^x?[h,s,v].[a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' | sort -V";
-        partitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
-
-        // linux partions: without ntfs, exfat, vfat, Bitloaker, and swap
-        // size >= 6 GB
-        // version sorted
-        cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
-                 "| grep -v -P '^(BitLocker|ntfs|exfat|vfat|swap|[[:space:]])' "
-                 "| grep -oP '^[a-z][[:alnum:]_]+[[:space:]]+\\K.*' "
-                 "| grep -vE '^[1-5]([,.][0-9])?G[[:space:]]' "
-                 "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
-                 "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
-                 "| sort -V"
-                 "| sed -r '/^"
-                 + rootPartition + " /s|/[^[:space:]]+|/|'";
-
-        linuxPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
-
-        // data partions for frugal: any linux and ntfs, vfat, exfat without Bitloaker and swap
-        // size >= 1 GB
-        // version sorted
-
-        cmdStr = "lsblk -ln -o FSTYPE,SIZE,NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL -e 2,11 -x NAME "
-                 "| grep -v -P '^(swap|BitLocker|[[:space:]])' "
-                 "| grep -oP '^[a-z][[:alnum:]]+[[:space:]]+\\K.*' "
-                 "| grep -oP '^[0-9,.]+[GT][[:space:]]+\\K.*' "
-                 "| grep -E '^x?[h,s,v][a-z][a-z][0-9]|^mmcblk[0-9]+p|^nvme[0-9]+n[0-9]+p' "
-                 "| sort -V"
-                 "| sed -r '/^"
-                 + rootPartition + " /s|/[^[:space:]]+|/|'";
-
-        frugalPartitionList = cmd.getOut(cmdStr).split('\n', Qt::SkipEmptyParts);
-
         rootDrive = [&]() {
-            // Regular expression to match the disk device name followed by digits
             QRegularExpression regex("^(.*?)(\\d+)$");
             QRegularExpressionMatch match = regex.match(rootPartition);
-
-            QString diskDeviceName;
-
-            if (match.hasMatch()) {
-                // Get the disk device name (1st capturing group)
-                diskDeviceName = match.captured(1);
-            } else {
-                diskDeviceName = rootPartition; // Return as is if no match is found
+            QString diskDeviceName = match.hasMatch() ? match.captured(1) : rootPartition;
+            if ((diskDeviceName.startsWith("nvme") || diskDeviceName.startsWith("mmcblk"))
+                && diskDeviceName.endsWith("p")) {
+                diskDeviceName.chop(1);
             }
-
-            // Check disk device name starts with "nvme" or "mmcblk"
-            if (diskDeviceName.startsWith("nvme") || diskDeviceName.startsWith("mmcblk")) {
-                // Remove the last 'p' if exists
-                if (diskDeviceName.endsWith("p")) {
-                    diskDeviceName.chop(1); // Remove last character
-                }
-            }
-            return diskDeviceName; // Return disk device name
+            return diskDeviceName;
         }();
     }
+
+    // Regex for physical disk/partition device names (sd*, hd*, vd*, xvd*, mmcblk*, nvme*)
+    static const QRegularExpression driveNameRegex("^x?[hsv]d[a-z]|^mmcblk|^nvme");
+    static const QRegularExpression partNameRegex("^x?[hsv]d[a-z]\\d|^mmcblk\\d+p|^nvme\\d+n\\d+p");
+
+    // Filesystem types excluded from Linux partition list
+    static const QStringList excludedLinuxFs = {"ntfs", "exfat", "vfat", "BitLocker", "swap"};
+    // Filesystem types excluded from frugal partition list
+    static const QStringList excludedFrugalFs = {"swap", "BitLocker"};
+
+    static constexpr qint64 ONE_GB = 1'073'741'824LL;
+    static constexpr qint64 SIX_GB = 6 * ONE_GB;
+
+    // Single lsblk call to get all block device info as JSON
+    QString lsblkJson;
+    cmd.proc("lsblk", {"-ln", "--json", "--bytes", "-o",
+                        "NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL,MODEL,PARTTYPE,TYPE", "-e", "2,11"},
+             &lsblkJson);
+
+    QJsonDocument doc = QJsonDocument::fromJson(lsblkJson.toUtf8());
+    QJsonArray devices = doc.object().value("blockdevices").toArray();
+
+    // Helper: format display string with name first (for .section(' ', 0, 0) extraction)
+    auto formatSize = [](qint64 bytes) -> QString {
+        if (bytes >= ONE_GB) {
+            return QString::number(static_cast<double>(bytes) / ONE_GB, 'f', 1) + "G";
+        }
+        return QString::number(static_cast<double>(bytes) / (1024 * 1024), 'f', 1) + "M";
+    };
+
+    espList.clear();
+    driveList.clear();
+    partitionList.clear();
+    linuxPartitionList.clear();
+    frugalPartitionList.clear();
+
+    for (const QJsonValue &val : devices) {
+        QJsonObject dev = val.toObject();
+        const QString name = dev.value("name").toString();
+        const qint64 size = dev.value("size").toInteger();
+        const QString fstype = dev.value("fstype").toString();
+        const QString mountpoint = dev.value("mountpoint").toString();
+        const QString label = dev.value("label").toString();
+        const QString model = dev.value("model").toString();
+        const QString parttype = dev.value("parttype").toString().toLower();
+        const QString type = dev.value("type").toString();
+        const QString sizeStr = formatSize(size);
+
+        bool isDrive = (type == "disk") && driveNameRegex.match(name).hasMatch();
+        bool isPartition = (type == "part") && partNameRegex.match(name).hasMatch();
+
+        // ESP list: EFI System Partitions with vfat filesystem
+        if (isPartition && fstype.compare("vfat", Qt::CaseInsensitive) == 0
+            && (parttype == ESP_GUID_GPT || parttype == ESP_TYPE_MBR)) {
+            espList.append(QString("%1 %2 %3").arg(name, sizeStr, label).trimmed());
+        }
+
+        // Drive list: physical disk devices
+        if (isDrive) {
+            driveList.append(QString("%1 %2 %3 %4").arg(name, sizeStr, label, model).trimmed());
+        }
+
+        // Partition list: all partitions on physical disks
+        if (isPartition) {
+            // Show mountpoint as "/" for root partition
+            QString mp = (name == rootPartition) ? "/" : mountpoint;
+            partitionList.append(QString("%1 %2 %3 %4 %5").arg(name, sizeStr, fstype, mp, label).trimmed());
+        }
+
+        // Linux partition list: non-Windows/swap filesystems, >= 6 GB
+        if (isPartition && size >= SIX_GB && !fstype.isEmpty()
+            && !excludedLinuxFs.contains(fstype, Qt::CaseInsensitive)) {
+            QString mp = (name == rootPartition) ? "/" : mountpoint;
+            linuxPartitionList.append(
+                QString("%1 %2 %3 %4 %5").arg(name, sizeStr, fstype, mp, label).trimmed());
+        }
+
+        // Frugal partition list: broader FS set, >= 1 GB
+        if (isPartition && size >= ONE_GB && !fstype.isEmpty()
+            && !excludedFrugalFs.contains(fstype, Qt::CaseInsensitive)) {
+            QString mp = (name == rootPartition) ? "/" : mountpoint;
+            frugalPartitionList.append(
+                QString("%1 %2 %3 %4 %5").arg(name, sizeStr, fstype, mp, label).trimmed());
+        }
+    }
+
+    // Sort partition lists by version (matches original sort -V behavior)
+    auto versionSort = [](QStringList &list) {
+        QCollator collator;
+        collator.setNumericMode(true);
+        std::sort(list.begin(), list.end(), [&collator](const QString &a, const QString &b) {
+            return collator.compare(a, b) < 0;
+        });
+    };
+    versionSort(espList);
+    versionSort(partitionList);
+    versionSort(linuxPartitionList);
+    versionSort(frugalPartitionList);
 }
 
 void MainWindow::validateAndLoadOptions(const QString &frugalDir)
