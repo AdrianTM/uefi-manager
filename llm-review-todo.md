@@ -94,7 +94,7 @@
    - Keep Unicode/loader/options semantics intact without embedding quote characters.
    - Acceptance: resulting boot entries have expected labels/options (no extra quote chars).
 
-3. Harden `Cmd::proc()` error path for elevation.
+3. ~~Harden `Cmd::proc()` error path for elevation.~~ DONE
    - If elevation requested and no elevation command found: fail fast with user-visible error.
    - Connect `errorOccurred` to loop quit and map failure to actionable message.
    - Optionally add timeout safety for synchronous process execution.

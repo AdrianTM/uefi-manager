@@ -87,9 +87,17 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
         qDebug() << cmd << args;
     }
 
+    // Fail fast if elevation is needed but no elevation command is available
+    if (elevation == Elevation::Yes && getuid() != 0 && elevationCommand.isEmpty()) {
+        qWarning() << "Elevation required but no pkexec/gksu found";
+        handleElevationError();
+        return false;
+    }
+
     // Set up event loop for synchronous execution
     QEventLoop loop;
     connect(this, &Cmd::done, &loop, &QEventLoop::quit);
+    connect(this, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
 
     // Start the process with appropriate elevation
     if (elevation == Elevation::Yes && getuid() != 0) {
