@@ -1257,7 +1257,11 @@ QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDi
             QString crypttab = rootDir.endsWith("/") ? rootDir + "etc/crypttab" : rootDir + "/etc/crypttab";
 
             if (QFile::exists(crypttab)) {
-                cmd.procAsRoot("grep", {"-m1", "-oP", QString("^([^[:space:]]+)[[:space:]]+(?=(%1).*)").arg(rootParentPatternList.join("|")), crypttab}, &rootDevMapper, nullptr);
+                QStringList escapedPatterns;
+                for (const QString &token : std::as_const(rootParentPatternList)) {
+                    escapedPatterns << QRegularExpression::escape(token);
+                }
+                cmd.procAsRoot("grep", {"-m1", "-oP", QString("^([^[:space:]]+)[[:space:]]+(?=(%1).*)").arg(escapedPatterns.join("|")), crypttab}, &rootDevMapper, nullptr);
                 if (!rootDevMapper.trimmed().isEmpty()) {
                     rootPatternList << "/dev/mapper/" + rootDevMapper.trimmed();
                 }
@@ -1274,8 +1278,12 @@ QString MainWindow::parseGrubOptions(const QString &grubFile, const QStringList 
         qWarning() << "GRUB file not found:" << grubFile;
         return "";
     } else {
+        QStringList escapedRootPatterns;
+        for (const QString &p : rootPatterns) {
+            escapedRootPatterns << QRegularExpression::escape(p);
+        }
         QString pattern = QString("^[[:space:]]*linux[[:space:]]+(/@)?%1/%2[[:space:]]+\\K.*root=(%3).*")
-                              .arg(kernelDir, QRegularExpression::escape(vmlinuz), rootPatterns.join("|"));
+                              .arg(kernelDir, QRegularExpression::escape(vmlinuz), escapedRootPatterns.join("|"));
         cmd.procAsRoot("grep", {"-m1", "-oiP", pattern, grubFile}, &bootOptions);
         bootOptions = bootOptions.trimmed();
     }

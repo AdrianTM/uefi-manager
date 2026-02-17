@@ -100,7 +100,7 @@
    - Optionally add timeout safety for synchronous process execution.
    - Acceptance: no indefinite wait when elevated process fails to start.
 
-4. Escape regex tokens in crypttab matching.
+4. ~~Escape regex tokens in crypttab matching.~~ DONE
    - Escape each token in `rootParentPatternList` before joining with `|`.
    - Add/extend tests to include PARTLABEL values with regex metacharacters.
    - Acceptance: deterministic parsing for labels containing characters like `+`, `(`, `)`, `[` etc.
