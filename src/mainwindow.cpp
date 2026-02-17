@@ -582,10 +582,7 @@ QString MainWindow::mountPartition(QString part)
         }
     }
 
-    if (!part.startsWith("/dev/")) {
-        part = "/dev/" + part;
-    }
-    // part should now in reduced form of /dev/partionname
+    // Reduce to bare device name (e.g. "sda1")
     if (part.startsWith("/dev/")) {
         part = part.mid(5);
     }
