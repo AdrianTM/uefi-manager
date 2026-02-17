@@ -518,8 +518,8 @@ bool MainWindow::installEfiStub(const QString &esp)
 
     QStringList args;
     args << "--disk" << disk << "--part" << part << "--create"
-         << "--label" << '"' + entryName + '"' << "--loader"
-         << QString("\"\\EFI\\%1\\%2\\vmlinuz\"").arg(distro, efiDir) << "--unicode";
+         << "--label" << entryName << "--loader"
+         << QString("\\EFI\\%1\\%2\\vmlinuz").arg(distro, efiDir) << "--unicode";
 
     const QString espPath = espMountPoint + "/EFI/" + distro + "/" + efiDir;
 
@@ -541,10 +541,10 @@ bool MainWindow::installEfiStub(const QString &esp)
     QString bootOptions;
     if (isFrugal) {
         bootOptions
-            = QString("'bdir=%1 buuid=%2 %3 %4 %5'")
+            = QString("bdir=%1 buuid=%2 %3 %4 %5")
                   .arg(options.bdir, options.uuid, options.stringOptions, ui->comboFrugalMode->currentText(), initrd);
     } else {
-        bootOptions = QString("'%1 %2'").arg(options.stringOptions, initrd);
+        bootOptions = QString("%1 %2").arg(options.stringOptions, initrd);
     }
 
     if (!cmd.procAsRoot("efibootmgr", args << bootOptions)) {
@@ -2004,12 +2004,11 @@ bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabe
     }
 
     // Execute efibootmgr commands
-    QString escapedLoader = targetLoader.replace("'", "'\\''");
     QStringList deleteCmd = {"--bootnum", targetBootNum, "--delete-bootnum"};
 
     QStringList createCmd
-        = {"--create", "--disk",     deviceName, "--part", targetPart, "--label", "\"" + newLabel + "\"",
-           "--loader", escapedLoader};
+        = {"--create", "--disk",     deviceName, "--part", targetPart, "--label", newLabel,
+           "--loader", targetLoader};
 
     if (!cmd.procAsRoot("efibootmgr", deleteCmd)) {
         QMessageBox::critical(this, tr("Error"), tr("Failed to delete old boot entry"));

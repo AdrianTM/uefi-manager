@@ -89,7 +89,7 @@
    - Add default `case` branch returning non-zero for unknown subcommands.
    - Acceptance: direct invocation returns non-zero for invalid command; checkfile path works.
 
-2. Remove literal shell-quote wrapping from all argv-style `efibootmgr` calls.
+2. ~~Remove literal shell-quote wrapping from all argv-style `efibootmgr` calls.~~ DONE
    - Update `installEfiStub()` and `renameUefiEntry()` argument assembly.
    - Keep Unicode/loader/options semantics intact without embedding quote characters.
    - Acceptance: resulting boot entries have expected labels/options (no extra quote chars).
