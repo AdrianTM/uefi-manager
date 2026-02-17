@@ -101,13 +101,11 @@ split_segments() {
                 fi
                 ;;
             "&")
+                printf '%s\n' "$segment"
+                segment=""
                 next="${input:i+1:1}"
                 if [[ "$next" == "&" ]]; then
-                    printf '%s\n' "$segment"
-                    segment=""
                     ((++i))
-                else
-                    segment+="$char"
                 fi
                 ;;
             *)
@@ -149,12 +147,39 @@ if [[ "$cmd_string" == *'$('* || "$cmd_string" == *'`'* || "$cmd_string" == *'<(
     exit 1
 fi
 
+# Block I/O redirections outside of quotes (could write to arbitrary files).
+{
+    local_in_sq=0 local_in_dq=0 local_esc=0
+    for ((j = 0; j < ${#cmd_string}; ++j)); do
+        c="${cmd_string:j:1}"
+        if ((local_esc)); then local_esc=0; continue; fi
+        if ((local_in_sq)); then [[ "$c" == "'" ]] && local_in_sq=0; continue; fi
+        if ((local_in_dq)); then
+            if [[ "$c" == '"' ]]; then local_in_dq=0;
+            elif [[ "$c" == "\\" ]]; then local_esc=1; fi
+            continue
+        fi
+        case "$c" in
+            "\\") local_esc=1 ;;
+            "'")  local_in_sq=1 ;;
+            '"')  local_in_dq=1 ;;
+            ">"| "<")
+                echo "Error: I/O redirections are not permitted" >&2
+                exit 1
+                ;;
+        esac
+    done
+}
+
 # Extract and validate every command in the pipeline/chain.
 while IFS= read -r segment; do
     segment="$(trim_whitespace "$segment")"
     [[ -z "$segment" ]] && continue
     read -r cmd_word _ <<< "$segment"
     [[ -z "$cmd_word" ]] && continue
+    # Strip surrounding quotes so that e.g. 'grep' or "grep" matches the allowlist
+    cmd_word="${cmd_word#\"}" ; cmd_word="${cmd_word%\"}"
+    cmd_word="${cmd_word#\'}" ; cmd_word="${cmd_word%\'}"
     if ! is_allowed "$cmd_word"; then
         echo "Error: command not permitted: $cmd_word" >&2
         exit 1
