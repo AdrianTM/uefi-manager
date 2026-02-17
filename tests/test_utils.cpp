@@ -89,11 +89,9 @@ void TestUtils::extractDisk_virtio()
 
 void TestUtils::extractDisk_wholeDisk()
 {
-    // Whole-disk names without trailing partition digits pass through unchanged
     QCOMPARE(utils::extractDiskFromPartition("sda"), QString("sda"));
-    // Note: nvme0n1 ends with a digit so the regex strips it; this input
-    // is a partition-like edge case and not a typical whole-disk input
-    QCOMPARE(utils::extractDiskFromPartition("nvme0n1"), QString("nvme0n"));
+    QCOMPARE(utils::extractDiskFromPartition("nvme0n1"), QString("nvme0n1"));
+    QCOMPARE(utils::extractDiskFromPartition("mmcblk0"), QString("mmcblk0"));
 }
 
 QTEST_MAIN(TestUtils)

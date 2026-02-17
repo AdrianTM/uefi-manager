@@ -52,14 +52,22 @@ QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse)
 
 QString extractDiskFromPartition(const QString &partition)
 {
-    QRegularExpression regex("^(.*?)(\\d+)$");
-    QRegularExpressionMatch match = regex.match(partition);
-    QString diskDeviceName = match.hasMatch() ? match.captured(1) : partition;
-    if ((diskDeviceName.startsWith("nvme") || diskDeviceName.startsWith("mmcblk"))
-        && diskDeviceName.endsWith("p")) {
-        diskDeviceName.chop(1);
+    // NVMe/MMC partitions have the form nvme0n1p2 / mmcblk0p1 — strip the p\d+ suffix
+    static const QRegularExpression nvmeRegex("^((?:nvme|mmcblk).+)p\\d+$");
+    QRegularExpressionMatch nvmeMatch = nvmeRegex.match(partition);
+    if (nvmeMatch.hasMatch()) {
+        return nvmeMatch.captured(1);
     }
-    return diskDeviceName;
+
+    // If it's an nvme/mmcblk name without a partition suffix, return as-is
+    if (partition.startsWith("nvme") || partition.startsWith("mmcblk")) {
+        return partition;
+    }
+
+    // Standard drives (sda1, vda3, xvda1) — strip trailing digits
+    static const QRegularExpression regex("^(.*?)(\\d+)$");
+    QRegularExpressionMatch match = regex.match(partition);
+    return match.hasMatch() ? match.captured(1) : partition;
 }
 
 } // namespace utils
