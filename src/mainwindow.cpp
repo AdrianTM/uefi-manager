@@ -725,7 +725,9 @@ void MainWindow::selectKernel(const QString &rootDir)
     ui->comboKernel->addItems(sortedKernelFiles);
 
     if (rootDir == "/") {
-        const QString kernel = cmd.getOut("uname -r", QuietMode::Yes).trimmed();
+        QString kernel;
+        cmd.proc("uname", {"-r"}, &kernel, nullptr, QuietMode::Yes);
+        kernel = kernel.trimmed();
         if (ui->comboKernel->findText(kernel) != -1) {
             ui->comboKernel->setCurrentText(kernel);
         }
@@ -771,7 +773,9 @@ void MainWindow::promptFrugalStubInstall()
 void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, QLabel *textBootNext,
                                  QLabel *textBootCurrent, QStringList *bootorder)
 {
-    QStringList entries = cmd.getOut("efibootmgr").split('\n', Qt::SkipEmptyParts);
+    QString efiOut;
+    cmd.proc("efibootmgr", {}, &efiOut);
+    QStringList entries = efiOut.split('\n', Qt::SkipEmptyParts);
     QRegularExpression bootEntryRegex(R"(^Boot[0-9A-F]{4}\*?\s+)");
 
     for (const auto &item : std::as_const(entries)) {

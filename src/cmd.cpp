@@ -71,18 +71,6 @@ void Cmd::handleStandardError()
     emit errorAvailable(error);
 }
 
-QString Cmd::getOut(const QString &cmd, QuietMode quiet, Elevation elevation)
-{
-    QString output;
-    run(cmd, &output, nullptr, quiet, elevation);
-    return output;
-}
-
-QString Cmd::getOutAsRoot(const QString &cmd, QuietMode quiet)
-{
-    return getOut(cmd, quiet, Elevation::Yes);
-}
-
 bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, const QByteArray *input, QuietMode quiet,
                Elevation elevation)
 {
@@ -137,24 +125,6 @@ bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *outpu
                      QuietMode quiet)
 {
     return proc(cmd, args, output, input, quiet, Elevation::Yes);
-}
-
-bool Cmd::run(const QString &cmd, QString *output, const QByteArray *input, QuietMode quiet, Elevation elevation)
-{
-    if (elevation == Elevation::Yes && getuid() != 0) {
-        bool result = proc(elevationCommand, {helper, cmd}, output, input, quiet);
-        // Command-not-found is returned when password is entered incorrectly
-        if (exitCode() == EXIT_CODE_PERMISSION_DENIED || exitCode() == EXIT_CODE_COMMAND_NOT_FOUND) {
-            handleElevationError();
-        }
-        return result;
-    }
-    return proc("/bin/bash", {"-c", cmd}, output, input, quiet);
-}
-
-bool Cmd::runAsRoot(const QString &cmd, QString *output, const QByteArray *input, QuietMode quiet)
-{
-    return run(cmd, output, input, quiet, Elevation::Yes);
 }
 
 void Cmd::handleElevationError()
