@@ -1,11 +1,15 @@
 #!/bin/bash
 
+set -euo pipefail
+
 # Root level functions requiring password for uefi-manager
 
 cleanup_temp() {
+    :
 }
 
 copy_log() {
+    :
 }
 
 write_checkfile() {
@@ -13,14 +17,17 @@ write_checkfile() {
 }
 
 main() {
-case "$1" in 
-    copy_log) 
-        copy_log;;
-    cleanup_temp)
-        cleanup_temp;;
-    write_chkfile)
-        write_chkfile;;
-esac
+    case "$1" in
+        copy_log)
+            copy_log;;
+        cleanup_temp)
+            cleanup_temp;;
+        write_checkfile)
+            write_checkfile;;
+        *)
+            echo "Error: unknown subcommand: $1" >&2
+            return 1;;
+    esac
 }
 
 main "$@"
