@@ -105,7 +105,7 @@
    - Add/extend tests to include PARTLABEL values with regex metacharacters.
    - Acceptance: deterministic parsing for labels containing characters like `+`, `(`, `)`, `[` etc.
 
-5. Integrate helper tests into CTest.
+5. ~~Integrate helper tests into CTest.~~ DONE
    - Add `add_test(NAME test_helper COMMAND bash ${CMAKE_SOURCE_DIR}/tests/test_helper.sh)` (or equivalent).
    - Gate on required binaries or provide fallback/mocks so CI behavior is deterministic.
    - Acceptance: `ctest` runs both unit tests and helper validation.
