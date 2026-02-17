@@ -82,10 +82,15 @@ MainWindow::~MainWindow()
 {
     settings.setValue("geometry", saveGeometry());
     for (auto it = newMounts.rbegin(); it != newMounts.rend(); ++it) {
-        cmd.procAsRoot("umount", {*it});
+        if (!cmd.procAsRoot("umount", {*it})) {
+            qWarning() << "umount failed, trying lazy umount:" << *it;
+            cmd.procAsRoot("umount", {"-l", *it});
+        }
     }
     for (const QString &dir : newDirectories) {
-        cmd.procAsRoot("rmdir", {dir});
+        if (!cmd.procAsRoot("rmdir", {dir})) {
+            qWarning() << "rmdir failed:" << dir;
+        }
     }
 
     QString mountDir = MOUNT_BASE;
@@ -96,15 +101,24 @@ MainWindow::~MainWindow()
     if (dir.exists()) {
         for (const QString &subDir : subDirs) {
             QString subDirPath = dir.filePath(subDir);
-            cmd.procAsRoot("umount", {subDirPath});
-            cmd.procAsRoot("rmdir", {subDirPath});
+            if (!cmd.procAsRoot("umount", {subDirPath})) {
+                qWarning() << "umount failed, trying lazy umount:" << subDirPath;
+                cmd.procAsRoot("umount", {"-l", subDirPath});
+            }
+            if (!cmd.procAsRoot("rmdir", {subDirPath})) {
+                qWarning() << "rmdir failed:" << subDirPath;
+            }
         }
-        cmd.procAsRoot("rmdir", {mountDir});
+        if (!cmd.procAsRoot("rmdir", {mountDir})) {
+            qWarning() << "rmdir failed:" << mountDir;
+        }
     }
 
     // Close opened luks devices
     for (const QString &luksDevice : newLuksDevices) {
-        cmd.procAsRoot("cryptsetup", {"close", luksDevice});
+        if (!cmd.procAsRoot("cryptsetup", {"close", luksDevice})) {
+            qWarning() << "Failed to close LUKS device:" << luksDevice;
+        }
     }
 
     delete ui;
