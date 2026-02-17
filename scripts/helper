@@ -141,6 +141,12 @@ fi
 # runAsRoot(commandString) path; command may contain pipes/conditionals.
 cmd_string="$1"
 
+# Reject empty or whitespace-only command strings
+if [[ -z "${cmd_string// /}" ]]; then
+    echo "Error: empty command string" >&2
+    exit 1
+fi
+
 # Block shell features that can execute hidden commands.
 if [[ "$cmd_string" == *'$('* || "$cmd_string" == *'`'* || "$cmd_string" == *'<('* || "$cmd_string" == *'>('* ]]; then
     echo "Error: command string contains forbidden shell constructs" >&2

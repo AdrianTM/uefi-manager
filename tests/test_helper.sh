@@ -138,9 +138,8 @@ expect_err_msg "unterminated double quote"  "malformed"  'grep "foo'
 
 echo "=== Empty/whitespace input ==="
 
-# Empty/whitespace command strings are no-ops (bash -c "" exits 0), which is safe
-expect_ok "empty string is harmless no-op"       ""
-expect_ok "whitespace only is harmless no-op"    "   "
+expect_err_msg "empty string"       "empty command string"  ""
+expect_err_msg "whitespace only"    "empty command string"  "   "
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
