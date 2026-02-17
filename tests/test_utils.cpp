@@ -85,6 +85,7 @@ void TestUtils::extractDisk_mmc()
 void TestUtils::extractDisk_virtio()
 {
     QCOMPARE(utils::extractDiskFromPartition("vda3"), QString("vda"));
+    QCOMPARE(utils::extractDiskFromPartition("xvda1"), QString("xvda"));
 }
 
 void TestUtils::extractDisk_wholeDisk()
