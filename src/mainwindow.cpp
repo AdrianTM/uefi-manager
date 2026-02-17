@@ -570,9 +570,6 @@ QString MainWindow::mountPartition(QString part)
         QString luksDevice;
         luksDevice = openLuks(part);
         if (!luksDevice.isEmpty()) {
-            // todo : close luks device when done
-            // newLuksDevices.append(luksDevice);
-
             mountDir = MOUNT_BASE + "/" + luksDevice;
             if (!QDir(mountDir).exists()) {
                 if (!cmd.procAsRoot("mkdir", {"-p", mountDir})) {
