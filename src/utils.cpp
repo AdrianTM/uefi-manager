@@ -8,9 +8,9 @@ namespace utils
 
 QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse)
 {
-    auto versionCompare = [reverse](const QString &a, const QString &b) {
-        QRegularExpression regex(R"((\d+)\.(\d+)(?:\.(\d+))?(-([a-z0-9]+[^-]*)?)?(-.*)?)");
+    static const QRegularExpression regex(R"((\d+)\.(\d+)(?:\.(\d+))?(-([a-z0-9]+[^-]*)?)?(-.*)?)");
 
+    auto versionCompare = [reverse](const QString &a, const QString &b) {
         QRegularExpressionMatch matchA = regex.match(a);
         QRegularExpressionMatch matchB = regex.match(b);
 
