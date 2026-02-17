@@ -110,20 +110,33 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+QStringList MainWindow::getEspDevicePaths()
+{
+    QString lsblkJson;
+    cmd.proc("lsblk", {"-ln", "--json", "-o", "PATH,PARTTYPE,FSTYPE,TYPE"}, &lsblkJson);
+
+    QJsonDocument doc = QJsonDocument::fromJson(lsblkJson.toUtf8());
+    QJsonArray devices = doc.object().value("blockdevices").toArray();
+
+    QStringList paths;
+    for (const QJsonValue &val : devices) {
+        QJsonObject dev = val.toObject();
+        if (dev.value("type").toString() != "part") {
+            continue;
+        }
+        const QString parttype = dev.value("parttype").toString().toLower();
+        if ((parttype == ESP_GUID_GPT || parttype == ESP_TYPE_MBR)
+            && dev.value("fstype").toString().compare("vfat", Qt::CaseInsensitive) == 0) {
+            paths.append(dev.value("path").toString());
+        }
+    }
+    return paths;
+}
+
 void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
 {
     // Mount all ESPs
-    QString lsblkOut;
-    cmd.procAsRoot("lsblk", {"-no", "PATH,PARTTYPE"}, &lsblkOut);
-    QStringList partList;
-    static const QRegularExpression espRegex(QString("^(\\S+)\\s+(?:%1|%2)\\s*$").arg(ESP_GUID_GPT, ESP_TYPE_MBR),
-                                             QRegularExpression::CaseInsensitiveOption);
-    for (const QString &line : lsblkOut.split('\n', Qt::SkipEmptyParts)) {
-        QRegularExpressionMatch m = espRegex.match(line);
-        if (m.hasMatch()) {
-            partList.append(m.captured(1));
-        }
-    }
+    const QStringList partList = getEspDevicePaths();
 
     for (const auto &device : std::as_const(partList)) {
         if (!cmd.procAsRoot("findmnt", {"-n", device})) {

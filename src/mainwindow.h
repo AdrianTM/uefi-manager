@@ -127,6 +127,7 @@ private:
     QString combineBootOptions(const QString &parsedOptions, const QString &rootDir);
     void guessPartition();
     void detectRootDevice();
+    QStringList getEspDevicePaths();
     void listDevices();
     void loadStubOption();
     void promptFrugalStubInstall();
