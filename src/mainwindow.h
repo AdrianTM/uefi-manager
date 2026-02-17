@@ -137,7 +137,6 @@ private:
     void saveBootOrder(const QListWidget *list);
     void selectKernel(const QString &mountPoint);
     void validateAndLoadOptions(const QString &frugalDir);
-    QStringList sortKernelVersions(const QStringList &kernelFiles, bool reverse = true) const;
     bool isSystemd() const;
     bool isShimSystemd(const QString &rootPath = "/") const;
 };

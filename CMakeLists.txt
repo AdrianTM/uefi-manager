@@ -115,6 +115,7 @@ set(SOURCES
     src/about.cpp
     src/cmd.cpp
     src/log.cpp
+    src/utils.cpp
 )
 
 set(HEADERS
@@ -123,6 +124,7 @@ set(HEADERS
     src/cmd.h
     src/log.h
     src/common.h
+    src/utils.h
 )
 
 set(UI_FILES
@@ -208,3 +210,18 @@ set_target_properties(uefi-manager PROPERTIES
 install(TARGETS uefi-manager
     RUNTIME DESTINATION bin
 )
+
+# Unit tests
+find_package(Qt6 QUIET COMPONENTS Test)
+if(Qt6Test_FOUND)
+    enable_testing()
+
+    add_executable(test_utils
+        tests/test_utils.cpp
+        src/utils.cpp
+        src/utils.h
+    )
+    target_include_directories(test_utils PRIVATE src)
+    target_link_libraries(test_utils Qt6::Core Qt6::Test)
+    add_test(NAME test_utils COMMAND test_utils)
+endif()

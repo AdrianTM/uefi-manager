@@ -23,6 +23,7 @@
 #include "mainwindow.h"
 #include "qapplication.h"
 #include "ui_mainwindow.h"
+#include "utils.h"
 
 #include <QDebug>
 #include <QFileDialog>
@@ -703,7 +704,7 @@ void MainWindow::selectKernel(const QString &rootDir)
     ui->comboKernel->clear();
     ui->textKernelOptions->setText("");
 
-    QStringList sortedKernelFiles = sortKernelVersions(kernelFiles);
+    QStringList sortedKernelFiles = utils::sortKernelVersions(kernelFiles);
     if (sortedKernelFiles.count() == 0) {
         return;
     }
@@ -1306,56 +1307,6 @@ QString MainWindow::combineBootOptions(const QString &parsedOptions, const QStri
     return bootOptions;
 }
 
-QStringList MainWindow::sortKernelVersions(const QStringList &kernelFiles, bool reverse) const
-{
-    // Custom sort
-    auto versionCompare = [reverse](const QString &a, const QString &b) {
-        // Regexp to match version part
-        QRegularExpression regex(R"((\d+)\.(\d+)(?:\.(\d+))?(-([a-z0-9]+[^-]*)?)?(-.*)?)");
-
-        QRegularExpressionMatch matchA = regex.match(a);
-        QRegularExpressionMatch matchB = regex.match(b);
-
-        // Fallback if regex does not match
-        if (!matchA.hasMatch() && !matchB.hasMatch()) {
-            return reverse ? a > b : a < b; // Both unmatched, sort lexicographically
-        }
-        if (!matchA.hasMatch()) {
-            return reverse; // A unmatched, B matched
-        }
-        if (!matchB.hasMatch()) {
-            return !reverse; // B unmatched, A matched
-        }
-
-        // Extract version components
-        int majorA = matchA.captured(1).toInt();
-        int minorA = matchA.captured(2).toInt();
-        int patchA = matchA.captured(3).isEmpty() ? 0 : matchA.captured(3).toInt();
-
-        int majorB = matchB.captured(1).toInt();
-        int minorB = matchB.captured(2).toInt();
-        int patchB = matchB.captured(3).isEmpty() ? 0 : matchB.captured(3).toInt();
-
-        // Compare major, minor and patch versions numerically
-        if (majorA != majorB) {
-            return reverse ? majorA > majorB : majorA < majorB;
-        }
-        if (minorA != minorB) {
-            return reverse ? minorA > minorB : minorA < minorB;
-        }
-        if (patchA != patchB) {
-            return reverse ? patchA > patchB : patchA < patchB;
-        }
-
-        // If major, minor, and patch are equal, compare suffix
-        return reverse ? matchA.captured(4) > matchB.captured(4) : matchA.captured(4) < matchB.captured(4);
-    };
-
-    // Sort kernel files using custom comparator
-    QStringList sortedList = kernelFiles;
-    std::sort(sortedList.begin(), sortedList.end(), versionCompare);
-    return sortedList;
-}
 
 // Try to guess root partition by checking partition labels and types
 void MainWindow::guessPartition()
@@ -1444,16 +1395,7 @@ void MainWindow::listDevices()
             rootPartition = rootDevicePath.split('/').last().trimmed();
         }
 
-        rootDrive = [&]() {
-            QRegularExpression regex("^(.*?)(\\d+)$");
-            QRegularExpressionMatch match = regex.match(rootPartition);
-            QString diskDeviceName = match.hasMatch() ? match.captured(1) : rootPartition;
-            if ((diskDeviceName.startsWith("nvme") || diskDeviceName.startsWith("mmcblk"))
-                && diskDeviceName.endsWith("p")) {
-                diskDeviceName.chop(1);
-            }
-            return diskDeviceName;
-        }();
+        rootDrive = utils::extractDiskFromPartition(rootPartition);
     }
 
     // Regex for physical disk/partition device names (sd*, hd*, vd*, xvd*, mmcblk*, nvme*)
