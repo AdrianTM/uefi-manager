@@ -1425,11 +1425,16 @@ void MainWindow::listDevices()
 
     // Single lsblk call to get all block device info as JSON
     QString lsblkJson;
-    cmd.proc("lsblk", {"-ln", "--json", "--bytes", "-o",
-                        "NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL,MODEL,PARTTYPE,TYPE", "-e", "2,11"},
-             &lsblkJson);
+    if (!cmd.proc("lsblk", {"-ln", "--json", "--bytes", "-o",
+                            "NAME,SIZE,FSTYPE,MOUNTPOINT,LABEL,MODEL,PARTTYPE,TYPE", "-e", "2,11"},
+                   &lsblkJson)) {
+        qWarning() << "lsblk failed; device lists will be empty";
+    }
 
     QJsonDocument doc = QJsonDocument::fromJson(lsblkJson.toUtf8());
+    if (doc.isNull()) {
+        qWarning() << "Failed to parse lsblk JSON output";
+    }
     QJsonArray devices = doc.object().value("blockdevices").toArray();
 
     // Helper: format display string with name first (for .section(' ', 0, 0) extraction)
