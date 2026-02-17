@@ -126,6 +126,7 @@ private:
     QString getFallbackOptions(const QString &rootDir, const QString &rootUUID);
     QString combineBootOptions(const QString &parsedOptions, const QString &rootDir);
     void guessPartition();
+    void detectRootDevice();
     void listDevices();
     void loadStubOption();
     void promptFrugalStubInstall();

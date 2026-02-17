@@ -227,6 +227,9 @@ void MainWindow::setup()
     // Refresh blkid cache early
     cmd.proc("blkid");
 
+    // Detect root device/partition once at startup
+    detectRootDevice();
+
     // Refresh appropriate tab content based on current tab
     const auto currentTab = ui->tabWidget->currentIndex();
     switch (currentTab) {
@@ -1373,28 +1376,24 @@ void MainWindow::guessPartition()
     findKernel();
 }
 
-void MainWindow::listDevices()
+void MainWindow::detectRootDevice()
 {
-    static bool firstRun {true};
+    QString dfRoot;
+    cmd.proc("df", {"--output=source", "/"}, &dfRoot);
+    rootDevicePath = dfRoot.split('\n').last();
 
-    if (firstRun) {
-        firstRun = false;
-
-        // Detect root device/partition (stable, only needed once)
-        QString dfRoot;
-        cmd.proc("df", {"--output=source", "/"}, &dfRoot);
-        rootDevicePath = dfRoot.split('\n').last();
-
-        if (rootDevicePath.startsWith("/dev/mapper")) {
-            cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootPartition);
-            rootPartition = rootPartition.trimmed();
-        } else {
-            rootPartition = rootDevicePath.split('/').last().trimmed();
-        }
-
-        rootDrive = utils::extractDiskFromPartition(rootPartition);
+    if (rootDevicePath.startsWith("/dev/mapper")) {
+        cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootPartition);
+        rootPartition = rootPartition.trimmed();
+    } else {
+        rootPartition = rootDevicePath.split('/').last().trimmed();
     }
 
+    rootDrive = utils::extractDiskFromPartition(rootPartition);
+}
+
+void MainWindow::listDevices()
+{
     // Regex for physical disk/partition device names (sd*, hd*, vd*, xvd*, mmcblk*, nvme*)
     static const QRegularExpression driveNameRegex("^x?[hsv]d[a-z]|^mmcblk|^nvme");
     static const QRegularExpression partNameRegex("^x?[hsv]d[a-z]\\d|^mmcblk\\d+p|^nvme\\d+n\\d+p");
