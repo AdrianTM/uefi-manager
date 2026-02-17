@@ -1,3 +1,20 @@
+uefi-manager (26.02) mx; urgency=medium
+
+  * Improve reliability of elevated command execution and error handling when
+    authentication tools are unavailable.
+  * Fix efibootmgr argument construction for create/rename operations to avoid
+    malformed labels/loaders.
+  * Escape dynamic regex inputs when parsing crypttab/GRUB-derived root
+    identifiers, improving handling of special characters.
+  * Improve block device and ESP detection robustness using lsblk JSON parsing,
+    including NVMe/virtio naming edge cases.
+  * Improve cleanup reliability by retrying failed unmounts and cleaning stale
+    compressed kernel/initrd artifacts on the ESP.
+  * Guard boot-entry list selection against null current item to avoid
+    potential crashes.
+
+ -- Adrian <adrian@mxlinux.org>  Tue, 17 Feb 2026 00:18:28 -0500
+
 uefi-manager (25.09.1) mx; urgency=medium
 
   * Update translations
