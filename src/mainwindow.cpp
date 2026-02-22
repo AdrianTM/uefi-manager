@@ -176,7 +176,12 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         name = "New entry";
     }
 
-    fileName = "/EFI/" + fileName.section("/EFI/", 1);
+    const int efiIdx = fileName.indexOf("/EFI/", 0, Qt::CaseInsensitive);
+    if (efiIdx < 0) {
+        QMessageBox::critical(dialogUefi, tr("Error"), tr("Selected file is not in an EFI directory"));
+        return;
+    }
+    fileName = "/EFI/" + fileName.mid(efiIdx + 5);
     QString out;
     cmd.procAsRoot("efibootmgr", {"-c", "-L", name, "-d", disk, "-p", partition, "-l", fileName}, &out);
 
