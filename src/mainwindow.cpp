@@ -1601,6 +1601,12 @@ QString MainWindow::selectESP()
         return {};
     }
 
+    if (!checkSizeEsp()) {
+        QMessageBox::critical(this, QApplication::applicationDisplayName(),
+                              tr("Not enough space on the EFI System Partition to copy the kernel and initrd files."));
+        return {};
+    }
+
     const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
     const QString subDir = isFrugal ? "/frugal" : "/stub";
     const QString targetPath = espMountPoint + "/EFI/" + distro + subDir;
@@ -1608,11 +1614,6 @@ QString MainWindow::selectESP()
                           targetPath + "/initrd.img", targetPath + "/initrd.gz",
                           targetPath + "/amducode.img", targetPath + "/amducode.gz",
                           targetPath + "/intucode.img", targetPath + "/intucode.gz"});
-    if (!checkSizeEsp()) {
-        QMessageBox::critical(this, QApplication::applicationDisplayName(),
-                              tr("Not enough space on the EFI System Partition to copy the kernel and initrd files."));
-        return {};
-    }
     return selectedEsp;
 }
 
