@@ -521,9 +521,9 @@ bool MainWindow::installEfiStub(const QString &esp)
     if (isFrugal) {
         bootOptions
             = QString("bdir=%1 buuid=%2 %3 %4 %5")
-                  .arg(options.bdir, options.uuid, options.stringOptions, ui->comboFrugalMode->currentText(), initrd);
+                  .arg(options.bdir, options.uuid, ui->textOptionsFrugal->text(), ui->comboFrugalMode->currentText(), initrd);
     } else {
-        bootOptions = QString("%1 %2").arg(options.stringOptions, initrd);
+        bootOptions = QString("%1 %2").arg(ui->textKernelOptions->text(), initrd);
     }
 
     if (!cmd.procAsRoot("efibootmgr", args << bootOptions)) {
