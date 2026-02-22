@@ -159,8 +159,9 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
             if (!QDir(mountDir).exists()) {
                 cmd.procAsRoot("mkdir", {"-p", mountDir});
                 newDirectories.append(mountDir);
-                cmd.procAsRoot("mount", {device, mountDir});
-                newMounts.append(mountDir);
+                if (cmd.procAsRoot("mount", {device, mountDir})) {
+                    newMounts.append(mountDir);
+                }
             }
         }
     }
