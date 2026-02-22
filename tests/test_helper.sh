@@ -76,70 +76,18 @@ else
     ((++PASS))
 fi
 
-echo "=== Shell construct blocking ==="
+echo "=== Single-string shell commands are rejected ==="
 
-expect_err_msg "command substitution \$()"   "forbidden shell constructs"  'echo $(whoami)'
-expect_err_msg "backtick substitution"       "forbidden shell constructs"  'echo `whoami`'
-expect_err_msg "process substitution <()"    "forbidden shell constructs"  'grep foo <(cat /etc/passwd)'
-expect_err_msg "process substitution >()"    "forbidden shell constructs"  'grep foo >(cat /etc/passwd)'
+expect_err_msg "single-arg pipeline string" "not permitted" 'grep --version | cut -d" " -f1'
+expect_err_msg "single-arg command substitution" "not permitted" 'echo $(whoami)'
+expect_err_msg "single-arg redirection" "not permitted" 'grep foo /dev/null > /tmp/out'
+expect_err_msg "single-quoted command in one arg" "not permitted" "'grep' --version"
+expect_err_msg "double-quoted command in one arg" "not permitted" '"grep" --version'
 
-echo "=== I/O redirection blocking ==="
+echo "=== Empty/whitespace command arguments ==="
 
-expect_err_msg "output redirect >"       "redirections are not permitted"  'grep foo /dev/null > /tmp/out'
-expect_err_msg "append redirect >>"      "redirections are not permitted"  'grep foo /dev/null >> /tmp/out'
-expect_err_msg "input redirect <"        "redirections are not permitted"  'grep foo < /etc/passwd'
-
-echo "=== Redirects inside quotes are allowed ==="
-
-# grep ">" in /dev/null — the > is inside quotes, should pass validation
-# (grep itself returns 1 because no match, but that's fine)
-stderr="$("$HELPER" 'grep ">" /dev/null' 2>&1 || true)"
-if [[ "$stderr" == *"redirections"* ]]; then
-    echo "FAIL: redirect inside quotes was blocked" >&2
-    ((++FAIL))
-else
-    ((++PASS))
-fi
-
-echo "=== Pipe chain validation ==="
-
-expect_ok      "pipe with allowed commands"       'grep --version | cut -d" " -f1'
-expect_err_msg "pipe with disallowed command"  "not permitted"  'grep foo | bash -c "evil"'
-expect_err_msg "pipe with cat"                 "not permitted"  'lsblk | cat'
-
-echo "=== && chain validation ==="
-
-expect_ok      "&& with allowed commands"          'grep --version && lsblk --version'
-expect_err_msg "&& with disallowed command"    "not permitted"  'grep --version && bash -c "evil"'
-
-echo "=== || chain validation ==="
-
-expect_ok      "|| with allowed commands"          'grep --version || lsblk --version'
-expect_err_msg "|| with disallowed command"    "not permitted"  'grep --version || bash evil'
-
-echo "=== ; chain validation ==="
-
-expect_ok      "; with allowed commands"           'grep --version ; lsblk --version'
-expect_err_msg "; with disallowed command"     "not permitted"  'grep --version ; bash -c evil'
-
-echo "=== Bare & validation ==="
-
-expect_err_msg "bare & with disallowed cmd"    "not permitted"  'grep --version & bash -c evil'
-
-echo "=== Quoted command names ==="
-
-expect_ok   "single-quoted command name"       "'grep' --version"
-expect_ok   "double-quoted command name"       '"grep" --version'
-
-echo "=== Malformed input ==="
-
-expect_err_msg "unterminated single quote"  "malformed"  "grep 'foo"
-expect_err_msg "unterminated double quote"  "malformed"  'grep "foo'
-
-echo "=== Empty/whitespace input ==="
-
-expect_err_msg "empty string"       "empty command string"  ""
-expect_err_msg "whitespace only"    "empty command string"  "   "
+expect_err_msg "empty string command" "not permitted" ""
+expect_err_msg "whitespace command" "not permitted" "   "
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
