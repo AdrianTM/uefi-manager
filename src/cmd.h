@@ -37,6 +37,8 @@ public:
               const QByteArray *input = nullptr, QuietMode quiet = QuietMode::No, Elevation elevation = Elevation::No);
     bool procAsRoot(const QString &cmd, const QStringList &args = {}, QString *output = nullptr,
                     const QByteArray *input = nullptr, QuietMode quiet = QuietMode::No);
+    bool procElevated(const QString &cmd, const QStringList &args = {}, QString *output = nullptr,
+                      QuietMode quiet = QuietMode::No);
 
 signals:
     void done();

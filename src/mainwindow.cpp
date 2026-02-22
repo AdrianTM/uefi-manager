@@ -121,6 +121,8 @@ MainWindow::~MainWindow()
         }
     }
 
+    cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"copy_log"});
+
     delete ui;
 }
 
@@ -780,7 +782,7 @@ void MainWindow::promptFrugalStubInstall()
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
     if (ret == QMessageBox::No) {
-        cmd.procAsRoot("/usr/lib/uefi-manager/uefimanager-lib", {"write_checkfile"});
+        cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"write_checkfile"});
         exit(EXIT_SUCCESS);
     } else {
         ui->tabWidget->setCurrentIndex(Tab::Frugal);

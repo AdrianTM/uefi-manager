@@ -9,7 +9,12 @@ cleanup_temp() {
 }
 
 copy_log() {
-    :
+    local src="/tmp/uefi-manager.log"
+    local dest="/var/log/uefi-manager.log"
+    if [[ -f "$src" ]]; then
+        cp "$src" "$dest"
+        chmod 644 "$dest"
+    fi
 }
 
 write_checkfile() {

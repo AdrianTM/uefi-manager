@@ -36,7 +36,7 @@ Cmd::Cmd(QObject *parent)
     : QProcess(parent)
 {
     // Determine the appropriate elevation command
-    const QStringList elevationCommands = {"/usr/bin/pkexec", "/usr/bin/gksu"};
+    const QStringList elevationCommands = {"/usr/bin/pkexec", "/usr/bin/gksu", "/usr/bin/sudo"};
     for (const QString &command : elevationCommands) {
         if (QFile::exists(command)) {
             elevationCommand = command;
@@ -45,7 +45,7 @@ Cmd::Cmd(QObject *parent)
     }
 
     if (elevationCommand.isEmpty()) {
-        qWarning() << "No suitable elevation command found (pkexec or gksu)";
+        qWarning() << "No suitable elevation command found (pkexec, gksu, or sudo)";
     }
 
     helper = QString("/usr/lib/%1/helper").arg(QApplication::applicationName());
@@ -149,6 +149,19 @@ bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *outpu
                      QuietMode quiet)
 {
     return proc(cmd, args, output, input, quiet, Elevation::Yes);
+}
+
+bool Cmd::procElevated(const QString &cmd, const QStringList &args, QString *output, QuietMode quiet)
+{
+    if (getuid() == 0) {
+        return proc(cmd, args, output, nullptr, quiet);
+    }
+    if (elevationCommand.isEmpty()) {
+        qWarning() << "Elevation required but no pkexec/gksu found";
+        return false;
+    }
+    QStringList elevatedArgs = QStringList() << cmd << args;
+    return proc(elevationCommand, elevatedArgs, output, nullptr, quiet);
 }
 
 void Cmd::handleElevationError()
