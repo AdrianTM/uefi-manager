@@ -77,7 +77,8 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     outBuffer.clear();
 
     // Skip if elevation has already failed (app is shutting down)
-    if (elevationFailed) {
+    // but allow non-helper elevated calls (e.g. uefimanager-lib with its own policy)
+    if (elevationFailed && elevation == Elevation::Yes) {
         return false;
     }
 
