@@ -179,9 +179,10 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     QString pkname;
     cmd.proc("lsblk", {"-no", "PKNAME", partitionName}, &pkname);
     const QString disk = "/dev/" + pkname.trimmed();
-    const QString partition = partitionName.mid(partitionName.lastIndexOf(QRegularExpression("[0-9]+$")));
+    const QRegularExpressionMatch partMatch = QRegularExpression("[0-9]+$").match(partitionName);
+    const QString partition = partMatch.hasMatch() ? partMatch.captured() : QString();
 
-    if (cmd.exitCode() != 0) {
+    if (cmd.exitCode() != 0 || partition.isEmpty()) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
         return;
     }
@@ -506,7 +507,8 @@ bool MainWindow::installEfiStub(const QString &esp)
             break;
         }
     }
-    QString part = esp.mid(esp.lastIndexOf(QRegularExpression("[0-9]+$")));
+    const QRegularExpressionMatch partMatch = QRegularExpression("[0-9]+$").match(esp);
+    QString part = partMatch.hasMatch() ? partMatch.captured() : QString();
 
     if (disk.isEmpty() || part.isEmpty()) {
         return false;
