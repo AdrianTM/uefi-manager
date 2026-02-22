@@ -103,8 +103,8 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     // Set up event loop for synchronous execution
     QEventLoop loop;
     bool processError = false;
-    connect(this, &Cmd::done, &loop, &QEventLoop::quit);
-    connect(this, &QProcess::errorOccurred, &loop, [&loop, &processError] {
+    auto doneConn = connect(this, &Cmd::done, &loop, &QEventLoop::quit);
+    auto errorConn = connect(this, &QProcess::errorOccurred, &loop, [&loop, &processError] {
         processError = true;
         loop.quit();
     });
@@ -124,6 +124,8 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     }
     closeWriteChannel();
     loop.exec();
+    disconnect(doneConn);
+    disconnect(errorConn);
 
     if (processError) {
         qWarning() << "Process error:" << errorString();
