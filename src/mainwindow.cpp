@@ -1095,6 +1095,9 @@ QString MainWindow::getDistroName(bool pretty, const QString &mountPoint, const 
     }
 
     file.close();
+    if (distroName.isEmpty()) {
+        return "Linux";
+    }
     return distroName;
 }
 
