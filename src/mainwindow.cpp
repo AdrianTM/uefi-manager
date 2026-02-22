@@ -716,7 +716,7 @@ void MainWindow::filterDrivePartitions()
 
 void MainWindow::selectKernel(const QString &rootDir)
 {
-    QDir bootDir {getBootLocation()};
+    QDir bootDir {getBootLocation(rootDir)};
     QStringList kernelFiles = bootDir.entryList({"vmlinuz-*"}, QDir::Files | QDir::NoDotAndDotDot, QDir::Name);
     std::transform(kernelFiles.begin(), kernelFiles.end(), kernelFiles.begin(),
                    [](const QString &file) { return file.mid(QStringLiteral("vmlinuz-").length()); });
