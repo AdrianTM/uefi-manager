@@ -81,44 +81,18 @@ MainWindow::MainWindow(const QCommandLineParser &argParser, QWidget *parent)
 MainWindow::~MainWindow()
 {
     settings.setValue("geometry", saveGeometry());
-    for (auto it = newMounts.rbegin(); it != newMounts.rend(); ++it) {
-        if (!cmd.procAsRoot("umount", {*it})) {
-            qWarning() << "umount failed, trying lazy umount:" << *it;
-            cmd.procAsRoot("umount", {"-l", *it});
-        }
+    QStringList cleanupArgs = {"cleanup_temp"};
+    if (!newMounts.isEmpty()) {
+        cleanupArgs << "--mounts" << newMounts;
     }
-    for (const QString &dir : newDirectories) {
-        if (!cmd.procAsRoot("rmdir", {dir})) {
-            qWarning() << "rmdir failed:" << dir;
-        }
+    if (!newDirectories.isEmpty()) {
+        cleanupArgs << "--dirs" << newDirectories;
     }
-
-    QString mountDir = MOUNT_BASE;
-    QDir dir(mountDir);
-    QStringList subDirs = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-
-    // Remove any leftover mountpoints and directories
-    if (dir.exists()) {
-        for (const QString &subDir : subDirs) {
-            QString subDirPath = dir.filePath(subDir);
-            if (!cmd.procAsRoot("umount", {subDirPath})) {
-                qWarning() << "umount failed, trying lazy umount:" << subDirPath;
-                cmd.procAsRoot("umount", {"-l", subDirPath});
-            }
-            if (!cmd.procAsRoot("rmdir", {subDirPath})) {
-                qWarning() << "rmdir failed:" << subDirPath;
-            }
-        }
-        if (!cmd.procAsRoot("rmdir", {mountDir})) {
-            qWarning() << "rmdir failed:" << mountDir;
-        }
+    if (!newLuksDevices.isEmpty()) {
+        cleanupArgs << "--luks" << newLuksDevices;
     }
-
-    // Close opened luks devices
-    for (const QString &luksDevice : newLuksDevices) {
-        if (!cmd.procAsRoot("cryptsetup", {"close", luksDevice})) {
-            qWarning() << "Failed to close LUKS device:" << luksDevice;
-        }
+    if (!cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", cleanupArgs)) {
+        qWarning() << "Cleanup failed";
     }
 
     cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"copy_log"});
