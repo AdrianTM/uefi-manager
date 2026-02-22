@@ -488,14 +488,7 @@ bool MainWindow::installEfiStub(const QString &esp)
         return false;
     }
 
-    QString disk;
-    for (const QString &drive : driveList) {
-        const QString driveName = drive.section(' ', 0, 0);
-        if (esp.startsWith(driveName)) {
-            disk = "/dev/" + driveName;
-            break;
-        }
-    }
+    const QString disk = "/dev/" + utils::extractDiskFromPartition(esp);
     const QRegularExpressionMatch partMatch = QRegularExpression("[0-9]+$").match(esp);
     QString part = partMatch.hasMatch() ? partMatch.captured() : QString();
 
