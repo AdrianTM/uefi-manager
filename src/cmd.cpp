@@ -76,6 +76,11 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
 {
     outBuffer.clear();
 
+    // Skip if elevation has already failed (app is shutting down)
+    if (elevationFailed) {
+        return false;
+    }
+
     // Check if process is already running
     if (state() != QProcess::NotRunning) {
         qDebug() << "Process already running:" << program() << arguments();
@@ -119,6 +124,7 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
     if (elevation == Elevation::Yes
         && (exitCode() == EXIT_CODE_PERMISSION_DENIED || exitCode() == EXIT_CODE_COMMAND_NOT_FOUND)) {
         handleElevationError();
+        return false;
     }
 
     // Provide output if requested
@@ -137,10 +143,11 @@ bool Cmd::procAsRoot(const QString &cmd, const QStringList &args, QString *outpu
 
 void Cmd::handleElevationError()
 {
+    elevationFailed = true;
     QWidget *parentWidget = qobject_cast<QWidget *>(qApp->activeWindow());
     QMessageBox::critical(parentWidget, tr("Administrator Access Required"),
                           tr("This operation requires administrator privileges. Please restart the application "
                              "and enter your password when prompted."));
 
-    QTimer::singleShot(0, qApp, &QApplication::quit);
+    QApplication::quit();
 }
