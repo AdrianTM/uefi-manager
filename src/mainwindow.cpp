@@ -770,7 +770,8 @@ void MainWindow::promptFrugalStubInstall()
 
     if (ret == QMessageBox::No) {
         cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"write_checkfile"});
-        exit(EXIT_SUCCESS);
+        qApp->quit();
+        return;
     } else {
         ui->tabWidget->setCurrentIndex(Tab::Frugal);
     }
