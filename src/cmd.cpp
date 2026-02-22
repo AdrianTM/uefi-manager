@@ -101,8 +101,12 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
 
     // Set up event loop for synchronous execution
     QEventLoop loop;
+    bool processError = false;
     connect(this, &Cmd::done, &loop, &QEventLoop::quit);
-    connect(this, &QProcess::errorOccurred, &loop, &QEventLoop::quit);
+    connect(this, &QProcess::errorOccurred, &loop, [&loop, &processError] {
+        processError = true;
+        loop.quit();
+    });
 
     // Start the process with appropriate elevation
     if (elevation == Elevation::Yes && getuid() != 0) {
@@ -114,10 +118,16 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
 
     // Handle input if provided
     if (input && !input->isEmpty()) {
+        waitForStarted();
         write(*input);
     }
     closeWriteChannel();
     loop.exec();
+
+    if (processError) {
+        qWarning() << "Process error:" << errorString();
+        return false;
+    }
 
     // Check for permission denied or command not found errors
     // These can occur when elevation fails (canceled dialog or incorrect password)
