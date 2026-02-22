@@ -1862,29 +1862,33 @@ bool MainWindow::isShimSystemd(const QString &rootPath) const
         root.chop(strlen("/lib/systemd/systemd"));
     }
 
-    // Check if /sbin/init or /bin/init is a symlink to /lib/systemd/systemd
-    QFile initFile;
+    // Check if /sbin/init or /bin/init is a symlink to systemd
+    QString initPath;
     if (QFile::exists(root + "/sbin/init")) {
-        initFile.setFileName(root + "/sbin/init");
+        initPath = root + "/sbin/init";
+    } else if (QFile::exists(root + "/bin/init")) {
+        initPath = root + "/bin/init";
     } else {
-        initFile.setFileName(root + "/bin/init");
+        return false;
     }
-    QFile initSystemd(root + "/lib/systemd/systemd");
 
-    QFileInfo initInfo(initFile);
-    QFileInfo initSystemdInfo(initSystemd);
-
-    if (initFile.exists() && initSystemd.exists()) {
-        QString initInfoCanonical = initInfo.canonicalFilePath();
-        QString initSystemdInfoCanonical = initSystemdInfo.canonicalFilePath();
-
-        if (initInfoCanonical != initSystemdInfoCanonical) {
-            return true; // shim systemd
-        } else {
-            return false; // pure systemd
-        }
+    if (!QFile::exists(root + "/lib/systemd/systemd")) {
+        return false;
     }
-    return false;
+
+    // Read symlink target without resolving through host filesystem
+    QFileInfo initInfo(initPath);
+    if (!initInfo.isSymLink()) {
+        return true; // init exists but is not a symlink to systemd
+    }
+
+    const QString target = initInfo.symLinkTarget();
+    // symLinkTarget returns absolute path within the mounted root, strip the root prefix
+    QString relativeTarget = target;
+    if (relativeTarget.startsWith(root)) {
+        relativeTarget = relativeTarget.mid(root.length());
+    }
+    return !relativeTarget.endsWith("/systemd");
 }
 
 bool MainWindow::renameUefiEntry(const QString &oldLabel, const QString &newLabel, const QString &oldBootNum)
