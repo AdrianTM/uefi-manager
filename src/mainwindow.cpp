@@ -159,7 +159,7 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
     const QRegularExpressionMatch partMatch = QRegularExpression("[0-9]+$").match(partitionName);
     const QString partition = partMatch.hasMatch() ? partMatch.captured() : QString();
 
-    if (cmd.exitCode() != 0 || partition.isEmpty()) {
+    if (cmd.exitCode() != 0 || partition.isEmpty() || pkname.trimmed().isEmpty()) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
         return;
     }
@@ -1212,7 +1212,7 @@ QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDi
 {
     QString dfOut;
     cmd.proc("df", {"--output=source", rootDir}, &dfOut);
-    QString rootDevicePath = dfOut.split('\n').last();
+    QString rootDevicePath = dfOut.split('\n').last().trimmed();
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
     cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr);
