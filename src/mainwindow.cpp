@@ -152,7 +152,14 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
 
     QString dfOut;
     cmd.proc("df", {"--output=source", fileName}, &dfOut);
-    const QString partitionName = dfOut.split('\n').last().trimmed();
+    const QStringList dfLines = dfOut.split('\n', Qt::SkipEmptyParts);
+    const QString partitionName = dfLines.size() >= 2 ? dfLines.last().trimmed() : QString();
+
+    if (partitionName.isEmpty() || !partitionName.startsWith("/dev/")) {
+        QMessageBox::critical(dialogUefi, tr("Error"), tr("Could not find the source mountpoint for %1").arg(fileName));
+        return;
+    }
+
     QString pkname;
     cmd.proc("lsblk", {"-no", "PKNAME", partitionName}, &pkname);
     const QString disk = "/dev/" + pkname.trimmed();
@@ -1213,7 +1220,12 @@ QPair<QStringList, QString> MainWindow::getRootIdentifiers(const QString &rootDi
 {
     QString dfOut;
     cmd.proc("df", {"--output=source", rootDir}, &dfOut);
-    QString rootDevicePath = dfOut.split('\n').last().trimmed();
+    const QStringList dfLines = dfOut.split('\n', Qt::SkipEmptyParts);
+    QString rootDevicePath = dfLines.size() >= 2 ? dfLines.last().trimmed() : QString();
+    if (rootDevicePath.isEmpty() || !rootDevicePath.startsWith("/dev/")) {
+        qWarning() << "Could not determine root device for" << rootDir;
+        return {{}, {}};
+    }
     QStringList rootPatternList = {rootDevicePath};
     QString rootUUID;
     cmd.procAsRoot("blkid", {"--output", "value", "--match-tag", "UUID", rootDevicePath}, &rootUUID, nullptr);
@@ -1415,7 +1427,12 @@ void MainWindow::detectRootDevice()
 {
     QString dfRoot;
     cmd.proc("df", {"--output=source", "/"}, &dfRoot);
-    rootDevicePath = dfRoot.split('\n').last();
+    const QStringList dfLines = dfRoot.split('\n', Qt::SkipEmptyParts);
+    rootDevicePath = dfLines.size() >= 2 ? dfLines.last().trimmed() : QString();
+    if (rootDevicePath.isEmpty() || !rootDevicePath.startsWith("/dev/")) {
+        qWarning() << "Could not determine root device";
+        return;
+    }
 
     if (rootDevicePath.startsWith("/dev/mapper")) {
         cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootPartition);
