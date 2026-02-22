@@ -649,10 +649,23 @@ bool MainWindow::checkSizeEsp()
     const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
     const QString sourceDir = isFrugal ? frugalDir : getBootLocation();
     qDebug() << "Source Dir:" << sourceDir;
-    const QString vmlinuz
-        = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + ui->comboKernel->currentText());
-    const QString initrd
-        = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + ui->comboKernel->currentText());
+    const QString kernelVersion = ui->comboKernel->currentText();
+    QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
+    if (!QFile::exists(vmlinuz)) {
+        vmlinuz = QString("%1/vmlinuz-linux").arg(sourceDir);
+    }
+
+    QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
+    if (!QFile::exists(initrd)) {
+        QString initramfs = QString("%1/initramfs-%2").arg(sourceDir, isFrugal ? "" : kernelVersion + ".img");
+        if (!QFile::exists(initramfs)) {
+            initramfs = QString("%1/initramfs-linux.img").arg(sourceDir);
+        }
+        if (QFile::exists(initramfs)) {
+            initrd = initramfs;
+        }
+    }
+
     const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
     const QString intUcode = QString("%1/intel-ucode.img").arg(sourceDir);
 
