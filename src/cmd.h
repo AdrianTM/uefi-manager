@@ -39,6 +39,7 @@ public:
                     const QByteArray *input = nullptr, QuietMode quiet = QuietMode::No);
     bool procElevated(const QString &cmd, const QStringList &args = {}, QString *output = nullptr,
                       QuietMode quiet = QuietMode::No);
+    static void resetElevation() { elevationFailed = false; }
 
 signals:
     void done();

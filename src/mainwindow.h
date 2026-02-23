@@ -136,7 +136,7 @@ private:
     void refreshEntries();
     void refreshFrugal();
     void refreshStubInstall();
-    void saveBootOrder(const QListWidget *list);
+    bool saveBootOrder(const QListWidget *list);
     void selectKernel(const QString &mountPoint);
     void validateAndLoadOptions(const QString &frugalDir);
     bool isSystemd() const;

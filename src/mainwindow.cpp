@@ -38,6 +38,7 @@
 #include <QScreen>
 #include <QStorageInfo>
 #include <QTextStream>
+#include <QTimer>
 
 #include "about.h"
 #include "cmd.h"
@@ -811,6 +812,7 @@ void MainWindow::readBootEntries(QListWidget *listEntries, QLabel *textTimeout, 
 
 void MainWindow::refreshEntries()
 {
+    Cmd::resetElevation();
     clearEntryWidget();
 
     auto *layout = new QGridLayout(ui->tabManageUefi);
@@ -844,20 +846,21 @@ void MainWindow::refreshEntries()
     listEntries->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     connect(pushResetNext, &QPushButton::clicked, ui->tabManageUefi, [textBootNext]() {
+        Cmd::resetElevation();
         if (Cmd().procAsRoot("efibootmgr", {"-N"})) {
             textBootNext->setText(tr("Boot Next: %1").arg(tr("not set, will boot using list order")));
         }
     });
     connect(pushTimeout, &QPushButton::clicked, this,
-            [this, textTimeout]() { setUefiTimeout(ui->tabManageUefi, textTimeout); });
+            [this, textTimeout]() { Cmd::resetElevation(); setUefiTimeout(ui->tabManageUefi, textTimeout); });
     connect(pushAddEntry, &QPushButton::clicked, this,
-            [this, listEntries]() { addUefiEntry(listEntries, ui->tabManageUefi); });
+            [this, listEntries]() { Cmd::resetElevation(); addUefiEntry(listEntries, ui->tabManageUefi); });
     connect(pushBootNext, &QPushButton::clicked, this,
-            [listEntries, textBootNext]() { setUefiBootNext(listEntries, textBootNext); });
+            [listEntries, textBootNext]() { Cmd::resetElevation(); setUefiBootNext(listEntries, textBootNext); });
     connect(pushRemove, &QPushButton::clicked, this,
-            [this, listEntries]() { removeUefiEntry(listEntries, ui->tabManageUefi); });
+            [this, listEntries]() { Cmd::resetElevation(); removeUefiEntry(listEntries, ui->tabManageUefi); });
 
-    connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { toggleUefiActive(listEntries); });
+    connect(pushActive, &QPushButton::clicked, ui->tabManageUefi, [listEntries]() { Cmd::resetElevation(); toggleUefiActive(listEntries); });
     connect(pushUp, &QPushButton::clicked, ui->tabManageUefi, [this, listEntries, pushUp, pushDown]() {
         pushUp->setEnabled(false);
         pushDown->setEnabled(false);
@@ -899,7 +902,11 @@ void MainWindow::refreshEntries()
 
     listEntries->setDragDropMode(QAbstractItemView::InternalMove);
     connect(listEntries->model(), &QAbstractItemModel::rowsMoved, this, [this, listEntries]() {
-        saveBootOrder(listEntries);
+        Cmd::resetElevation();
+        if (!saveBootOrder(listEntries)) {
+            QTimer::singleShot(0, this, &MainWindow::refreshEntries);
+            return;
+        }
         emit listEntries->itemSelectionChanged();
     });
 
@@ -930,6 +937,7 @@ void MainWindow::refreshEntries()
 
 void MainWindow::refreshFrugal()
 {
+    Cmd::resetElevation();
     addDevToList();
     ui->stackedFrugal->setCurrentIndex(Page::Location);
     ui->pushCancel->setEnabled(true);
@@ -941,6 +949,7 @@ void MainWindow::refreshFrugal()
 
 void MainWindow::refreshStubInstall()
 {
+    Cmd::resetElevation();
     addDevToList();
     ui->pushCancel->setEnabled(true);
     ui->pushNext->setText(tr("Install"));
@@ -1648,6 +1657,7 @@ QString MainWindow::selectESP()
 
 void MainWindow::pushNextClicked()
 {
+    Cmd::resetElevation();
     if (ui->tabWidget->currentIndex() == Tab::Frugal) {
         if (ui->stackedFrugal->currentIndex() == Page::Location) {
             ui->pushNext->setEnabled(false);
@@ -1762,7 +1772,7 @@ void MainWindow::pushBackClicked()
     }
 }
 
-void MainWindow::saveBootOrder(const QListWidget *list)
+bool MainWindow::saveBootOrder(const QListWidget *list)
 {
     QStringList orderList;
     orderList.reserve(list->count());
@@ -1776,8 +1786,13 @@ void MainWindow::saveBootOrder(const QListWidget *list)
 
     const QString order = orderList.join(',');
     if (!cmd.procAsRoot("efibootmgr", {"-o", order})) {
-        QMessageBox::critical(this, tr("Error"), tr("Something went wrong, could not save boot order."));
+        // Only show generic error if it wasn't already an elevation failure (which shows its own message)
+        if (cmd.exitCode() != 126 && cmd.exitCode() != 127) {
+            QMessageBox::critical(this, tr("Error"), tr("Something went wrong, could not save boot order."));
+        }
+        return false;
     }
+    return true;
 }
 
 void MainWindow::setUefiTimeout(QWidget *uefiDialog, QLabel *textTimeout)

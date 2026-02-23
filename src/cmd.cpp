@@ -27,7 +27,6 @@
 #include <QEventLoop>
 #include <QFile>
 #include <QMessageBox>
-#include <QTimer>
 #include <QWidget>
 
 #include <unistd.h>
@@ -76,8 +75,7 @@ bool Cmd::proc(const QString &cmd, const QStringList &args, QString *output, con
 {
     outBuffer.clear();
 
-    // Skip if elevation has already failed (app is shutting down)
-    // but allow non-helper elevated calls (e.g. uefimanager-lib with its own policy)
+    // Skip if elevation has already failed in this action chain
     if (elevationFailed && elevation == Elevation::Yes) {
         return false;
     }
@@ -172,8 +170,5 @@ void Cmd::handleElevationError()
     elevationFailed = true;
     QWidget *parentWidget = qobject_cast<QWidget *>(qApp->activeWindow());
     QMessageBox::critical(parentWidget, tr("Administrator Access Required"),
-                          tr("This operation requires administrator privileges. Please restart the application "
-                             "and enter your password when prompted."));
-
-    QApplication::quit();
+                          tr("This operation requires administrator privileges."));
 }
