@@ -10,7 +10,6 @@ Homepage: https://mxlinux.org
 Package: uefi-manager
 Architecture: any
 Depends: efibootmgr,
-         xdg-utils | mx-viewer,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: UEFI Manager

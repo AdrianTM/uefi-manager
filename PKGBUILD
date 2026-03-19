@@ -63,9 +63,10 @@ package() {
 
     # Install documentation
     install -dm755 "${pkgdir}/usr/share/doc/uefi-manager"
-    if [ -d docs ]; then
-        cp -r docs/license.html "${pkgdir}/usr/share/doc/uefi-manager/" 2>/dev/null || true
-    fi
+    install -Dm644 docs/custom.css "${pkgdir}/usr/share/doc/uefi-manager/custom.css"
+    install -Dm644 docs/help.html "${pkgdir}/usr/share/doc/uefi-manager/help.html"
+    install -Dm644 docs/license.html "${pkgdir}/usr/share/doc/uefi-manager/license.html"
+    install -Dm644 images/logo.svg "${pkgdir}/usr/share/doc/uefi-manager/logo.svg"
 
     # Install man page
     install -Dm644 docs/uefi-manager.1 "${pkgdir}/usr/share/man/man1/uefi-manager.1"
