@@ -1757,7 +1757,8 @@ void MainWindow::pushAboutClicked()
 
 void MainWindow::pushHelpClicked()
 {
-    displayHelpDoc("/usr/share/doc/uefi-manager/help.html", tr("%1 Help").arg(this->windowTitle()));
+    const QString url = "https://mxlinux.org/wiki/uefi-manager/";
+    displayDoc(url, tr("%1 Help").arg(this->windowTitle()));
 }
 
 void MainWindow::pushBackClicked()
