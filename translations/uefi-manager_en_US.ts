@@ -1,15 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="tr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="en_US">
 <context>
     <name>Cmd</name>
     <message>
         <location filename="../src/cmd.cpp" line="172"/>
         <source>Administrator Access Required</source>
-        <translation type="unfinished"/>
+        <translation>Administrator Access Required</translation>
     </message>
     <message>
         <location filename="../src/cmd.cpp" line="173"/>
         <source>This operation requires administrator privileges.</source>
-        <translation type="unfinished"/>
+        <translation>This operation requires administrator privileges.</translation>
     </message>
 </context>
 <context>
@@ -18,65 +18,65 @@
         <location filename="../src/mainwindow.ui" line="57"/>
         <location filename="../src/mainwindow.ui" line="198"/>
         <source>Please select the location of your installation:</source>
-        <translation type="unfinished"/>
+        <translation>Please select the location of your installation:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="71"/>
         <location filename="../src/mainwindow.ui" line="211"/>
         <source>Select drive:</source>
-        <translation type="unfinished"/>
+        <translation>Select drive:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
         <location filename="../src/mainwindow.ui" line="228"/>
         <source>Select partition:</source>
-        <translation type="unfinished"/>
+        <translation>Select partition:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="249"/>
         <source>Frugal mode:</source>
-        <translation type="unfinished"/>
+        <translation>Frugal mode:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation>Önyükleme seçenekleri:</translation>
+        <translation>Boot options:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="129"/>
         <location filename="../src/mainwindow.ui" line="313"/>
         <source>UEFI entry name:</source>
-        <translation type="unfinished"/>
+        <translation>UEFI entry name:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="20"/>
         <source>UEFI manager</source>
-        <translation type="unfinished"/>
+        <translation>UEFI manager</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="41"/>
         <source>EFI stub installer</source>
-        <translation type="unfinished"/>
+        <translation>EFI stub installer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="115"/>
         <source>Kernel to boot:</source>
-        <translation type="unfinished"/>
+        <translation>Kernel to boot:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="122"/>
         <source>Kernel options:</source>
-        <translation type="unfinished"/>
+        <translation>Kernel options:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation>Uygulama hakkında</translation>
+        <translation>About this application</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation>Hakkında...</translation>
+        <translation>About...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="402"/>
@@ -86,12 +86,12 @@
     <message>
         <location filename="../src/mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation>Uygulamadan çık</translation>
+        <translation>Quit application</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation>Close</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="427"/>
@@ -101,32 +101,32 @@
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation>Yardımı görüntüle</translation>
+        <translation>Display help </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="36"/>
         <source>Manage UEFI entries</source>
-        <translation type="unfinished"/>
+        <translation>Manage UEFI entries</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="47"/>
         <source>This option copies the kernel and initrd files to ESP (EFI System Partition) and creates an UEFI entry that allows to boot the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
-        <translation type="unfinished"/>
+        <translation>This option copies the kernel and initrd files to ESP (EFI System Partition) and creates an UEFI entry that allows to boot the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="166"/>
         <source>Frugal EFI stub installer</source>
-        <translation type="unfinished"/>
+        <translation>Frugal EFI stub installer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="172"/>
         <source>This option is meant to create a bootable entry for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
-        <translation type="unfinished"/>
+        <translation>This option is meant to create a bootable entry for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation>Yardım</translation>
+        <translation>Help</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
@@ -138,12 +138,12 @@
         <location filename="../src/mainwindow.cpp" line="946"/>
         <location filename="../src/mainwindow.cpp" line="1769"/>
         <source>Next</source>
-        <translation>Sonraki</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation>Geri</translation>
+        <translation>Back</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="772"/>
@@ -151,68 +151,69 @@
         <location filename="../src/mainwindow.cpp" line="1575"/>
         <location filename="../src/mainwindow.cpp" line="1585"/>
         <source>UEFI Installer</source>
-        <translation type="unfinished"/>
+        <translation>UEFI Installer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="773"/>
         <source>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</source>
-        <translation type="unfinished"/>
+        <translation>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1018"/>
         <source>Could not retrieve UUID for %1</source>
-        <translation>%1 için UUID geri alınamadı</translation>
+        <translation>Could not retrieve UUID for %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1025"/>
         <source>Enter passphrase to unlock %1 encrypted partition:</source>
-        <translation type="unfinished"/>
+        <translation>Enter passphrase to unlock %1 encrypted partition:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1030"/>
         <source>Passphrase entry cancelled or empty for %1</source>
-        <translation type="unfinished"/>
+        <translation>Passphrase entry cancelled or empty for %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1036"/>
         <source>Could not open %1 LUKS container</source>
-        <translation>%1 LUKS konteyner açılamadı</translation>
+        <translation>Could not open %1 LUKS container</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1576"/>
         <source>Are you sure this is the MX or antiX Frugal installation location?
 Missing mandatory files in directory: </source>
-        <translation type="unfinished"/>
+        <translation>Are you sure this is the MX or antiX Frugal installation location?
+Missing mandatory files in directory: </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1644"/>
         <source>Not enough space on the EFI System Partition to copy the kernel and initrd files.</source>
-        <translation type="unfinished"/>
+        <translation>Not enough space on the EFI System Partition to copy the kernel and initrd files.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1706"/>
         <source>All fields are required</source>
-        <translation type="unfinished"/>
+        <translation>All fields are required</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1729"/>
         <source>Could not select ESP</source>
-        <translation type="unfinished"/>
+        <translation>Could not select ESP</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1747"/>
         <source>About %1</source>
-        <translation>%1 Hakkında </translation>
+        <translation>About %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="148"/>
         <source>Select EFI file</source>
-        <translation>EFİ dosyasını seçin</translation>
+        <translation>Select EFI file</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="148"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation>EFI dosyaları (*.efi *.EFI)</translation>
+        <translation>EFI files (*.efi *.EFI)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="160"/>
@@ -232,40 +233,40 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="2053"/>
         <location filename="../src/mainwindow.cpp" line="2058"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>Current kernel doesn&apos;t support selected compression algorithm, please edit the configuration file and select a different algorithm.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="160"/>
         <location filename="../src/mainwindow.cpp" line="171"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation>%1 için kaynak bağlama noktası bulunamadı</translation>
+        <translation>Could not find the source mountpoint for %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="175"/>
         <source>Set name</source>
-        <translation>Adı ayarlayın</translation>
+        <translation>Set name</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="175"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation>UEFI menü öğesi için ad girin:</translation>
+        <translation>Enter the name for the UEFI menu item:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="182"/>
         <source>Selected file is not in an EFI directory</source>
-        <translation type="unfinished"/>
+        <translation>Selected file is not in an EFI directory</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="190"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation>Bir şeyler ters gitti, girdi ekle nemedi.</translation>
+        <translation>Something went wrong, could not add entry.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="802"/>
         <location filename="../src/mainwindow.cpp" line="845"/>
         <location filename="../src/mainwindow.cpp" line="1806"/>
         <source>Timeout: %1 seconds</source>
-        <translation>Zaman aşımı: %1 saniye</translation>
+        <translation>Timeout: %1 seconds</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="804"/>
@@ -273,233 +274,233 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="851"/>
         <location filename="../src/mainwindow.cpp" line="1823"/>
         <source>Boot Next: %1</source>
-        <translation>Sonraki Önyükleme: %1</translation>
+        <translation>Boot Next: %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="806"/>
         <source>Boot Current: %1</source>
-        <translation>Şimdiki Önyükleme: %1</translation>
+        <translation>Boot Current: %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="820"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation>Önyükleme sırasını değiştirmek için Yukarı/Aşağı düğmelerini kullanabilir veya öğeleri sürükleyip bırakabilirsiniz.
-- Öğeler önyükleme sırasıyla listelenir.
-- Gri çizgililer etkin değil.</translation>
+        <translation>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
+- Items are listed in the boot order.
+- Grayed out lines are inactive.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="831"/>
         <location filename="../src/mainwindow.cpp" line="894"/>
         <source>Set ac&amp;tive</source>
-        <translation>&amp;Aktif olarak ayarla</translation>
+        <translation>Set ac&amp;tive</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="832"/>
         <source>&amp;Add entry</source>
-        <translation>&amp;Girdi ekle</translation>
+        <translation>&amp;Add entry</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="833"/>
         <source>Boot &amp;next</source>
-        <translation>&amp;Sonraki önyükleme</translation>
+        <translation>Boot &amp;next</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="834"/>
         <source>Move &amp;down</source>
-        <translation>&amp;Aşağı taşı</translation>
+        <translation>Move &amp;down</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="835"/>
         <source>&amp;Remove entry</source>
-        <translation>Girdi &amp;sil</translation>
+        <translation>&amp;Remove entry</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="837"/>
         <source>Re&amp;set next</source>
-        <translation>Son&amp;rakini sıfırla</translation>
+        <translation>Re&amp;set next</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="838"/>
         <source>Change &amp;timeout</source>
-        <translation>&amp;Zaman aşımını değiştir</translation>
+        <translation>Change &amp;timeout</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="839"/>
         <source>Move &amp;up</source>
-        <translation>&amp;Yukarı taşı</translation>
+        <translation>Move &amp;up</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="844"/>
         <location filename="../src/mainwindow.cpp" line="851"/>
         <source>not set, will boot using list order</source>
-        <translation>ayarlanmadı, listedeki sırayla önyüklenecek</translation>
+        <translation>not set, will boot using list order</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="891"/>
         <source>Set &amp;inactive</source>
-        <translation>&amp;Pasif yap</translation>
+        <translation>Set &amp;inactive</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="970"/>
         <source>Failed to open grub.entry file.</source>
-        <translation type="unfinished"/>
+        <translation>Failed to open grub.entry file.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1750"/>
         <source>Tool for managing UEFI boot entries</source>
-        <translation type="unfinished"/>
+        <translation>Tool for managing UEFI boot entries</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1929"/>
         <source>Both old and new EFI labels must be specified</source>
-        <translation type="unfinished"/>
+        <translation>Both old and new EFI labels must be specified</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2001"/>
         <source>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</source>
-        <translation type="unfinished"/>
+        <translation>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2011"/>
         <source>No EFI data found for label &apos;%1&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>No EFI data found for label &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2019"/>
         <source>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2030"/>
         <source>Unexpected device name format &apos;%1&apos; for partition related to the label.</source>
-        <translation type="unfinished"/>
+        <translation>Unexpected device name format &apos;%1&apos; for partition related to the label.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2040"/>
         <source>Device partition number [%1] differs from EFI entry partition number [%2].</source>
-        <translation type="unfinished"/>
+        <translation>Device partition number [%1] differs from EFI entry partition number [%2].</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2053"/>
         <source>Failed to delete old boot entry</source>
-        <translation type="unfinished"/>
+        <translation>Failed to delete old boot entry</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2058"/>
         <source>Failed to create new boot entry</source>
-        <translation type="unfinished"/>
+        <translation>Failed to create new boot entry</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1585"/>
         <source>Failed to read grub.entry file.</source>
-        <translation type="unfinished"/>
+        <translation>Failed to read grub.entry file.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="955"/>
         <location filename="../src/mainwindow.cpp" line="1598"/>
         <source>Install</source>
-        <translation>Kur</translation>
+        <translation>Install</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1604"/>
         <source>Select Frugal Directory</source>
-        <translation type="unfinished"/>
+        <translation>Select Frugal Directory</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1611"/>
         <source>No EFI System Partitions found.</source>
-        <translation type="unfinished"/>
+        <translation>No EFI System Partitions found.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1617"/>
         <source>Select EFI System Partition</source>
-        <translation type="unfinished"/>
+        <translation>Select EFI System Partition</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1618"/>
         <source>EFI System Partitions:</source>
-        <translation type="unfinished"/>
+        <translation>EFI System Partitions:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1631"/>
         <source>No EFI System Partition selected</source>
-        <translation type="unfinished"/>
+        <translation>No EFI System Partition selected</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1638"/>
         <source>Could not mount selected EFI System Partition</source>
-        <translation type="unfinished"/>
+        <translation>Could not mount selected EFI System Partition</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1669"/>
         <location filename="../src/mainwindow.cpp" line="1713"/>
         <source>Could not mount partition. Please make sure you selected the correct partition.</source>
-        <translation type="unfinished"/>
+        <translation>Could not mount partition. Please make sure you selected the correct partition.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1678"/>
         <source>No directory selected</source>
-        <translation type="unfinished"/>
+        <translation>No directory selected</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1698"/>
         <location filename="../src/mainwindow.cpp" line="1735"/>
         <source>EFI stub installed successfully.</source>
-        <translation type="unfinished"/>
+        <translation>EFI stub installed successfully.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1700"/>
         <location filename="../src/mainwindow.cpp" line="1737"/>
         <source>Failed to install EFI stub.</source>
-        <translation type="unfinished"/>
+        <translation>Failed to install EFI stub.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1748"/>
         <source>Version: </source>
-        <translation>Sürüm:</translation>
+        <translation>Version: </translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1752"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Telif Hakkı (c) MX Linux</translation>
+        <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1753"/>
         <source>%1 License</source>
-        <translation>%1 Lisans</translation>
+        <translation>%1 License</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1761"/>
         <source>%1 Help</source>
-        <translation>%1 Yardım</translation>
+        <translation>%1 Help</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1791"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation>Bir şeyler ters gitti, önyükleme sırası kaydedilemedi.</translation>
+        <translation>Something went wrong, could not save boot order.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1802"/>
         <source>Set timeout</source>
-        <translation>Zaman aşımını ayarlayın</translation>
+        <translation>Set timeout</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1802"/>
         <source>Timeout in seconds:</source>
-        <translation>Saniye olarak zaman aşımı:</translation>
+        <translation>Timeout in seconds:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1841"/>
         <source>Removal confirmation</source>
-        <translation>Kaldırma onayı</translation>
+        <translation>Removal confirmation</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1842"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation>Bu önyükleme girdisini silmek istediğinizden emin misiniz?
+        <translation>Are you sure you want to delete this boot entry?
 %1</translation>
     </message>
 </context>
@@ -508,73 +509,73 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="99"/>
         <source>License</source>
-        <translation>Lisans</translation>
+        <translation>License</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation>Değişim günlüğü</translation>
+        <translation>Changelog</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation>İptal</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="125"/>
         <source>Error: Changelog file is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Error: Changelog file is missing.</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="127"/>
         <source>Error: Required utility &apos;zless&apos; is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Error: Required utility &apos;zless&apos; is missing.</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation>&amp;Kapat</translation>
+        <translation>&amp;Close</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="85"/>
         <source>uefi-manager is a tool for managing UEFI boot entries</source>
-        <translation type="unfinished"/>
+        <translation>uefi-manager is a tool for managing UEFI boot entries</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="88"/>
         <source>Perform EFI Stub installation for frugal installation.</source>
-        <translation type="unfinished"/>
+        <translation>Perform EFI Stub installation for frugal installation.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="66"/>
         <location filename="../src/main.cpp" line="95"/>
         <source>UEFI Manager</source>
-        <translation>UEFI Yöneticisi</translation>
+        <translation>UEFI Manager</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="89"/>
         <source>Run in test mode (bypass UEFI detection for GUI testing).</source>
-        <translation type="unfinished"/>
+        <translation>Run in test mode (bypass UEFI detection for GUI testing).</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="96"/>
         <source>This system doesn&apos;t seem to support UEFI, or was not booted in UEFI mode. Exiting.</source>
-        <translation type="unfinished"/>
+        <translation>This system doesn&apos;t seem to support UEFI, or was not booted in UEFI mode. Exiting.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="107"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation>Current kernel doesn&apos;t support selected compression algorithm, please edit the configuration file and select a different algorithm.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="108"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation>Görünüşe göre root olarak girmişsiniz, lütfen çıkın ve bu programı kullanmak için normal kullanıcı olarak girin. </translation>
+        <translation>You seem to be logged in as root, please log out and log in as normal user to use this program.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>version:</source>
-        <translation>sürüm:</translation>
+        <translation>version:</translation>
     </message>
 </context>
 </TS>
