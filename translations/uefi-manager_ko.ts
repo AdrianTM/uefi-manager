@@ -1,15 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ko">
 <context>
     <name>Cmd</name>
     <message>
         <location filename="../src/cmd.cpp" line="174"/>
         <source>Administrator Access Required</source>
-        <translation>Требуется доступ администратора</translation>
+        <translation>관리자 권한 필요</translation>
     </message>
     <message>
         <location filename="../src/cmd.cpp" line="175"/>
         <source>This operation requires administrator privileges.</source>
-        <translation>Для этой операции требуются права администратора.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -18,65 +18,65 @@
         <location filename="../src/mainwindow.ui" line="57"/>
         <location filename="../src/mainwindow.ui" line="198"/>
         <source>Please select the location of your installation:</source>
-        <translation>Пожалуйста, выберите расположение вашей установки:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="71"/>
         <location filename="../src/mainwindow.ui" line="211"/>
         <source>Select drive:</source>
-        <translation>Выберите диск:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="78"/>
         <location filename="../src/mainwindow.ui" line="228"/>
         <source>Select partition:</source>
-        <translation>Выберите раздел:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="249"/>
         <source>Frugal mode:</source>
-        <translation>Экономный режим:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="296"/>
         <source>Boot options:</source>
-        <translation>Параметры загрузки:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="129"/>
         <location filename="../src/mainwindow.ui" line="313"/>
         <source>UEFI entry name:</source>
-        <translation>Имя записи UEFI:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="20"/>
         <source>UEFI manager</source>
-        <translation>Менеджер UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="41"/>
         <source>EFI stub installer</source>
-        <translation>Установщик EFI-заглушки</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="115"/>
         <source>Kernel to boot:</source>
-        <translation>Ядро для загрузки:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="122"/>
         <source>Kernel options:</source>
-        <translation>Параметры ядра:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation>Об этом приложении</translation>
+        <translation>이 애플리케이션 정보</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation>О программе...</translation>
+        <translation>About...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="402"/>
@@ -86,47 +86,47 @@
     <message>
         <location filename="../src/mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation>Выход</translation>
+        <translation>종료</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="427"/>
         <source>Alt+N</source>
-        <translation>Alt+N</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation>Показать справку</translation>
+        <translation>도움말 표시</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="36"/>
         <source>Manage UEFI entries</source>
-        <translation>Управление записями UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="47"/>
         <source>This option copies the kernel and initrd files to ESP (EFI System Partition) and creates an UEFI entry that allows to boot the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
-        <translation>Эта опция копирует файлы ядра и initrd в ESP (Системный раздел EFI) и создаёт запись UEFI, которая позволяет загружать установку напрямую, минуя GRUB и другие загрузчики. Чтобы загрузиться с помощью созданной записи UEFI, войдите в меню выбора загрузки UEFI при запуске, нажав соответствующую клавишу для вашего устройства (например, F12, F9 или Esc, в зависимости от производителя).</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="166"/>
         <source>Frugal EFI stub installer</source>
-        <translation>Установщик EFI-заглушки для экономного режима</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="172"/>
         <source>This option is meant to create a bootable entry for MX and antiX frugal installation, it creates an EFI boot entry for launching the installation directly, bypassing GRUB and other bootloaders. To boot using the created UEFI entry, access the UEFI boot selection menu at startup by pressing the appropriate key for your device (e.g., F12, F9, or Esc, depending on the manufacturer).</source>
-        <translation>Эта опция предназначена для создания загрузочной записи для экономной установки MX и antiX; она создаёт загрузочную запись EFI для непосредственного запуска установки, минуя GRUB и другие загрузчики. Чтобы загрузиться с помощью созданной записи UEFI, войдите в меню выбора загрузки UEFI при запуске, нажав соответствующую клавишу для вашего устройства (например, F12, F9 или Esc, в зависимости от производителя).</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation>Справка</translation>
+        <translation>도움말</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
@@ -138,12 +138,12 @@
         <location filename="../src/mainwindow.cpp" line="954"/>
         <location filename="../src/mainwindow.cpp" line="1777"/>
         <source>Next</source>
-        <translation>Далее</translation>
+        <translation>다음으로</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation>Назад</translation>
+        <translation>뒤로</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="780"/>
@@ -151,69 +151,68 @@
         <location filename="../src/mainwindow.cpp" line="1583"/>
         <location filename="../src/mainwindow.cpp" line="1593"/>
         <source>UEFI Installer</source>
-        <translation>Установщик UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="781"/>
         <source>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</source>
-        <translation>Обнаружена недавняя экономная установка. Желаете добавить запись UEFI непосредственно в меню вашей системы UEFI?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1026"/>
         <source>Could not retrieve UUID for %1</source>
-        <translation>Не удалось получить UUID для %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1033"/>
         <source>Enter passphrase to unlock %1 encrypted partition:</source>
-        <translation>Введите парольную фразу для разблокировки зашифрованного раздела %1:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1038"/>
         <source>Passphrase entry cancelled or empty for %1</source>
-        <translation>Ввод парольной фразы отменён или она пуста для %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1044"/>
         <source>Could not open %1 LUKS container</source>
-        <translation>Не удалось открыть LUKS-контейнер %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1584"/>
         <source>Are you sure this is the MX or antiX Frugal installation location?
 Missing mandatory files in directory: </source>
-        <translation>Уверены, что это расположение экономной установки MX или antiX?
-В каталоге отсутствуют обязательные файлы: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1652"/>
         <source>Not enough space on the EFI System Partition to copy the kernel and initrd files.</source>
-        <translation>Недостаточно места на системном разделе EFI для копирования файлов ядра и initrd.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1714"/>
         <source>All fields are required</source>
-        <translation>Все поля обязательны для заполнения</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1737"/>
         <source>Could not select ESP</source>
-        <translation>Не удалось выбрать ESP</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1755"/>
         <source>About %1</source>
-        <translation>О %1</translation>
+        <translation>%1 정보</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="156"/>
         <source>Select EFI file</source>
-        <translation>Выберите файл EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="156"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation>Файлы EFI (*.efi *.EFI)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="168"/>
@@ -233,40 +232,40 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="2061"/>
         <location filename="../src/mainwindow.cpp" line="2066"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation>에러</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="168"/>
         <location filename="../src/mainwindow.cpp" line="179"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation>Не удалось найти исходную точку монтирования для %1</translation>
+        <translation>%1 의 마운트 포인트를 찾을 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="183"/>
         <source>Set name</source>
-        <translation>Задать имя</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="183"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation>Введите имя для элемента меню UEFI:</translation>
+        <translation>UEFI 메뉴 항목의 이름 입력:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="190"/>
         <source>Selected file is not in an EFI directory</source>
-        <translation>Выбранный файл находится не в каталоге EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="198"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation>Что-то пошло не так, не удалось добавить запись.</translation>
+        <translation>에러가 발생하여 항목을 추가하지 못했습니다.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="810"/>
         <location filename="../src/mainwindow.cpp" line="853"/>
         <location filename="../src/mainwindow.cpp" line="1814"/>
         <source>Timeout: %1 seconds</source>
-        <translation>Тайм-аут: %1 секунд</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="812"/>
@@ -274,233 +273,233 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="859"/>
         <location filename="../src/mainwindow.cpp" line="1831"/>
         <source>Boot Next: %1</source>
-        <translation>Следующая загрузка: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="814"/>
         <source>Boot Current: %1</source>
-        <translation>Текущая загрузка: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="828"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation>Вы можете использовать кнопки Вверх/Вниз или перетаскивать элементы, чтобы изменить порядок загрузки.
-- Элементы перечислены в порядке загрузки.
-- Выделенные серым строки неактивны.</translation>
+        <translation>Up/Down 버튼을 사용하거나, 마우스로 항목을 드래그 하여 부트 순서를 변경할 수 있습니다.
+- 항목들은 부트 순서에 나열됩니다.
+- 흐려진 라인들은 비활성화 상태입니다.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="839"/>
         <location filename="../src/mainwindow.cpp" line="902"/>
         <source>Set ac&amp;tive</source>
-        <translation>Сделать а&amp;ктивной</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="840"/>
         <source>&amp;Add entry</source>
-        <translation>&amp;Добавить запись</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="841"/>
         <source>Boot &amp;next</source>
-        <translation>Следующая заг&amp;рузка</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="842"/>
         <source>Move &amp;down</source>
-        <translation>Сместить &amp;вниз</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="843"/>
         <source>&amp;Remove entry</source>
-        <translation>&amp;Удалить запись</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="845"/>
         <source>Re&amp;set next</source>
-        <translation>С&amp;бросить следующую</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="846"/>
         <source>Change &amp;timeout</source>
-        <translation>См&amp;енить тайм-аут</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="847"/>
         <source>Move &amp;up</source>
-        <translation>Сместить ввер&amp;х</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="852"/>
         <location filename="../src/mainwindow.cpp" line="859"/>
         <source>not set, will boot using list order</source>
-        <translation>не задано, будет загружаться в порядке списка</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Set &amp;inactive</source>
-        <translation>Сделать неа&amp;ктивной</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="978"/>
         <source>Failed to open grub.entry file.</source>
-        <translation>Не удалось открыть файл grub.entry.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1758"/>
         <source>Tool for managing UEFI boot entries</source>
-        <translation>Инструмент для управления загрузочными записями UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1937"/>
         <source>Both old and new EFI labels must be specified</source>
-        <translation>Необходимо указать как старую, так и новую метки EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2009"/>
         <source>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</source>
-        <translation>Найдено несколько загрузочных записей для метки &apos;%1&apos;: %2 и %3;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2019"/>
         <source>No EFI data found for label &apos;%1&apos;.</source>
-        <translation>Данные EFI для метки «%1» не найдены.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2027"/>
         <source>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</source>
-        <translation>Метка EFI «%1» связана с неизвестным разделом «%2».</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2038"/>
         <source>Unexpected device name format &apos;%1&apos; for partition related to the label.</source>
-        <translation>Неожиданный формат имени устройства «%1» для раздела, связанного с меткой.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2048"/>
         <source>Device partition number [%1] differs from EFI entry partition number [%2].</source>
-        <translation>Номер раздела устройства [%1] отличается от номера раздела в записи EFI [%2].</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2061"/>
         <source>Failed to delete old boot entry</source>
-        <translation>Не удалось удалить старую загрузочную запись</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="2066"/>
         <source>Failed to create new boot entry</source>
-        <translation>Не удалось создать новую загрузочную запись</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1593"/>
         <source>Failed to read grub.entry file.</source>
-        <translation>Не удалось прочитать файл grub.entry.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="963"/>
         <location filename="../src/mainwindow.cpp" line="1606"/>
         <source>Install</source>
-        <translation>Установить</translation>
+        <translation>설치</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1612"/>
         <source>Select Frugal Directory</source>
-        <translation>Выберите каталог экономной установки</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1619"/>
         <source>No EFI System Partitions found.</source>
-        <translation>Системные разделы EFI не найдены.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1625"/>
         <source>Select EFI System Partition</source>
-        <translation>Выберите системный раздел EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1626"/>
         <source>EFI System Partitions:</source>
-        <translation>Системные разделы EFI:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1639"/>
         <source>No EFI System Partition selected</source>
-        <translation>Системный раздел EFI не выбран</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1646"/>
         <source>Could not mount selected EFI System Partition</source>
-        <translation>Не удалось смонтировать выбранный системный раздел EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1677"/>
         <location filename="../src/mainwindow.cpp" line="1721"/>
         <source>Could not mount partition. Please make sure you selected the correct partition.</source>
-        <translation>Не удалось смонтировать раздел. Пожалуйста, убедитесь, что вы выбрали правильный раздел.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1686"/>
         <source>No directory selected</source>
-        <translation>Каталог не выбран</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1706"/>
         <location filename="../src/mainwindow.cpp" line="1743"/>
         <source>EFI stub installed successfully.</source>
-        <translation>EFI-заглушка успешно установлена.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1708"/>
         <location filename="../src/mainwindow.cpp" line="1745"/>
         <source>Failed to install EFI stub.</source>
-        <translation>Не удалось установить EFI-заглушку.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1756"/>
         <source>Version: </source>
-        <translation>Версия: </translation>
+        <translation>버전:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1760"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Авторское право (c) MX Linux</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1761"/>
         <source>%1 License</source>
-        <translation>%1 Лицензия</translation>
+        <translation>%1 라이센스</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1769"/>
         <source>%1 Help</source>
-        <translation>%1 Справка</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1799"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation>Что-то пошло не так, не удалось сохранить порядок загрузки.</translation>
+        <translation>에러가 발생하여 부트 순서를 저장하지 못했습니다.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1810"/>
         <source>Set timeout</source>
-        <translation>Задать тайм-аут</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1810"/>
         <source>Timeout in seconds:</source>
-        <translation>Тайм-аут в секундах:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1849"/>
         <source>Removal confirmation</source>
-        <translation>Подтверждение удаления</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1850"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation>Уверены, что хотите удалить эту загрузочную запись?
+        <translation>이 부트 항목을 정말 삭제하시겠습니까?
 %1</translation>
     </message>
 </context>
@@ -509,73 +508,73 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="99"/>
         <source>License</source>
-        <translation>Лицензия</translation>
+        <translation>라이센스</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="100"/>
         <source>Changelog</source>
-        <translation>Список изменений</translation>
+        <translation>변경 로그</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="101"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="125"/>
         <source>Error: Changelog file is missing.</source>
-        <translation>Ошибка: файл списка изменений отсутствует.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/about.cpp" line="127"/>
         <source>Error: Required utility &apos;zless&apos; is missing.</source>
-        <translation>Ошибка: отсутствует необходимая утилита «zless».</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/about.cpp" line="134"/>
         <source>&amp;Close</source>
-        <translation>&amp;Закрыть</translation>
+        <translation>닫기(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="85"/>
         <source>uefi-manager is a tool for managing UEFI boot entries</source>
-        <translation>uefi-manager — это инструмент для управления загрузочными записями UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="88"/>
         <source>Perform EFI Stub installation for frugal installation.</source>
-        <translation>Выполнить установку EFI-заглушки для экономной установки.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="66"/>
         <location filename="../src/main.cpp" line="95"/>
         <source>UEFI Manager</source>
-        <translation>Менеджер UEFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="89"/>
         <source>Run in test mode (bypass UEFI detection for GUI testing).</source>
-        <translation>Запуск в тестовом режиме (обход определения UEFI для тестирования GUI).</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="96"/>
         <source>This system doesn&apos;t seem to support UEFI, or was not booted in UEFI mode. Exiting.</source>
-        <translation>Похоже, эта система не поддерживает UEFI или не была загружена в режиме UEFI. Выход.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="107"/>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation>에러</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="108"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation>Похоже, вы вошли как root. Пожалуйста, выйдите и войдите как обычный пользователь, чтобы использовать эту программу.</translation>
+        <translation>루트 권한으로 로그인한 상태로 보입니다. 이 프로그램을 사용하시려면 로그아웃 후 일반 사용자로 로그인해 주세요.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>version:</source>
-        <translation>версия:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
