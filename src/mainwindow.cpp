@@ -190,14 +190,29 @@ void MainWindow::addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi)
         name = "New entry";
     }
 
-    const int efiIdx = fileName.indexOf("/EFI/", 0, Qt::CaseInsensitive);
-    if (efiIdx < 0) {
+    // Express the loader path relative to the ESP root (e.g. \EFI\fedora\shimx64.efi).
+    // We strip the actual mountpoint rather than searching for "/EFI/" in the absolute
+    // path: the ESP is mounted under /boot/efi/<part>, whose own "/efi/" would match
+    // first (case-insensitively) and leave the mount directory name wrongly embedded
+    // in the path, e.g. \EFI\nvme1n1p1\EFI\fedora\shimx64.efi.
+    QString dfTarget;
+    cmd.proc("df", {"--output=target", fileName}, &dfTarget);
+    const QStringList targetLines = dfTarget.split('\n', Qt::SkipEmptyParts);
+    const QString mountPoint = targetLines.size() >= 2 ? targetLines.last().trimmed() : QString();
+
+    QString loaderPath;
+    if (!mountPoint.isEmpty() && fileName.startsWith(mountPoint)) {
+        loaderPath = fileName.mid(mountPoint.length());
+        if (!loaderPath.startsWith('/')) {
+            loaderPath.prepend('/');
+        }
+    }
+    if (!loaderPath.startsWith("/EFI/", Qt::CaseInsensitive)) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Selected file is not in an EFI directory"));
         return;
     }
-    fileName = "/EFI/" + fileName.mid(efiIdx + 5);
     QString out;
-    cmd.procAsRoot("efibootmgr", {"-c", "-L", name, "-d", disk, "-p", partition, "-l", fileName}, &out);
+    cmd.procAsRoot("efibootmgr", {"-c", "-L", name, "-d", disk, "-p", partition, "-l", loaderPath}, &out);
 
     if (cmd.exitCode() != 0) {
         QMessageBox::critical(dialogUefi, tr("Error"), tr("Something went wrong, could not add entry."));
