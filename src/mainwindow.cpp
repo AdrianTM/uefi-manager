@@ -26,6 +26,7 @@
 #include "utils.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QInputDialog>
