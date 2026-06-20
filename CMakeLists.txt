@@ -164,7 +164,6 @@ target_link_libraries(helper
 # Set compiler flags
 target_compile_options(uefi-manager PRIVATE
     -Wpedantic
-    -pedantic
     -Werror=return-type
     -Werror=switch
     -Werror=uninitialized
@@ -173,7 +172,6 @@ target_compile_options(uefi-manager PRIVATE
 
 target_compile_options(helper PRIVATE
     -Wpedantic
-    -pedantic
     -Werror=return-type
     -Werror=switch
     -Werror=uninitialized
