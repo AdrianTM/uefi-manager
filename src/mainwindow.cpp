@@ -310,7 +310,7 @@ void MainWindow::setConnections()
     connect(ui->comboDriveStub, &QComboBox::currentTextChanged, this, &MainWindow::filterDrivePartitions);
     connect(ui->pushAbout, &QPushButton::clicked, this, &MainWindow::pushAboutClicked);
     connect(ui->pushBack, &QPushButton::clicked, this, &MainWindow::pushBackClicked);
-    connect(ui->pushCancel, &QPushButton::pressed, this, &MainWindow::close);
+    connect(ui->pushCancel, &QPushButton::clicked, this, &MainWindow::close);
     connect(ui->pushHelp, &QPushButton::clicked, this, &MainWindow::pushHelpClicked);
     connect(ui->pushNext, &QPushButton::clicked, this, &MainWindow::pushNextClicked);
     connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::tabWidgetCurrentChanged);
