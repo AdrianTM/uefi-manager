@@ -24,12 +24,6 @@
 #include <QLatin1StringView>
 #include <QString>
 
-inline const QString &startingHome()
-{
-    static const QString home = qEnvironmentVariable("HOME");
-    return home;
-}
-
 // EFI System Partition GUID (GPT) and MBR type
 inline constexpr QLatin1StringView ESP_GUID_GPT("c12a7328-f81f-11d2-ba4b-00a0c93ec93b");
 inline constexpr QLatin1StringView ESP_TYPE_MBR("0xef");
