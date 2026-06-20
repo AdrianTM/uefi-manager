@@ -87,7 +87,7 @@ void displayDoc(const QString &url, const QString &title)
         }
     }
     if (startedAsRoot) {
-        qputenv("HOME", STARTING_HOME.toUtf8());
+        qputenv("HOME", startingHome().toUtf8());
     }
 }
 

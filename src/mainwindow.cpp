@@ -1216,7 +1216,7 @@ QString MainWindow::determineKernelDir(const QString &bootDir, const QString &ro
 {
     QString kernelDir;
     if (bootDir == "/boot" || bootDir == "/boot/") {
-        if (!Cmd().procAsRoot("mountpoint", {"-q", bootDir})) {
+        if (!cmd.procAsRoot("mountpoint", {"-q", bootDir})) {
             kernelDir = "/boot";
         } else {
             kernelDir = "";
