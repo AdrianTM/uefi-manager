@@ -122,6 +122,7 @@ private:
     void addUefiEntry(QListWidget *listEntries, QWidget *dialogUefi);
     void checkDoneStub();
     void clearEntryWidget();
+    void cleanEspTarget(const QString &targetPath);
     void filterDrivePartitions();
     void getGrubOptions(const QString &mountPoint = "/");
     void getKernelOptions(const QString &mountPoint);

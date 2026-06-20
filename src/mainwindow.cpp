@@ -247,6 +247,14 @@ void MainWindow::clearEntryWidget()
     delete ui->tabManageUefi->layout();
 }
 
+void MainWindow::cleanEspTarget(const QString &targetPath)
+{
+    cmd.procAsRoot("rm", {"-f", targetPath + "/vmlinuz",
+                          targetPath + "/initrd.img", targetPath + "/initrd.gz",
+                          targetPath + "/amducode.img", targetPath + "/amducode.gz",
+                          targetPath + "/intucode.img", targetPath + "/intucode.gz"});
+}
+
 void MainWindow::centerWindow()
 {
     const auto screenGeometry = QApplication::primaryScreen()->geometry();
@@ -466,33 +474,14 @@ bool MainWindow::copyKernel()
 
         return dir;
     }();
-    const QString kernelVersion = ui->comboKernel->currentText();
-    QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
-    if (!QFile::exists(vmlinuz)) {
-        // Fallback for Arch-style
-        vmlinuz = QString("%1/vmlinuz-linux").arg(sourceDir);
-    }
+    const auto kernelFiles = utils::resolveKernelFiles(sourceDir, ui->comboKernel->currentText(), isFrugal);
 
-    QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
-    QString initramfs = QString("%1/initramfs-%2").arg(sourceDir, isFrugal ? "" : kernelVersion + ".img");
-    if (!QFile::exists(initrd) && !QFile::exists(initramfs)) {
-        // Fallback for Arch-style initramfs
-        initramfs = QString("%1/initramfs-linux.img").arg(sourceDir);
-    }
-
-    const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
-    const QString intelUcode = QString("%1/intel-ucode.img").arg(sourceDir);
-
-    const QStringList filesToCopy = {vmlinuz, initrd, amdUcode, intelUcode};
+    const QStringList filesToCopy = {kernelFiles.vmlinuz, kernelFiles.initrd, kernelFiles.amdUcode, kernelFiles.intelUcode};
     const QStringList targetFiles = {"/vmlinuz", "/initrd.img", "/amducode.img", "/intucode.img"};
 
     for (int i = 0; i < filesToCopy.size(); ++i) {
         QString file = filesToCopy.at(i);
         const QString targetFile = targetPath + targetFiles.at(i);
-
-        if (targetFile.endsWith("initrd.img") && !QFile::exists(initrd) && QFile::exists(initramfs)) {
-            file = initramfs;
-        }
 
         if (!QFile::exists(file) && file.endsWith("ucode.img")) {
             continue;
@@ -685,25 +674,11 @@ bool MainWindow::checkSizeEsp()
     const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
     const QString sourceDir = isFrugal ? frugalDir : getBootLocation();
     qDebug() << "Source Dir:" << sourceDir;
-    const QString kernelVersion = ui->comboKernel->currentText();
-    QString vmlinuz = QString("%1/vmlinuz%2").arg(sourceDir, isFrugal ? "" : "-" + kernelVersion);
-    if (!QFile::exists(vmlinuz)) {
-        vmlinuz = QString("%1/vmlinuz-linux").arg(sourceDir);
-    }
-
-    QString initrd = QString("%1/initrd%2").arg(sourceDir, isFrugal ? ".gz" : ".img-" + kernelVersion);
-    if (!QFile::exists(initrd)) {
-        QString initramfs = QString("%1/initramfs-%2").arg(sourceDir, isFrugal ? "" : kernelVersion + ".img");
-        if (!QFile::exists(initramfs)) {
-            initramfs = QString("%1/initramfs-linux.img").arg(sourceDir);
-        }
-        if (QFile::exists(initramfs)) {
-            initrd = initramfs;
-        }
-    }
-
-    const QString amdUcode = QString("%1/amd-ucode.img").arg(sourceDir);
-    const QString intUcode = QString("%1/intel-ucode.img").arg(sourceDir);
+    const auto kernelFiles = utils::resolveKernelFiles(sourceDir, ui->comboKernel->currentText(), isFrugal);
+    const QString vmlinuz = kernelFiles.vmlinuz;
+    const QString initrd = kernelFiles.initrd;
+    const QString amdUcode = kernelFiles.amdUcode;
+    const QString intUcode = kernelFiles.intelUcode;
 
     qDebug() << "VMLINUZ:" << vmlinuz;
     qDebug() << "INITRD :" << initrd;
@@ -1683,10 +1658,7 @@ QString MainWindow::selectESP()
     const bool isFrugal = ui->tabWidget->currentIndex() == Tab::Frugal;
     const QString subDir = isFrugal ? "/frugal" : "/stub";
     const QString targetPath = espMountPoint + "/EFI/" + distro + subDir;
-    cmd.procAsRoot("rm", {"-f", targetPath + "/vmlinuz",
-                          targetPath + "/initrd.img", targetPath + "/initrd.gz",
-                          targetPath + "/amducode.img", targetPath + "/amducode.gz",
-                          targetPath + "/intucode.img", targetPath + "/intucode.gz"});
+    cleanEspTarget(targetPath);
     return selectedEsp;
 }
 
