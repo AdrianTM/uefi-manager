@@ -1454,7 +1454,7 @@ void MainWindow::detectRootDevice()
         cmd.proc("lsblk", {"-ln", "-o", "PKNAME", rootDevicePath}, &rootPartition);
         rootPartition = rootPartition.trimmed();
     } else {
-        rootPartition = rootDevicePath.split('/').last().trimmed();
+        rootPartition = QFileInfo(rootDevicePath).fileName();
     }
 
     rootDrive = utils::extractDiskFromPartition(rootPartition);
