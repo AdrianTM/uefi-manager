@@ -27,6 +27,7 @@ build() {
     cmake -G Ninja \
         -B build \
         -DCMAKE_BUILD_TYPE=Release \
+        -DHELPER_INSTALL_DIR=/usr/lib/uefi-manager \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
         -DPROJECT_VERSION_OVERRIDE="$_version"
@@ -50,7 +51,7 @@ package() {
     install -Dm755 scripts/uefimanager-lib "${pkgdir}/usr/lib/uefi-manager/uefimanager-lib"
 
     # Install PolicyKit policy
-    install -Dm644 scripts/org.mxlinux.pkexec.mx-uefimanager-helper.policy \
+    install -Dm644 build/org.mxlinux.pkexec.mx-uefimanager-helper.policy \
         "${pkgdir}/usr/share/polkit-1/actions/org.mxlinux.pkexec.mx-uefimanager-helper.policy"
 
     # Install desktop file
