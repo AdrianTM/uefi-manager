@@ -13,8 +13,7 @@ Depends: efibootmgr,
          xdg-utils | mx-viewer,
          ${misc:Depends},
          ${shlibs:Depends}
-Description: UEFI Manager
- A graphical tool for managing UEFI boot entries.
+Description: graphical tool for managing UEFI boot entries
  Allows users to view, add, modify, and delete UEFI boot entries
  in a user-friendly interface. Designed for MX Linux, but may
  work on other systems.

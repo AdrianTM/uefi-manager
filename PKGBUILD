@@ -58,7 +58,7 @@ package() {
     install -Dm644 uefi-manager.desktop "${pkgdir}/usr/share/applications/uefi-manager.desktop"
 
     # Install icons
-    install -Dm644 uefi-manager.png "${pkgdir}/usr/share/icons/hicolor/48x48/apps/uefi-manager.png"
+    install -Dm644 uefi-manager.png "${pkgdir}/usr/share/icons/hicolor/64x64/apps/uefi-manager.png"
     install -Dm644 uefi-manager.png "${pkgdir}/usr/share/pixmaps/uefi-manager.png"
     install -Dm644 uefi-manager.svg "${pkgdir}/usr/share/icons/hicolor/scalable/apps/uefi-manager.svg"
 
