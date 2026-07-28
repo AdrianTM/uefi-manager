@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="gl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hi">
 <context>
     <name>Cmd</name>
     <message>
@@ -71,12 +71,12 @@
     <message>
         <location filename="../src/mainwindow.ui" line="393"/>
         <source>About this application</source>
-        <translation>Sobre esta aplicación</translation>
+        <translation>इस अनुप्रयोग के बारे में</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="396"/>
         <source>About...</source>
-        <translation>Sobre...</translation>
+        <translation>बारे में...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="402"/>
@@ -86,12 +86,12 @@
     <message>
         <location filename="../src/mainwindow.ui" line="418"/>
         <source>Quit application</source>
-        <translation>Saír do aplicativo</translation>
+        <translation>अनुप्रयोग बंद करें</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="421"/>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>बंद करें</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="427"/>
@@ -101,7 +101,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
         <source>Display help </source>
-        <translation>Amosar axuda</translation>
+        <translation>सहायता देखें</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="36"/>
@@ -126,7 +126,7 @@
     <message>
         <location filename="../src/mainwindow.ui" line="446"/>
         <source>Help</source>
-        <translation>Axuda</translation>
+        <translation>सहायता</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
@@ -138,12 +138,12 @@
         <location filename="../src/mainwindow.cpp" line="954"/>
         <location filename="../src/mainwindow.cpp" line="1714"/>
         <source>Next</source>
-        <translation>Seguinte</translation>
+        <translation>आगामी</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="503"/>
         <source>Back</source>
-        <translation>Volver atrás</translation>
+        <translation>वापस</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="778"/>
@@ -202,17 +202,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1692"/>
         <source>About %1</source>
-        <translation>Sobre %1</translation>
+        <translation>%1 के बारे में</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="162"/>
         <source>Select EFI file</source>
-        <translation>Seleccionar ficheiro EFI</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="162"/>
         <source>EFI files (*.efi *.EFI)</source>
-        <translation>Ficheiros EFI (*.efi *.EFI)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="174"/>
@@ -224,23 +224,23 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="1044"/>
         <location filename="../src/mainwindow.cpp" line="1736"/>
         <source>Error</source>
-        <translation>Erro</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="174"/>
         <location filename="../src/mainwindow.cpp" line="185"/>
         <source>Could not find the source mountpoint for %1</source>
-        <translation>Non se puido atopar o punto de montaxe da fonte para %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="189"/>
         <source>Set name</source>
-        <translation>Establecer nome</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="189"/>
         <source>Enter the name for the UEFI menu item:</source>
-        <translation>Introduza o nome para o item do menu UEFI:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="212"/>
@@ -250,14 +250,14 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="219"/>
         <source>Something went wrong, could not add entry.</source>
-        <translation>Algo saiu mal, non se puido engadir a entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="810"/>
         <location filename="../src/mainwindow.cpp" line="853"/>
         <location filename="../src/mainwindow.cpp" line="1751"/>
         <source>Timeout: %1 seconds</source>
-        <translation>Tempo de espera: %1 segundos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="812"/>
@@ -265,73 +265,71 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="859"/>
         <location filename="../src/mainwindow.cpp" line="1767"/>
         <source>Boot Next: %1</source>
-        <translation>Arranque seguinte: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="814"/>
         <source>Boot Current: %1</source>
-        <translation>Arranque actual: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="828"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
-        <translation>Pode usar os botóns Arriba/Abaixo ou arrastrar e soltar elementos para cambiar a orde de arranque.
-- Os elementos están listados na orde de arranque.
-- As liñas grisadas están inactivas.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="839"/>
         <location filename="../src/mainwindow.cpp" line="902"/>
         <source>Set ac&amp;tive</source>
-        <translation>Configurar como ac&amp;tivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="840"/>
         <source>&amp;Add entry</source>
-        <translation>Eng&amp;adir entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="841"/>
         <source>Boot &amp;next</source>
-        <translation>Arra&amp;nque seguinte</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="842"/>
         <source>Move &amp;down</source>
-        <translation>Mover abaixo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="843"/>
         <source>&amp;Remove entry</source>
-        <translation>Elimina&amp;r entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="845"/>
         <source>Re&amp;set next</source>
-        <translation>Repor &amp;seguinte</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="846"/>
         <source>Change &amp;timeout</source>
-        <translation>Cambiar &amp;tempo de espera</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="847"/>
         <source>Move &amp;up</source>
-        <translation>Mover arriba</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="852"/>
         <location filename="../src/mainwindow.cpp" line="859"/>
         <source>not set, will boot using list order</source>
-        <translation>non configurado, arrincará usando a orde da lista</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Set &amp;inactive</source>
-        <translation>Configurar como &amp;inactivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="978"/>
@@ -352,7 +350,7 @@ Missing mandatory files in directory: </source>
         <location filename="../src/mainwindow.cpp" line="963"/>
         <location filename="../src/mainwindow.cpp" line="1550"/>
         <source>Install</source>
-        <translation>Instalar</translation>
+        <translation>इंस्टॉल</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1556"/>
@@ -410,49 +408,48 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/mainwindow.cpp" line="1693"/>
         <source>Version: </source>
-        <translation>Versión: </translation>
+        <translation>संस्करण :</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1697"/>
         <source>Copyright (c) MX Linux</source>
-        <translation>Copyright (c) MX Linux</translation>
+        <translation>कॉपीराइट (c) एमएक्स लिनक्स</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1698"/>
         <source>%1 License</source>
-        <translation>Licenza de %1</translation>
+        <translation>%1 लाइसेंस</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1706"/>
         <source>%1 Help</source>
-        <translation>Axuda para %1</translation>
+        <translation>%1 सहायता</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1736"/>
         <source>Something went wrong, could not save boot order.</source>
-        <translation>Algo saiu mal, non se puido gardar a orde de arranque.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1746"/>
         <source>Set timeout</source>
-        <translation>Establecer tempo de espera</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1746"/>
         <source>Timeout in seconds:</source>
-        <translation>Tempo de espera en segundos:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1785"/>
         <source>Removal confirmation</source>
-        <translation>Confirmación de eliminación</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1786"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
-        <translation>Estás seguro de que queres eliminar esta entrada de arranque?
-%1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -460,17 +457,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="100"/>
         <source>License</source>
-        <translation>Licenza</translation>
+        <translation>लाइसेंस</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="101"/>
         <source>Changelog</source>
-        <translation>Rexistro dos cambios</translation>
+        <translation>बदलाव सूची</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="102"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>रद्द करें</translation>
     </message>
     <message>
         <location filename="../src/about.cpp" line="126"/>
@@ -485,7 +482,7 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/about.cpp" line="135"/>
         <source>&amp;Close</source>
-        <translation>&amp;Cerrar</translation>
+        <translation>बंद करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="85"/>
@@ -516,17 +513,17 @@ Missing mandatory files in directory: </source>
     <message>
         <location filename="../src/main.cpp" line="107"/>
         <source>Error</source>
-        <translation>Erro</translation>
+        <translation>त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="108"/>
         <source>You seem to be logged in as root, please log out and log in as normal user to use this program.</source>
-        <translation>O usuario parece ser root; para usar este programa, pechar a sesión e iniciar sesión como usuario normal.</translation>
+        <translation>प्रतीत होता है कि आप रुट के रूप में लॉगिन हैं, प्रोग्राम उपयोग करने हेतु लॉगआउट कर सामान्य उपयोक्ता के रूप में लॉगिन करें।</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="113"/>
         <source>version:</source>
-        <translation type="unfinished"/>
+        <translation>संस्करण :</translation>
     </message>
 </context>
 </TS>

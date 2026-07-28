@@ -1,4 +1,4 @@
-uefi-manager (26.07) mx; urgency=medium
+uefi-manager (26.07.1) mx; urgency=medium
 
   * Require administrator authentication for all privileged UEFI Manager
     operations.
