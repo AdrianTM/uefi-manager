@@ -102,14 +102,14 @@ MainWindow::~MainWindow()
         if (!newLuksDevices.isEmpty()) {
             cleanupArgs << "--luks" << newLuksDevices;
         }
-        if (!cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", cleanupArgs)) {
+        if (!cmd.procElevated(cmd.helperLibraryPath(), cleanupArgs)) {
             qWarning() << "Cleanup failed";
         }
     }
 
     Log::flush();
     if (Log::hasRelevantContent(7)) {
-        cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"copy_log"});
+        cmd.procElevated(cmd.helperLibraryPath(), {"copy_log"});
     }
 
     delete ui;
@@ -781,7 +781,7 @@ void MainWindow::promptFrugalStubInstall()
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 
     if (ret == QMessageBox::No) {
-        cmd.procElevated("/usr/lib/uefi-manager/uefimanager-lib", {"write_checkfile"});
+        cmd.procElevated(cmd.helperLibraryPath(), {"write_checkfile"});
         qApp->quit();
         return;
     } else {
