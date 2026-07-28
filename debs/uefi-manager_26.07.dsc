@@ -1,3 +1,6 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
 Format: 3.0 (native)
 Source: uefi-manager
 Binary: uefi-manager
@@ -11,8 +14,20 @@ Build-Depends: debhelper-compat (= 13), cmake (>= 3.16), ninja-build, qt6-base-d
 Package-List:
  uefi-manager deb admin optional arch=any
 Checksums-Sha1:
- da8f85b4242dea2a26753b8478e608a9ae022a42 310008 uefi-manager_26.07.tar.xz
+ 248ed50a3c1a15f6e858ccad09c5c365baa492e8 150096 uefi-manager_26.07.tar.xz
 Checksums-Sha256:
- 8067d8b26b5bbb953095f1d2a3d77793e739e849336c422c0eba0b270bf1f164 310008 uefi-manager_26.07.tar.xz
+ b7f37a7f160f10239f2fb6e420d7204c6a2023e5bf8577ed1b53894922125bdb 150096 uefi-manager_26.07.tar.xz
 Files:
- 1b53e6cbe26b58468f8821ad319e7b33 310008 uefi-manager_26.07.tar.xz
+ e800f91cb5b4d48aaec56c3192bfb8fc 150096 uefi-manager_26.07.tar.xz
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFHBAEBCgAxFiEE8ndToY6S45N+YzXncJOMeAZ57pgFAmpoIcsTHGFkcmlhbkBt
+eGxpbnV4Lm9yZwAKCRBwk4x4BnnumCTgB/9qh2b4RagBZN236VWFl14v5bACKsLO
+M5L1R6SaecPE6V8oqV995LTJlol6APFr+7Ge1eq+3ol6lyue6J0FV+N4sO1NKM7p
+yUOWV+YsH15/uKIYbsHMIIopqopEGm2N4zwJCGKbF8bSw/9yx9YFBq9uTT9rmFS6
+SWZB8H+zSDE2fVXLaeHO/aso53lr90uvYC9KkEVkOIBCwp21aZeCLXS4rdgw76EO
+2UVuTC8ujD0Hr4APA+0mSwr8upMyEtyWOifj5F+ar1Up1rWpbAtiV6OuLV1hRbYY
+fJ6hkdkUGqqGwuSLR0I/3cTlfTkk7QqKvCwYHIk15hfEOIsTALlujvkx
+=+mm8
+-----END PGP SIGNATURE-----

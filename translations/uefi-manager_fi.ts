@@ -135,8 +135,8 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="465"/>
-        <location filename="../src/mainwindow.cpp" line="954"/>
-        <location filename="../src/mainwindow.cpp" line="1777"/>
+        <location filename="../src/mainwindow.cpp" line="978"/>
+        <location filename="../src/mainwindow.cpp" line="1804"/>
         <source>Next</source>
         <translation>Seuraava</translation>
     </message>
@@ -146,142 +146,142 @@
         <translation>Takaisin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="780"/>
-        <location filename="../src/mainwindow.cpp" line="978"/>
-        <location filename="../src/mainwindow.cpp" line="1583"/>
-        <location filename="../src/mainwindow.cpp" line="1593"/>
+        <location filename="../src/mainwindow.cpp" line="802"/>
+        <location filename="../src/mainwindow.cpp" line="1002"/>
+        <location filename="../src/mainwindow.cpp" line="1614"/>
+        <location filename="../src/mainwindow.cpp" line="1624"/>
         <source>UEFI Installer</source>
         <translation>UEFI asentaja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="781"/>
+        <location filename="../src/mainwindow.cpp" line="803"/>
         <source>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</source>
         <translation>Viimeinen frugal asennus on havaittu. Haluatko lisätä UEFI-kohteen suoraan UEFI-valikkoon?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1026"/>
+        <location filename="../src/mainwindow.cpp" line="1050"/>
         <source>Could not retrieve UUID for %1</source>
         <translation>Ei voi hakea UUID:tä kohteelle %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1033"/>
+        <location filename="../src/mainwindow.cpp" line="1057"/>
         <source>Enter passphrase to unlock %1 encrypted partition:</source>
         <translation>Avaa salatun osion %1 lukitus antamalla sen salasana:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1038"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
         <source>Passphrase entry cancelled or empty for %1</source>
         <translation>Salasanan merkintä peruutettu tai tyhjä kohteelle %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
         <source>Could not open %1 LUKS container</source>
         <translation>Ei voi avata %1 LUKS-säilöstä</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1584"/>
+        <location filename="../src/mainwindow.cpp" line="1615"/>
         <source>Are you sure this is the MX or antiX Frugal installation location?
 Missing mandatory files in directory: </source>
         <translation>Oletko varma, että tämä on MX ​​tai antiX Frugal asennuskohde?Hakemistosta puuttuu pakollisia tiedostoja:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1652"/>
+        <location filename="../src/mainwindow.cpp" line="1679"/>
         <source>Not enough space on the EFI System Partition to copy the kernel and initrd files.</source>
         <translation>EFI-osiossa ei ole riittävästi tilaa kernelin ja initrd-tiedostojen kopioimiseen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1714"/>
+        <location filename="../src/mainwindow.cpp" line="1741"/>
         <source>All fields are required</source>
         <translation>Kaikki kentät ovat pakollisia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1737"/>
+        <location filename="../src/mainwindow.cpp" line="1764"/>
         <source>Could not select ESP</source>
         <translation>ESP:n valinta ei onnistunut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1755"/>
+        <location filename="../src/mainwindow.cpp" line="1782"/>
         <source>About %1</source>
         <translation>%1 lisätietoja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="156"/>
+        <location filename="../src/mainwindow.cpp" line="161"/>
         <source>Select EFI file</source>
         <translation>Valitse EFI-tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="156"/>
+        <location filename="../src/mainwindow.cpp" line="161"/>
         <source>EFI files (*.efi *.EFI)</source>
         <translation>EFI tiedostot (*.efi *.EFI)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
-        <location filename="../src/mainwindow.cpp" line="179"/>
-        <location filename="../src/mainwindow.cpp" line="190"/>
-        <location filename="../src/mainwindow.cpp" line="198"/>
-        <location filename="../src/mainwindow.cpp" line="1026"/>
-        <location filename="../src/mainwindow.cpp" line="1038"/>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
-        <location filename="../src/mainwindow.cpp" line="1799"/>
-        <location filename="../src/mainwindow.cpp" line="1937"/>
-        <location filename="../src/mainwindow.cpp" line="2008"/>
-        <location filename="../src/mainwindow.cpp" line="2019"/>
-        <location filename="../src/mainwindow.cpp" line="2026"/>
-        <location filename="../src/mainwindow.cpp" line="2037"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="184"/>
+        <location filename="../src/mainwindow.cpp" line="211"/>
+        <location filename="../src/mainwindow.cpp" line="218"/>
+        <location filename="../src/mainwindow.cpp" line="1050"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
+        <location filename="../src/mainwindow.cpp" line="1826"/>
+        <location filename="../src/mainwindow.cpp" line="1965"/>
+        <location filename="../src/mainwindow.cpp" line="2036"/>
         <location filename="../src/mainwindow.cpp" line="2047"/>
-        <location filename="../src/mainwindow.cpp" line="2061"/>
-        <location filename="../src/mainwindow.cpp" line="2066"/>
+        <location filename="../src/mainwindow.cpp" line="2054"/>
+        <location filename="../src/mainwindow.cpp" line="2065"/>
+        <location filename="../src/mainwindow.cpp" line="2075"/>
+        <location filename="../src/mainwindow.cpp" line="2089"/>
+        <location filename="../src/mainwindow.cpp" line="2094"/>
         <source>Error</source>
         <translation>Virhe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
-        <location filename="../src/mainwindow.cpp" line="179"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="184"/>
         <source>Could not find the source mountpoint for %1</source>
         <translation>Ei löytynyt lähteen liitospistettä %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="183"/>
+        <location filename="../src/mainwindow.cpp" line="188"/>
         <source>Set name</source>
         <translation>Aseta nimi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="183"/>
+        <location filename="../src/mainwindow.cpp" line="188"/>
         <source>Enter the name for the UEFI menu item:</source>
         <translation>Anna valikolle UEFI nimi:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="211"/>
         <source>Selected file is not in an EFI directory</source>
         <translation>Valittu tiedosto ei ole EFI-hakemistossa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="198"/>
+        <location filename="../src/mainwindow.cpp" line="218"/>
         <source>Something went wrong, could not add entry.</source>
         <translation>Jotain meni väärin, merkintää ei voitu lisätä.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="810"/>
-        <location filename="../src/mainwindow.cpp" line="853"/>
-        <location filename="../src/mainwindow.cpp" line="1814"/>
+        <location filename="../src/mainwindow.cpp" line="834"/>
+        <location filename="../src/mainwindow.cpp" line="877"/>
+        <location filename="../src/mainwindow.cpp" line="1841"/>
         <source>Timeout: %1 seconds</source>
         <translation>Aikakatkaisu: %1 sekuntia</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="812"/>
-        <location filename="../src/mainwindow.cpp" line="852"/>
-        <location filename="../src/mainwindow.cpp" line="859"/>
-        <location filename="../src/mainwindow.cpp" line="1831"/>
+        <location filename="../src/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
+        <location filename="../src/mainwindow.cpp" line="1857"/>
         <source>Boot Next: %1</source>
         <translation>Seuraava käynnistys: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
+        <location filename="../src/mainwindow.cpp" line="838"/>
         <source>Boot Current: %1</source>
         <translation>Käynnistys viimeisin: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="828"/>
+        <location filename="../src/mainwindow.cpp" line="852"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
@@ -290,213 +290,213 @@ Missing mandatory files in directory: </source>
 - Harmaat rivit eivät ole aktiivisia.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="839"/>
-        <location filename="../src/mainwindow.cpp" line="902"/>
+        <location filename="../src/mainwindow.cpp" line="863"/>
+        <location filename="../src/mainwindow.cpp" line="926"/>
         <source>Set ac&amp;tive</source>
         <translation>Aseta ak&amp;tiiviseksi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="840"/>
+        <location filename="../src/mainwindow.cpp" line="864"/>
         <source>&amp;Add entry</source>
         <translation>&amp;Lisää merkintä</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
+        <location filename="../src/mainwindow.cpp" line="865"/>
         <source>Boot &amp;next</source>
         <translation>Käynnistä &amp;seuraava</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="842"/>
+        <location filename="../src/mainwindow.cpp" line="866"/>
         <source>Move &amp;down</source>
         <translation>Siirrä &amp;alas</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="843"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>&amp;Remove entry</source>
         <translation>&amp;Poista merkintä</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="869"/>
         <source>Re&amp;set next</source>
         <translation>Re&amp;setoi seuraava</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="846"/>
+        <location filename="../src/mainwindow.cpp" line="870"/>
         <source>Change &amp;timeout</source>
         <translation>Muuta &amp;aikakatkaisu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>Move &amp;up</source>
         <translation>Siirrä &amp;ylös</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="852"/>
-        <location filename="../src/mainwindow.cpp" line="859"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>not set, will boot using list order</source>
         <translation>ei asetettu, käynnistyy listan mukaan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="899"/>
+        <location filename="../src/mainwindow.cpp" line="923"/>
         <source>Set &amp;inactive</source>
         <translation>Aseta &amp;passiiviseksi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="978"/>
+        <location filename="../src/mainwindow.cpp" line="1002"/>
         <source>Failed to open grub.entry file.</source>
         <translation>Tiedoston grub.entry avaaminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1758"/>
+        <location filename="../src/mainwindow.cpp" line="1785"/>
         <source>Tool for managing UEFI boot entries</source>
         <translation>Työkalu UEFI-käynnistyksen hallintaan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1937"/>
+        <location filename="../src/mainwindow.cpp" line="1965"/>
         <source>Both old and new EFI labels must be specified</source>
         <translation>Sekä vanhat että uudet EFI-nimet on määritettävä</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2009"/>
+        <location filename="../src/mainwindow.cpp" line="2037"/>
         <source>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</source>
         <translation>Useita käynnistyskohteita nimelle &quot;%1&quot;: %2 ja %3;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2019"/>
+        <location filename="../src/mainwindow.cpp" line="2047"/>
         <source>No EFI data found for label &apos;%1&apos;.</source>
         <translation>EFI-dataa ei löytynyt nimelle &quot;%1&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2027"/>
+        <location filename="../src/mainwindow.cpp" line="2055"/>
         <source>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</source>
         <translation>EFI-nimi &quot;%1&quot; on linkitetty tuntemattomaan osioon &quot;%2&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2038"/>
+        <location filename="../src/mainwindow.cpp" line="2066"/>
         <source>Unexpected device name format &apos;%1&apos; for partition related to the label.</source>
         <translation>Odottamaton laittenimi &quot;%1&quot; osiolle liittyvälle nimelle.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2048"/>
+        <location filename="../src/mainwindow.cpp" line="2076"/>
         <source>Device partition number [%1] differs from EFI entry partition number [%2].</source>
         <translation>Laiteosion numero [%1] eroaa EFI-kohteen osion numerosta [%2].</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2061"/>
+        <location filename="../src/mainwindow.cpp" line="2089"/>
         <source>Failed to delete old boot entry</source>
         <translation>Vanhan käynnistysmerkinnän poistaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2066"/>
+        <location filename="../src/mainwindow.cpp" line="2094"/>
         <source>Failed to create new boot entry</source>
         <translation>Uuden käynnistysmerkinnän luominen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1593"/>
+        <location filename="../src/mainwindow.cpp" line="1624"/>
         <source>Failed to read grub.entry file.</source>
         <translation>Tiedoston grub.entry lukeminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="963"/>
-        <location filename="../src/mainwindow.cpp" line="1606"/>
+        <location filename="../src/mainwindow.cpp" line="987"/>
+        <location filename="../src/mainwindow.cpp" line="1637"/>
         <source>Install</source>
         <translation>Asenna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.cpp" line="1643"/>
         <source>Select Frugal Directory</source>
         <translation>Valitse Frugal hakemisto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1619"/>
+        <location filename="../src/mainwindow.cpp" line="1650"/>
         <source>No EFI System Partitions found.</source>
         <translation>EFI-osioita ei löytynyt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1625"/>
+        <location filename="../src/mainwindow.cpp" line="1655"/>
         <source>Select EFI System Partition</source>
         <translation>Valitse EFI-osio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1626"/>
+        <location filename="../src/mainwindow.cpp" line="1656"/>
         <source>EFI System Partitions:</source>
         <translation>EFI-osiot:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1639"/>
+        <location filename="../src/mainwindow.cpp" line="1666"/>
         <source>No EFI System Partition selected</source>
         <translation>EFI-osioita ei valittuna.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1646"/>
+        <location filename="../src/mainwindow.cpp" line="1673"/>
         <source>Could not mount selected EFI System Partition</source>
         <translation>Valittua EFI-osiota ei voitu liittää</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1677"/>
-        <location filename="../src/mainwindow.cpp" line="1721"/>
+        <location filename="../src/mainwindow.cpp" line="1704"/>
+        <location filename="../src/mainwindow.cpp" line="1748"/>
         <source>Could not mount partition. Please make sure you selected the correct partition.</source>
         <translation>Osiota ei voitu liittää. Varmista, että valitsit oikean osion.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1713"/>
         <source>No directory selected</source>
         <translation>Hakemistoa ei ole valittuna</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1706"/>
-        <location filename="../src/mainwindow.cpp" line="1743"/>
+        <location filename="../src/mainwindow.cpp" line="1733"/>
+        <location filename="../src/mainwindow.cpp" line="1770"/>
         <source>EFI stub installed successfully.</source>
         <translation>EFI stub asennettu onnistuneesti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1708"/>
-        <location filename="../src/mainwindow.cpp" line="1745"/>
+        <location filename="../src/mainwindow.cpp" line="1735"/>
+        <location filename="../src/mainwindow.cpp" line="1772"/>
         <source>Failed to install EFI stub.</source>
         <translation>EFI stub asentaminen epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1756"/>
+        <location filename="../src/mainwindow.cpp" line="1783"/>
         <source>Version: </source>
         <translation>Versio: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1760"/>
+        <location filename="../src/mainwindow.cpp" line="1787"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1761"/>
+        <location filename="../src/mainwindow.cpp" line="1788"/>
         <source>%1 License</source>
         <translation>%1 lisenssi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1769"/>
+        <location filename="../src/mainwindow.cpp" line="1796"/>
         <source>%1 Help</source>
         <translation>%1 ohje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1799"/>
+        <location filename="../src/mainwindow.cpp" line="1826"/>
         <source>Something went wrong, could not save boot order.</source>
         <translation>Jotain meni väärin, käynnistysjärjestystä ei voitu tallentaa.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1810"/>
+        <location filename="../src/mainwindow.cpp" line="1836"/>
         <source>Set timeout</source>
         <translation>Aseta aikakatkaisu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1810"/>
+        <location filename="../src/mainwindow.cpp" line="1836"/>
         <source>Timeout in seconds:</source>
         <translation>Aikakatkaisu sekunneissa:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1849"/>
+        <location filename="../src/mainwindow.cpp" line="1875"/>
         <source>Removal confirmation</source>
         <translation>Poiston vahvistus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1850"/>
+        <location filename="../src/mainwindow.cpp" line="1876"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
         <translation>Haluatko poistaa tämän käynnistyksen?

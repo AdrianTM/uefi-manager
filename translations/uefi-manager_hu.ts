@@ -135,8 +135,8 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="465"/>
-        <location filename="../src/mainwindow.cpp" line="954"/>
-        <location filename="../src/mainwindow.cpp" line="1777"/>
+        <location filename="../src/mainwindow.cpp" line="978"/>
+        <location filename="../src/mainwindow.cpp" line="1804"/>
         <source>Next</source>
         <translation>Következő</translation>
     </message>
@@ -146,143 +146,143 @@
         <translation>Vissza</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="780"/>
-        <location filename="../src/mainwindow.cpp" line="978"/>
-        <location filename="../src/mainwindow.cpp" line="1583"/>
-        <location filename="../src/mainwindow.cpp" line="1593"/>
+        <location filename="../src/mainwindow.cpp" line="802"/>
+        <location filename="../src/mainwindow.cpp" line="1002"/>
+        <location filename="../src/mainwindow.cpp" line="1614"/>
+        <location filename="../src/mainwindow.cpp" line="1624"/>
         <source>UEFI Installer</source>
         <translation>UEFI telepítő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="781"/>
+        <location filename="../src/mainwindow.cpp" line="803"/>
         <source>A recent frugal install has been detected. Do you wish to add a UEFI entry direct to your UEFI system menu?</source>
         <translation>Egy friss lemezképként telepített rendszer detektálva. Kívánja hozzáadni az UEFI rendszermenühöz a vonatkozó UEFI bejegyzést?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1026"/>
+        <location filename="../src/mainwindow.cpp" line="1050"/>
         <source>Could not retrieve UUID for %1</source>
         <translation>UUID beszerzése nem sikerült: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1033"/>
+        <location filename="../src/mainwindow.cpp" line="1057"/>
         <source>Enter passphrase to unlock %1 encrypted partition:</source>
         <translation>Adja meg a jelszót a %1 titkosított partíció feloldásához:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1038"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
         <source>Passphrase entry cancelled or empty for %1</source>
         <translation>Jelszóbevitel megszakítva vagy üres jelszó ehhez: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
         <source>Could not open %1 LUKS container</source>
         <translation>Nem sikerült a %1 LUKS konténer megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1584"/>
+        <location filename="../src/mainwindow.cpp" line="1615"/>
         <source>Are you sure this is the MX or antiX Frugal installation location?
 Missing mandatory files in directory: </source>
         <translation>Biztos benne, hogy ez az MX ill. antiX lemezképként telepített rendszer helye?
 Szükséges fájlok hiányoznak a könyvtárban:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1652"/>
+        <location filename="../src/mainwindow.cpp" line="1679"/>
         <source>Not enough space on the EFI System Partition to copy the kernel and initrd files.</source>
         <translation>Nincs elég hely az EFI rendszerpartíción a kernel és az initrd fájlok másolásához.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1714"/>
+        <location filename="../src/mainwindow.cpp" line="1741"/>
         <source>All fields are required</source>
         <translation>Az összes mező megadása szükséges</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1737"/>
+        <location filename="../src/mainwindow.cpp" line="1764"/>
         <source>Could not select ESP</source>
         <translation>Az ESP kiválasztása nem sikerült</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1755"/>
+        <location filename="../src/mainwindow.cpp" line="1782"/>
         <source>About %1</source>
         <translation>%1 névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="156"/>
+        <location filename="../src/mainwindow.cpp" line="161"/>
         <source>Select EFI file</source>
         <translation>Válassza ki az EFI fájlt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="156"/>
+        <location filename="../src/mainwindow.cpp" line="161"/>
         <source>EFI files (*.efi *.EFI)</source>
         <translation>EFI fájlok (*.efi, *.EFI)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
-        <location filename="../src/mainwindow.cpp" line="179"/>
-        <location filename="../src/mainwindow.cpp" line="190"/>
-        <location filename="../src/mainwindow.cpp" line="198"/>
-        <location filename="../src/mainwindow.cpp" line="1026"/>
-        <location filename="../src/mainwindow.cpp" line="1038"/>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
-        <location filename="../src/mainwindow.cpp" line="1799"/>
-        <location filename="../src/mainwindow.cpp" line="1937"/>
-        <location filename="../src/mainwindow.cpp" line="2008"/>
-        <location filename="../src/mainwindow.cpp" line="2019"/>
-        <location filename="../src/mainwindow.cpp" line="2026"/>
-        <location filename="../src/mainwindow.cpp" line="2037"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="184"/>
+        <location filename="../src/mainwindow.cpp" line="211"/>
+        <location filename="../src/mainwindow.cpp" line="218"/>
+        <location filename="../src/mainwindow.cpp" line="1050"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
+        <location filename="../src/mainwindow.cpp" line="1826"/>
+        <location filename="../src/mainwindow.cpp" line="1965"/>
+        <location filename="../src/mainwindow.cpp" line="2036"/>
         <location filename="../src/mainwindow.cpp" line="2047"/>
-        <location filename="../src/mainwindow.cpp" line="2061"/>
-        <location filename="../src/mainwindow.cpp" line="2066"/>
+        <location filename="../src/mainwindow.cpp" line="2054"/>
+        <location filename="../src/mainwindow.cpp" line="2065"/>
+        <location filename="../src/mainwindow.cpp" line="2075"/>
+        <location filename="../src/mainwindow.cpp" line="2089"/>
+        <location filename="../src/mainwindow.cpp" line="2094"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="168"/>
-        <location filename="../src/mainwindow.cpp" line="179"/>
+        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../src/mainwindow.cpp" line="184"/>
         <source>Could not find the source mountpoint for %1</source>
         <translation>Nem található a forrás csatolási pont ehhez: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="183"/>
+        <location filename="../src/mainwindow.cpp" line="188"/>
         <source>Set name</source>
         <translation>Név beállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="183"/>
+        <location filename="../src/mainwindow.cpp" line="188"/>
         <source>Enter the name for the UEFI menu item:</source>
         <translation>Adja meg a nevet az UEFI menü elemhez:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="190"/>
+        <location filename="../src/mainwindow.cpp" line="211"/>
         <source>Selected file is not in an EFI directory</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="198"/>
+        <location filename="../src/mainwindow.cpp" line="218"/>
         <source>Something went wrong, could not add entry.</source>
         <translation>Hiba történt, nem sikerült az elem hozzáadása.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="810"/>
-        <location filename="../src/mainwindow.cpp" line="853"/>
-        <location filename="../src/mainwindow.cpp" line="1814"/>
+        <location filename="../src/mainwindow.cpp" line="834"/>
+        <location filename="../src/mainwindow.cpp" line="877"/>
+        <location filename="../src/mainwindow.cpp" line="1841"/>
         <source>Timeout: %1 seconds</source>
         <translation>Időtúllépés: %1 másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="812"/>
-        <location filename="../src/mainwindow.cpp" line="852"/>
-        <location filename="../src/mainwindow.cpp" line="859"/>
-        <location filename="../src/mainwindow.cpp" line="1831"/>
+        <location filename="../src/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
+        <location filename="../src/mainwindow.cpp" line="1857"/>
         <source>Boot Next: %1</source>
         <translation>Következő Indítása: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="814"/>
+        <location filename="../src/mainwindow.cpp" line="838"/>
         <source>Boot Current: %1</source>
         <translation>Jelenlegi indítása: %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="828"/>
+        <location filename="../src/mainwindow.cpp" line="852"/>
         <source>You can use the Up/Down buttons, or drag &amp; drop items to change boot order.
 - Items are listed in the boot order.
 - Grayed out lines are inactive.</source>
@@ -291,213 +291,213 @@ Szükséges fájlok hiányoznak a könyvtárban:</translation>
 - A szürke elemek nem aktívak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="839"/>
-        <location filename="../src/mainwindow.cpp" line="902"/>
+        <location filename="../src/mainwindow.cpp" line="863"/>
+        <location filename="../src/mainwindow.cpp" line="926"/>
         <source>Set ac&amp;tive</source>
         <translation>Aktívvá &amp;tétel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="840"/>
+        <location filename="../src/mainwindow.cpp" line="864"/>
         <source>&amp;Add entry</source>
         <translation>Elem hozzá&amp;adása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
+        <location filename="../src/mainwindow.cpp" line="865"/>
         <source>Boot &amp;next</source>
         <translation>&amp;Következő indítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="842"/>
+        <location filename="../src/mainwindow.cpp" line="866"/>
         <source>Move &amp;down</source>
         <translation>Mozgatás &amp;le</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="843"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>&amp;Remove entry</source>
         <translation>Elem el&amp;távolítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="869"/>
         <source>Re&amp;set next</source>
         <translation>Következő &amp;visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="846"/>
+        <location filename="../src/mainwindow.cpp" line="870"/>
         <source>Change &amp;timeout</source>
         <translation>Időtúllépés &amp;megváltoztatása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>Move &amp;up</source>
         <translation>Mozgatás &amp;fel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="852"/>
-        <location filename="../src/mainwindow.cpp" line="859"/>
+        <location filename="../src/mainwindow.cpp" line="876"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>not set, will boot using list order</source>
         <translation>nincs megadva, a lista sorrendjében indul</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="899"/>
+        <location filename="../src/mainwindow.cpp" line="923"/>
         <source>Set &amp;inactive</source>
         <translation>&amp;Inaktívvá tétel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="978"/>
+        <location filename="../src/mainwindow.cpp" line="1002"/>
         <source>Failed to open grub.entry file.</source>
         <translation>A grub.entry fájl megnyitása nem sikerült.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1758"/>
+        <location filename="../src/mainwindow.cpp" line="1785"/>
         <source>Tool for managing UEFI boot entries</source>
         <translation>Eszköz az UEFI rendszerindítási bejegyzések kezelésére.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1937"/>
+        <location filename="../src/mainwindow.cpp" line="1965"/>
         <source>Both old and new EFI labels must be specified</source>
         <translation>Mind a régi és az új UEFI címkéket meg kell adni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2009"/>
+        <location filename="../src/mainwindow.cpp" line="2037"/>
         <source>Multiple boot entries found for label &apos;%1&apos;: %2 and %3;</source>
         <translation>Több indítási elem található ezzel a címkével: &apos;%1&apos;: %2 és %3;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2019"/>
+        <location filename="../src/mainwindow.cpp" line="2047"/>
         <source>No EFI data found for label &apos;%1&apos;.</source>
         <translation>Nincs EFI adat ehhez a címkéhez: &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2027"/>
+        <location filename="../src/mainwindow.cpp" line="2055"/>
         <source>EFI label &apos;%1&apos; is linked to an unknown partition &apos;%2&apos;.</source>
         <translation>A(z) &apos;%1&apos; EFI címke ismeretlen partícióhoz tartozik: &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2038"/>
+        <location filename="../src/mainwindow.cpp" line="2066"/>
         <source>Unexpected device name format &apos;%1&apos; for partition related to the label.</source>
         <translation>Váratlan eszköznév formátum: &apos;%1&apos;, a címkére vonatkozó partíciónak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2048"/>
+        <location filename="../src/mainwindow.cpp" line="2076"/>
         <source>Device partition number [%1] differs from EFI entry partition number [%2].</source>
         <translation>Ez eszköz partíciószáma [%1] különbözik az EFI bejegyzés partíciószámától [%2].</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2061"/>
+        <location filename="../src/mainwindow.cpp" line="2089"/>
         <source>Failed to delete old boot entry</source>
         <translation>A régi indítási bejegyzés törlése nem sikerült</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2066"/>
+        <location filename="../src/mainwindow.cpp" line="2094"/>
         <source>Failed to create new boot entry</source>
         <translation>Az új indítási bejegyzés létrehozása nem sikerült</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1593"/>
+        <location filename="../src/mainwindow.cpp" line="1624"/>
         <source>Failed to read grub.entry file.</source>
         <translation>A grub.entry fájl olvasása nem sikerült.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="963"/>
-        <location filename="../src/mainwindow.cpp" line="1606"/>
+        <location filename="../src/mainwindow.cpp" line="987"/>
+        <location filename="../src/mainwindow.cpp" line="1637"/>
         <source>Install</source>
         <translation>Telepítés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1612"/>
+        <location filename="../src/mainwindow.cpp" line="1643"/>
         <source>Select Frugal Directory</source>
         <translation>Válassza ki a lemezképként telepítés könyvtárát</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1619"/>
+        <location filename="../src/mainwindow.cpp" line="1650"/>
         <source>No EFI System Partitions found.</source>
         <translation>Nincs EFI rendszerpartíció.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1625"/>
+        <location filename="../src/mainwindow.cpp" line="1655"/>
         <source>Select EFI System Partition</source>
         <translation>Válassza ki az EFI rendszerpartíciót</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1626"/>
+        <location filename="../src/mainwindow.cpp" line="1656"/>
         <source>EFI System Partitions:</source>
         <translation>EFI rendszerpartíciók:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1639"/>
+        <location filename="../src/mainwindow.cpp" line="1666"/>
         <source>No EFI System Partition selected</source>
         <translation>Nincs kiválasztva EFI rendszerpartíció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1646"/>
+        <location filename="../src/mainwindow.cpp" line="1673"/>
         <source>Could not mount selected EFI System Partition</source>
         <translation>A kiválasztott EFI rendszerpartíció csatolása nem sikerült</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1677"/>
-        <location filename="../src/mainwindow.cpp" line="1721"/>
+        <location filename="../src/mainwindow.cpp" line="1704"/>
+        <location filename="../src/mainwindow.cpp" line="1748"/>
         <source>Could not mount partition. Please make sure you selected the correct partition.</source>
         <translation>Partíció csatolása sikertelen. Ellenőrzze, hogy a megfelelő partíciót választotta-e ki.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="1713"/>
         <source>No directory selected</source>
         <translation>Nincs könyvtár kiválasztva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1706"/>
-        <location filename="../src/mainwindow.cpp" line="1743"/>
+        <location filename="../src/mainwindow.cpp" line="1733"/>
+        <location filename="../src/mainwindow.cpp" line="1770"/>
         <source>EFI stub installed successfully.</source>
         <translation>EFI csonk telepítése sikeres.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1708"/>
-        <location filename="../src/mainwindow.cpp" line="1745"/>
+        <location filename="../src/mainwindow.cpp" line="1735"/>
+        <location filename="../src/mainwindow.cpp" line="1772"/>
         <source>Failed to install EFI stub.</source>
         <translation>EFI csonk telepítése nem sikerült.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1756"/>
+        <location filename="../src/mainwindow.cpp" line="1783"/>
         <source>Version: </source>
         <translation>Verzió:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1760"/>
+        <location filename="../src/mainwindow.cpp" line="1787"/>
         <source>Copyright (c) MX Linux</source>
         <translation>Copyright (c) MX Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1761"/>
+        <location filename="../src/mainwindow.cpp" line="1788"/>
         <source>%1 License</source>
         <translation>%1 licenc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1769"/>
+        <location filename="../src/mainwindow.cpp" line="1796"/>
         <source>%1 Help</source>
         <translation>%1 súgó</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1799"/>
+        <location filename="../src/mainwindow.cpp" line="1826"/>
         <source>Something went wrong, could not save boot order.</source>
         <translation>Hiba történt, nem sikerült az indítási sorrend mentése.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1810"/>
+        <location filename="../src/mainwindow.cpp" line="1836"/>
         <source>Set timeout</source>
         <translation>Időtúllépés megadása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1810"/>
+        <location filename="../src/mainwindow.cpp" line="1836"/>
         <source>Timeout in seconds:</source>
         <translation>Időtúllépés másodpercben:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1849"/>
+        <location filename="../src/mainwindow.cpp" line="1875"/>
         <source>Removal confirmation</source>
         <translation>Eltávolítás megerősítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1850"/>
+        <location filename="../src/mainwindow.cpp" line="1876"/>
         <source>Are you sure you want to delete this boot entry?
 %1</source>
         <translation>Biztos, hogy törölni szeretné ezt az indítási lehetőséget?
