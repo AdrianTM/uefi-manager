@@ -65,7 +65,6 @@ void Cmd::handleStandardOutput()
 void Cmd::handleStandardError()
 {
     const QString error = readAllStandardError();
-    outBuffer += error;
     emit errorAvailable(error);
 }
 
